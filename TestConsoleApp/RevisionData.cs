@@ -6,25 +6,24 @@ using System.Collections.Generic;
 
 namespace TestConsoleApp 
 {
-	public class RevisionData : IEnumerable<KeyValuePair<string, RevDataItems2>>, ICloneable<RevisionData>
+	public class RevisionData : IEnumerable<KeyValuePair<string, RevisionDataFields>>, ICloneable<RevisionData>
 	{
 		// this is the data read from the revit database
-		private SortedList<string, RevDataItems2> _revisionData = 
-			new SortedList<string, RevDataItems2>(10);
+		private SortedList<string, RevisionDataFields> _revisionData = 
+			new SortedList<string, RevisionDataFields>(10);
 
-
-		public void Add(string key, RevDataItems2 data)
+		public void Add(string key, RevisionDataFields data)
 		{
 			_revisionData.Add(key, data);
 		}
 
-		public RevDataItems2 this[string idx]
+		public RevisionDataFields this[string idx]
 		{
 			get => _revisionData[idx];
 			set => _revisionData[idx] = value;
 		}
 
-		public RevDataItems2 this[int idx]
+		public RevisionDataFields this[int idx]
 		{
 			get => _revisionData[_revisionData.Keys[idx]];
 			set => _revisionData[_revisionData.Keys[idx]] = value;
@@ -32,7 +31,7 @@ namespace TestConsoleApp
 
 		public int Count => _revisionData.Count;
 
-		public IEnumerator<KeyValuePair<string, RevDataItems2>> GetEnumerator()
+		public IEnumerator<KeyValuePair<string, RevisionDataFields>> GetEnumerator()
 		{
 			return _revisionData.GetEnumerator();
 		}
@@ -46,7 +45,7 @@ namespace TestConsoleApp
 		{
 			RevisionData rd = new RevisionData();
 
-			foreach (KeyValuePair<string, RevDataItems2> kvp in _revisionData)
+			foreach (KeyValuePair<string, RevisionDataFields> kvp in _revisionData)
 			{
 				rd.Add(kvp.Key, kvp.Value.Clone());
 			}

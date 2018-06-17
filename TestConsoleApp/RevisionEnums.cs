@@ -6,13 +6,6 @@ using static TestConsoleApp.RevisionMetaData;
 
 namespace TestConsoleApp
 {
-	public enum RevisionVisibility
-	{
-		Hidden = 0,
-		TagVisible = 1,
-		CloudAndTagVisible = 2,
-	}
-
 	public enum EDataType
 	{
 		BOOL,

@@ -12,9 +12,9 @@ namespace TestConsoleApp
 		// translate the data read to the correct format
 		// basically nothing for most
 		// put the data in the correct order
-		private static RevDataItems2 MakeRevDataItem(dynamic[] items)
+		private static RevisionDataFields MakeRevDataItem(dynamic[] items)
 		{
-			RevDataItems2 di = new RevDataItems2();
+			RevisionDataFields di = new RevisionDataFields();
 
 			int len = items.Length;
 			int last = len - 1;

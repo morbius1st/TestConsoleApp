@@ -1,7 +1,5 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using static TestConsoleApp.RevisionSelect.ESelVisibility;
 
 using static TestConsoleApp.RevisionUtil;
 using static TestConsoleApp.RevisionFilters;
@@ -15,23 +13,6 @@ namespace TestConsoleApp
 
 	public static class RevisionSelect
 	{
-		public enum ESelVisibility
-		{
-			VISIBILITY_ALL = -1,
-			VISIBILITY_HIDDEN = 0,
-			VISIBILITY_CLOUDANDTAG = 1,
-			VISIBILITY_TAGONLY = 2,
-			VISIBILITY_COUNT = VISIBILITY_TAGONLY + 2
-		}
-
-		private static RevisionVisibility[] _visCrossRef =
-			new RevisionVisibility[(int) VISIBILITY_COUNT];
-
-		static RevisionSelect()
-		{
-			DefineVisibility();
-		}
-
 		#region + Comparisons
 
 		public static bool Verify(bool a, Criteria c)
@@ -209,7 +190,7 @@ namespace TestConsoleApp
 		}
 
 		// compare one row versus the filters
-		public static bool Compare(RevDataItems2 items, RevisionFilters filters)
+		public static bool Compare(RevisionDataFields items, RevisionFilters filters)
 		{
 			// scan through the list of filter tests to determine if
 			// the provided information passes 
@@ -223,12 +204,6 @@ namespace TestConsoleApp
 
 			bool result = false;
 
-//			Console.Write(nl);
-//			Console.WriteLine("processing all filters");
-//
-//			ListColumnHeadersInColumnOrder();
-//			ListDataItemInColumnOrder(1, items);
-
 			// compare the data item referenced in the filter to the filter criteria
 			// the filters are in a outer (data enum) order
 			// each data item field could have multiple criteria filters
@@ -240,17 +215,8 @@ namespace TestConsoleApp
 			// the outer loop is the opposite
 			// it is an 'and' loop - a single false and the data row fails
 
-			int i = 0;
-
 			foreach (KeyValuePair<DataItems.FilterEnum, Filters> kvpOuter in filters)
 			{
-//				Console.WriteLine("data item    name| " + kvpOuter.Key.Name);
-//				Console.WriteLine("data item   title| " + kvpOuter.Key.Title[0] + " " + kvpOuter.Key.Title[1]);
-//				Console.WriteLine("data item dataidx| " + kvpOuter.Key.DataIdx);
-//				Console.WriteLine("data item filtidx| " + kvpOuter.Key.FilterIdx);
-//				Console.WriteLine("data item   value| " + items[kvpOuter.Key.DataIdx] + " :: " +
-//					items[kvpOuter.Key.DataIdx].GetType());
-
 				foreach (KeyValuePair<int, Criteria> kvpInner in kvpOuter.Value)
 				{
 					if (kvpInner.Value.CompareOpr == CompareOps.ANY)
@@ -263,47 +229,14 @@ namespace TestConsoleApp
 						result = Verify(items[kvpOuter.Key.DataIdx],  kvpInner.Value);
 					}
 
-//					string testval = kvpInner.Value.TestValue?.Value.ToString() ?? "null";
-//					string itemval = items[kvpOuter.Key.DataIdx].ToString();
-//
-//					Console.WriteLine("        idx| " + (i++).ToString().PadRight(6)
-//						+ " type| " + kvpInner.Value.CompareOpr.Type.ToString().PadRight(24) 
-//						+ " val| " + itemval.PadRight(10)
-//						+ " vs test val| " + testval.PadRight(20)
-//						+ " result| " + result);
-////
-//					Console.WriteLine("filter       item| " + i++);
-//					Console.WriteLine("filter        idx| " + kvpInner.Value.FilterEnum.FilterIdx);
-//					Console.WriteLine("filter       name| " + kvpInner.Value.FilterEnum.Name);
-//					Console.WriteLine("filter   opr name| " + kvpInner.Value.CompareOpr.Type.ToString());
-//					Console.WriteLine("filter test value| " + kvpInner.Value.TestValue.Value);
-
 					if (result) break;
 				}
-
-//				Console.Write(nl);
 
 				if (!result) break;
 			}
 
-//			Console.WriteLine("final result| " + result.ToString());
-//			Console.WriteLine(nl);
-
 			return result;
 		}
-
-
-
-		private static void DefineVisibility()
-		{
-			_visCrossRef[(int) VISIBILITY_HIDDEN] =
-				RevisionVisibility.Hidden;
-			_visCrossRef[(int) VISIBILITY_CLOUDANDTAG] =
-				RevisionVisibility.CloudAndTagVisible;
-			_visCrossRef[(int) VISIBILITY_TAGONLY] =
-				RevisionVisibility.TagVisible;
-		}
-
 	}
 
 	#endregion

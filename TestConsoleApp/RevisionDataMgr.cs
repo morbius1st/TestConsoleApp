@@ -45,46 +45,39 @@ namespace TestConsoleApp
 		{
 			if (_preSelected.Count == 0) return false;
 
-//			int i = 0;
-
-			foreach (KeyValuePair<string, RevDataItems2> kvp in _preSelected)
+			foreach (KeyValuePair<string, RevisionDataFields> kvp in _preSelected)
 			{
-//				Console.Write("item| " + i);
-//				Console.Write(nl);
 
 				if (RevisionSelect.Compare(kvp.Value, filters))
 				{
 					_selected.Add(kvp.Key, kvp.Value);
 				}
-
-//				if (++i == 15) break;
 			}
-
 			return _selected.Count != 0;
 		}
 
-		public static IEnumerable<KeyValuePair<string, RevDataItems2>>
+		public static IEnumerable<KeyValuePair<string, RevisionDataFields>>
 			IterateRevisionData()
 		{
-			foreach (KeyValuePair<string, RevDataItems2> kvp in _originalData)
+			foreach (KeyValuePair<string, RevisionDataFields> kvp in _originalData)
 			{
 				yield return kvp;
 			}
 		}
 
-		public static IEnumerable<KeyValuePair<string, RevDataItems2>>
+		public static IEnumerable<KeyValuePair<string, RevisionDataFields>>
 			IteratePreSelected()
 		{
-			foreach (KeyValuePair<string, RevDataItems2> kvp in _preSelected)
+			foreach (KeyValuePair<string, RevisionDataFields> kvp in _preSelected)
 			{
 				yield return kvp;
 			}
 		}
 
-		public static IEnumerable<KeyValuePair<string, RevDataItems2>>
+		public static IEnumerable<KeyValuePair<string, RevisionDataFields>>
 			IterateSelected()
 		{
-			foreach (KeyValuePair<string, RevDataItems2> kvp in _selected)
+			foreach (KeyValuePair<string, RevisionDataFields> kvp in _selected)
 			{
 				yield return kvp;
 			}

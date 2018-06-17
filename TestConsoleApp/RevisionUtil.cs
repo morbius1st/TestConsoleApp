@@ -15,29 +15,18 @@ using static TestConsoleApp.RevisionSelect;
 
 using static TestConsoleApp.RevisionVisibility;
 
-
-
 namespace TestConsoleApp
 {
+		public interface ICloneable<T> : ICloneable where T : ICloneable<T>
+	{
+		new T Clone();
+	}
+
 	public class RevisionUtil
 	{
 		public static string nl = Environment.NewLine;
 
 		// psudo class to just simulate revit
-		public class ElementId
-		{
-			public int? Value { get; set; }
-
-			public ElementId(int id)
-			{
-				Value = id;
-			}
-
-			public override string ToString()
-			{
-				return Value.ToString();
-			}
-		}
 
 		public static void Process()
 		{
@@ -185,9 +174,6 @@ namespace TestConsoleApp
 		{
 			// create a revision filter list
 			RevisionFilters rf = TestSelect6A();
-
-//			// show the filters
-//			ListFilters(rf);
 
 			// how the header
 			ListColumnHeadersInColumnOrder();
@@ -705,12 +691,12 @@ namespace TestConsoleApp
 
 		// list based on raw read data order
 		private static void ListDataInColumnOrder(
-			IEnumerable<KeyValuePair<string, RevDataItems2>> iEnumerable,
+			IEnumerable<KeyValuePair<string, RevisionDataFields>> iEnumerable,
 			bool header, int qty = 0)
 		{
 			int i = 1;
 			
-			foreach (KeyValuePair<string, RevDataItems2> kvp in iEnumerable)
+			foreach (KeyValuePair<string, RevisionDataFields> kvp in iEnumerable)
 			{
 				if (header)
 				{
@@ -727,7 +713,7 @@ namespace TestConsoleApp
 			Console.WriteLine(nl);
 		}
 
-		public static void ListDataItemInColumnOrder(int idx, RevDataItems2 items)
+		public static void ListDataItemInColumnOrder(int idx, RevisionDataFields items)
 		{
 			Console.Write($"| {idx,3:D} |");
 
@@ -805,63 +791,6 @@ namespace TestConsoleApp
 			}
 		}
 
-		#region + enums vs filters vs criteria constructors
-
-		// this only helps insure that the criteria 
-		// constructors are working - un-comment to validate
-//		private static RevisionFilters CriteriaTest()
-//		{
-//			RevisionFilters f = new RevisionFilters();
-//
-//			Criteria c;
-//			// any
-//			c = new Criteria(REV_ITEM_BASIS, ANY);
-//			f.Add(c);
-//
-//			// bool
-//			c = new Criteria(REV_SELECTED, ANY); // any really
-//			c = new Criteria(REV_SELECTED, TRUE);
-//			c = new Criteria(REV_SELECTED, NOT_EQUAL);
-//			c = new Criteria(REV_SELECTED, GREATER_THEN);
-//			c = new Criteria(REV_SELECTED, CONTAINS);
-//			f.Add(c);
-//
-//			// basic - elementid
-//			c = new Criteria(REV_TAG_ELEM_ID, ANY, new ElementId());
-//			c = new Criteria(REV_TAG_ELEM_ID, TRUE, new ElementId());
-//			c = new Criteria(REV_TAG_ELEM_ID, NOT_EQUAL, new ElementId());
-//			c = new Criteria(REV_TAG_ELEM_ID, GREATER_THEN, new ElementId());
-//			c = new Criteria(REV_TAG_ELEM_ID, CONTAINS, new ElementId());
-//			f.Add(c);
-//			
-//			// extended
-//			c = new Criteria(REV_SEQ, ANY, 1);
-//			c = new Criteria(REV_SEQ, TRUE, 1);
-//			c = new Criteria(REV_SEQ, NOT_EQUAL, 1);
-//			c = new Criteria(REV_SEQ, GREATER_THEN, 1);
-//			c = new Criteria(REV_SEQ, CONTAINS, 1);
-//			f.Add(c);
-//			
-//			// string
-//			c = new Criteria(REV_ITEM_REVID, ANY, "string 1");
-//			c = new Criteria(REV_ITEM_REVID, TRUE, "string 1");
-//			c = new Criteria(REV_ITEM_REVID, NOT_EQUAL, "string 1");
-//			c = new Criteria(REV_ITEM_REVID, GREATER_THEN, "string 1");
-//			c = new Criteria(REV_ITEM_REVID, CONTAINS, "string 1");
-//			f.Add(c);
-//
-//			// string
-//			c = new Criteria(REV_ITEM_REVID, CONTAINS, "string 2");
-//			f.Add(c);
-//
-//			ListFilters(f);
-//
-//			return f;
-//		}
-		
-
-		#endregion
-
 		// modify then list on column property order
 		private static void ModifyColumnOrder()
 		{
@@ -886,7 +815,7 @@ namespace TestConsoleApp
 		{
 			int i = 0;
 
-			foreach (KeyValuePair<string, RevDataItems2> kvp in RevisionDataMgr.IterateRevisionData())
+			foreach (KeyValuePair<string, RevisionDataFields> kvp in RevisionDataMgr.IterateRevisionData())
 			{
 				Console.WriteLine(nl);
 				Console.WriteLine($"{"data item",8} | {i++,-4:D}");
@@ -956,7 +885,6 @@ namespace TestConsoleApp
 			{
 				Console.WriteLine(String.Format(fmt2, i++, dx.Name, dx.DescItemIdx, dx.DataIdx, -1));
 			}
-			
 		}
 	}
 

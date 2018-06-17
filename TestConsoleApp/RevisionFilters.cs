@@ -5,7 +5,6 @@ using System.Configuration;
 using System.Dynamic;
 using System.Reflection;
 using static TestConsoleApp.DataItems;
-using static TestConsoleApp.RevisionSelect.ESelVisibility;
 using static TestConsoleApp.RevisionSelect;
 
 
@@ -14,22 +13,7 @@ using static TestConsoleApp.RevisionUtil;
 
 namespace TestConsoleApp
 {
-	// selection method:
-	//	this item
-	// visible or not visible
-	//	and / or
-	//	one of these items
-	// revision id (==, >, >=, <, <=, !=)#
-	// revision alt id == ## (will get master and childern
-	// block title == ""
-	// delta title == ""
-	//	and / or this item
-	// basis
-
-
 	// this class holds the list of filters
-
-
 	public class RevisionFilters : IEnumerable<KeyValuePair<FilterEnum, Filters>>
 	{
 		#region + Compare Ops
@@ -103,45 +87,9 @@ namespace TestConsoleApp
 				foreach (PropertyInfo p in typeof(CompareOps).GetProperties())
 				{
 					CompareOpRoot r = (CompareOpRoot) p.GetValue(null);
-//					r.Name = p.Name;
 					r.Type = (CompareType) Enum.Parse(typeof(CompareType), p.Name);
 				}
 			}
-//
-//			public static IEnumerable<ICompBasic> GetBasicEnumerator()
-//			{
-//				yield return EQUAL;
-//				yield return NOT_EQUAL;
-//			}
-//			public static IEnumerable<ICompExtended> GetExtendedEnumerator()
-//			{
-//				yield return EQUAL;
-//				yield return NOT_EQUAL;
-//				yield return LESS_THEN;
-//				yield return LESS_THEN_OR_EQUAL;
-//				yield return GREATER_THEN;
-//				yield return GREATER_THEN_OR_EQUAL;
-//			}
-//			public static IEnumerable<ICompStringBinary> GetString2Enumerator()
-//			{
-//				yield return EQUAL;
-//				yield return NOT_EQUAL;
-//				yield return LESS_THEN;
-//				yield return LESS_THEN_OR_EQUAL;
-//				yield return GREATER_THEN;
-//				yield return GREATER_THEN_OR_EQUAL;
-//				yield return STARTS_WITH;
-//				yield return DOES_NOT_START_WITH;
-//				yield return CONTAINS;
-//				yield return DOES_NOT_CONTAIN;
-//			}
-//
-//			public static IEnumerable<ICompStringUnary> GetString1Enumerator()
-//			{
-//				yield return IS_EMPTY;
-//				yield return IS_NOT_EMPTY;
-//			}
-
 		}
 
 		#endregion
@@ -252,8 +200,6 @@ namespace TestConsoleApp
 				TestValue = new TestValue(testValue);
 				IgnoreCase = ignoreCase;
 			}
-
-			
 		}
 
 		public class TestValue
@@ -328,7 +274,6 @@ namespace TestConsoleApp
 
 		public class CompareOpRoot : ICompRoot
 		{
-//			public string Name { get; set; }
 			public CompareType Type { get; set; }
 
 			public CompareOpRoot()
@@ -337,36 +282,12 @@ namespace TestConsoleApp
 			}
 		}
 		
-		public class CompareOpAny : CompareOpRoot, ICompAny
-		{
-
-//			public CompareOpAny(int val) : base(val) {}
-		}
-
-		public class CompareOpBool : CompareOpRoot, ICompBool
-		{
-//			public CompareOpBool(int val) : base(val) {}
-		}	
-		
-		public class CompareOpBasic : CompareOpRoot, ICompBasic
-		{
-//			public CompareOpBasic(int val) : base(val)
-		}
-
-		public class CompareOpExtended : CompareOpRoot, ICompExtended
-		{
-//			public CompareOpExtended(int val) : base(val) {}
-		}
-		
-		public class CompareOpStrUnary : CompareOpRoot, ICompStringUnary
-		{
-//			public CompareOpStrUnary(int val) : base(val) {}
-		}
-		
-		public class CompareOpStrBinary : CompareOpRoot, ICompStringBinary
-		{
-//			public CompareOpStrBinary(int val) : base(val) {}
-		}
+		public class CompareOpAny : CompareOpRoot, ICompAny {}
+		public class CompareOpBool : CompareOpRoot, ICompBool {}
+		public class CompareOpBasic : CompareOpRoot, ICompBasic {}
+		public class CompareOpExtended : CompareOpRoot, ICompExtended {}
+		public class CompareOpStrUnary : CompareOpRoot, ICompStringUnary {}
+		public class CompareOpStrBinary : CompareOpRoot, ICompStringBinary {}
 
 		#endregion	
 
