@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Reflection;
-using static TestConsoleApp.DataItems.ColumnHelpers;
+using System.Collections.Generic;
+//using static TestConsoleApp.DataItems.ColumnHelpers;
 
 using static TestConsoleApp.RevisionMetaData;
+using static TestConsoleApp.DataItems.EDataFields;
 
 namespace TestConsoleApp
 {
@@ -12,10 +14,11 @@ namespace TestConsoleApp
 		INT,
 		STRING,
 		ELEMENTID,
-		VISIBILITY
+		VISIBILITY,
+		ORDER
 	}
 
-	public enum EItemSource
+	public enum EFieldSource
 	{
 		REV_SOURCE_DERIVED,
 		REV_SOURCE_TAG,
@@ -26,11 +29,10 @@ namespace TestConsoleApp
 	{
 		public static int PropertyCount { get; private set; }
 
-		public static List<RootEnum> RootList ;
-		public static List<Desc> DescList;
-		public static List<DataEnum> DataList ;
+		public static List<RootEnum>   RootList ;
+		public static List<DescEnum>   DescList;
+		public static List<DataEnum>   DataList ;
 		public static List<FilterEnum> FilterList ;
-		public static List<MgmtEnum> MgmtList ;
 
 		public static List<DataEnum> ColumnList;
 
@@ -40,39 +42,63 @@ namespace TestConsoleApp
 			// create the data enums here - the order below defines the
 			// default column order
 			//
-			public static CompareBoolEnum	   REV_SELECTED            { get; } = new CompareBoolEnum();	// =>  0	// (derived) flag that this data item has 
-			//																								//			// been selected
-			public static CompareIntEnum       REV_SEQ                 { get; } = new CompareIntEnum();// =>  1	// (from sequence) revision sequence number
-			//																								//			// for ordering only
-			public static CompareStrEnum	   REV_ITEM_REVID          { get; } = new CompareStrEnum();		// =>  2	// (from revision) revision id number or 		   
-			//																								//			// alphanumeric									
-			public static CompareStrEnum	   REV_KEY_ALTID           { get; } = new CompareStrEnum();		// =>  3	// (from issued by) (part of item key) 
-			//																								//			// a cross-reference to the REV_REVID associated with this item
-			public static DataEnum		       REV_KEY_TYPE_CODE       { get; } = new DataEnum();			// =>  4	// (derived) (part of item key) code based  
-			//																								//			// on the document type
-			public static DataEnum		       REV_KEY_DISCIPLINE_CODE { get; } = new DataEnum();	        // =>  5	// (derived) (part of item key) code based
-			//																								//			// on the discipline														   
-			public static CompareStrEnum	   REV_KEY_DELTA_TITLE     { get; } = new CompareStrEnum();		// =>  6	// (from issued to) (part of item key) 		   
-			//																								//			// simple name for this issuance (goes below the delta)						   
-			public static CompareStrEnum	   REV_KEY_SHEETNUM        { get; } = new CompareStrEnum();		// =>  7	// (calculated) (part of item key) sheet 		   
-			//																								//			// number of this tag														   
-			public static CompareVisEnum       REV_ITEM_VISIBLE        { get; } = new CompareVisEnum();	// =>  8	// (from visibility)(calculated)) item 
-			//																								//			// visibility																   
-			public static CompareStrEnum	   REV_ITEM_BLOCK_TITLE    { get; } = new CompareStrEnum();		// =>  9	// (from revision description) title for 		   
-			//																								//			// this issuance															   
-			public static DataEnum		       REV_ITEM_DATE           { get; } = new DataEnum();	        // => 10	// (from revision date) the date assigned 
-			//																								//			// to the revision															   
-			public static CompareStrEnum	   REV_ITEM_BASIS          { get; } = new CompareStrEnum();		// => 11	// (from comment) the reason for the 			   
-			//																								//			// revision																	   
-			public static CompareStrEnum	   REV_ITEM_DESC           { get; } = new CompareStrEnum();     // => 12	// (from mark) the description of the 
-			//																								//			// revision																	   
-			public static CompareEIdEnum	   REV_TAG_ELEM_ID         { get; } = new CompareEIdEnum();	// => 13	// the element id of the tag for this 
-			//																								//			// data item															   
-			public static CompareEIdEnum	   REV_CLOUD_ELEM_ID       { get; } = new CompareEIdEnum();	// => 14	// the element id of of the cloud for 
-			//																								//			// this data item															   
-			public static MgmtEnum             REV_MGMT_COLUMN         { get; } = new MgmtEnum();			// => n/a	// (derived) the title for the column field the	   
-			//																								//			// column is only stored with the data description							   
-			public static MgmtEnum             REV_KEY                 { get; } = new MgmtEnum();	        // => n/a	// (derived) the list key for the items
+			public static DataEnum REV_MGMT_RECORD_ID { get; } =                // => n/a	// (derived) the sequence number the data was 	   
+				new DataEnum();													//	        // read from the revit file
+			//																
+			public static CompareBoolEnum REV_SELECTED { get; } =				// =>  0	// (derived) flag that this data item has 
+				new CompareBoolEnum();											//			// been selected
+			//																
+			public static CompareIntEnum REV_SEQ { get; } =						// =>  1	// (from sequence) revision sequence number
+				new CompareIntEnum();											//			// for ordering only
+			//																
+			public static CompareStrEnum REV_ITEM_REVID { get; } =				// =>  2	// (from revision) revision id number or 		   
+				new CompareStrEnum();											//			// alphanumeric									
+			//																
+			public static CompareOrderEnum REV_KEY_ORDER_CODE { get; } =		// =>  3	// (derived) combnation of AltId, 
+				new CompareOrderEnum();											//			// Type_code, Discipline code (a structure)
+			//																
+			public static CompareStrEnum REV_KEY_DELTA_TITLE { get; } =			// =>  4	// (from issued to) (part of item key) 		   
+				new CompareStrEnum();											//			// simple name for this issuance (goes below the delta)			
+			//																			   
+			public static CompareStrEnum REV_KEY_SHEETNUM { get; } =			// =>  5	// (calculated) (part of item key) sheet 		   
+				new CompareStrEnum();											//			// number of this tag											
+			//																			   
+			public static CompareVisEnum REV_ITEM_VISIBLE { get; } =			// =>  6	// (from visibility)(calculated)) item 
+				new CompareVisEnum();											//			// visibility													
+			//																			   
+			public static CompareStrEnum REV_ITEM_BLOCK_TITLE { get; } =		// =>  7	// (from revision description) title for 		   
+				new CompareStrEnum();											//			// this issuance												
+			//																			   
+			public static DataEnum REV_ITEM_DATE { get; } =						// =>  8	// (from revision date) the date assigned 
+				new DataEnum();													//			// to the revision												
+			//																			   
+			public static CompareStrEnum REV_ITEM_BASIS { get; } =				// =>  9	// (from comment) the reason for the 			   
+				new CompareStrEnum();											//			// revision														
+			//																			   
+			public static CompareStrEnum REV_ITEM_DESC { get; } =				// => 10	// (from mark) the description of the 
+				new CompareStrEnum();											//			// revision														
+			//																			   
+			public static CompareEIdEnum REV_TAG_ELEM_ID { get; } =				// => 11	// the element id of the tag for this 
+				new CompareEIdEnum();											//			// data item													
+			//																		   
+			public static CompareEIdEnum REV_CLOUD_ELEM_ID { get; } =			// => 12	// the element id of of the cloud for 
+				new CompareEIdEnum();											//			// this data item
+			//																
+			public static MgmtEnum REV_MGMT_COLUMN { get; } =					// => n/a	// (derived) the title for the column field the	   
+				new MgmtEnum();													//			// column is only stored with the data description				
+			//																			   
+			public static MgmtEnum REV_KEY { get; } =							// => n/a	// (derived) the list key for the items
+				new MgmtEnum();													//
+			//																
+			public static SubDataEnum REV_SUB_ALTID { get; } =					// =>sub(0) // (from issued by) (part of REV_KEY_ORDER_CODE) 
+				new SubDataEnum();												//			// a cross-reference to the REV_REVID associated with this item
+			//																
+			public static SubDataEnum REV_SUB_TYPE_CODE { get; } =				// =>sub(1) // (derived) (part of REV_KEY_ORDER_CODE) code based  
+				new SubDataEnum();												//			// on the document type
+			//
+			public static SubDataEnum REV_SUB_DISCIPLINE_CODE { get; } =		// =>sub(2)	// (derived) (part of REV_KEY_ORDER_CODE) code based
+				new SubDataEnum();											    //			// on the discipline
+			//																										   
 		}
 
 		static DataItems()
@@ -81,14 +107,13 @@ namespace TestConsoleApp
 
 			PropertyCount = propertyInfos.Length;
 
-			RootList = new List<RootEnum>(PropertyCount);
-			DescList = new List<Desc>(PropertyCount);
-			DataList = new List<DataEnum>(PropertyCount);
+			RootList   = new List<RootEnum>(PropertyCount);
+			DescList   = new List<DescEnum>(PropertyCount);
+			DataList   = new List<DataEnum>(PropertyCount);
 			FilterList = new List<FilterEnum>(PropertyCount);
-			MgmtList = new List<MgmtEnum>(PropertyCount);
 
 			ResetColumnList();
-			
+
 			// use reflection to access all of the data items
 			// update the data item's name with its variable name
 			// categorize the properties into arrays for easy access
@@ -100,12 +125,7 @@ namespace TestConsoleApp
 
 				RootList.Add(r);
 
-				if (r is MgmtEnum mgmt)
-				{
-					MgmtList.Add(mgmt);
-				}
-
-				if (r is Desc d)
+				if (r is DescEnum d)
 				{
 					DescList.Insert(d.DescItemIdx, d);
 				}
@@ -127,24 +147,88 @@ namespace TestConsoleApp
 				}
 			}
 
+			REV_KEY_ORDER_CODE.SubDataList = new []
+			{
+				REV_SUB_ALTID,
+				REV_SUB_TYPE_CODE,
+				REV_SUB_DISCIPLINE_CODE
+			};
+
+			REV_SUB_ALTID.SubDataIdx = 0;
+			REV_SUB_TYPE_CODE.SubDataIdx = 1;
+			REV_SUB_DISCIPLINE_CODE.SubDataIdx = 2;
+
+
 			// update the column list and set the column
 			// for each field based on the above order
 			ResetColumnOrder();
 		}
 
-		#region + Classes
+#region + Classes
 
-		#region + Primary
+#region + Primary
+
+		/* RootEnum
+		   |  +------> string:				Name
+		   |  +------> EDataType:			Type
+		   |  +------> string[]:			Title
+		   |
+		   +>DescEnum
+		   | |  +----> int:					DescItemIdx	
+		   | |  +----> int:					Column
+		   | |  +----> DataDisplay:			Display
+		   | |  +----> (RootEnum):			(Name)
+		   | |  +----> (RootEnum):			(Type)
+		   | |  +----> (RootEnum):			(Title)
+		   | |
+		   | +>SubDataEnum
+		   |   |  +-> int:					SubDataIdx
+		   |   |  +-> DataEnum[]:			SubDataList
+		   |   |
+		   |   +>DataEnum
+		   |     |  +-> int:				DataIdx
+		   |     |  +-> EFieldSource:		Source
+		   |     |  +-> (DescEnum):			(DescItemIdx)
+		   |     |  +-> (DescEnum):			(Column)
+		   |     |  +-> (DescEnum):			(Display)
+		   |     |  +-> (RootEnum):			(Name)
+		   |     |  +-> (RootEnum):			(Type)
+		   |     |  +-> (RootEnum):			(Title)
+		   |     |  +-> (SubDataEnum):		(SubDataIdx)
+		   |     |  +-> (SubDataEnum):		(SubDataList)
+		   |     |
+		   |     +> FilterEnum
+		   |          +-> int:				FilterIdx
+		   |          +-> (RootEnum):		(Name)
+		   |          +-> (RootEnum):		(Type)
+		   |          +-> (RootEnum):		(Title)
+		   |          +-> (DescEnum):		(DescItemIdx)
+		   |          +-> (DescEnum):		(Column)
+		   |          +-> (DescEnum):		(Display)
+		   |          +-> (SubDataEnum):	(SubDataIdx)
+		   |          +-> (SubDataEnum):	(SubDataList)
+		   |          +-> (DataEnum):		(DataIdx)
+		   |          +-> (DataEnum):		(Source)
+		   |
+		   +->MgmtEnum
+		         +-> [none]
+		         +-> (RootEnum):		(Name)
+		         +-> (RootEnum):		(Type)
+		         +-> (RootEnum):		(Title)
+
+ 		*/
+
 
 		// root class
 		// include properties that apply
 		// to every sub-class
 		public class RootEnum
 		{
-			public string		Name { get; set; }		// the variable's name - do I need this?
-			public EDataType	Type { get; set; }		// the data type
-			public string[]		Title { get; set; } 
-				= new string[2];					// the title for this data item (column header)
+			public string    Name { get; set; } // the variable's name - do I need this?
+			public EDataType Type { get; set; } // the data type
+
+			public string[] Title { get; set; }
+				= new string[2]; // the title for this data item (column header)
 
 			public RootEnum()
 			{
@@ -155,34 +239,51 @@ namespace TestConsoleApp
 		// description class
 		// only items that need a description and
 		// may be displayed
-		public class Desc : RootEnum
+		public class DescEnum : RootEnum
 		{
 			private static int a = 0;
 
-			public Desc()
+			public DescEnum()
 			{
 				DescItemIdx = a++;
 			}
 
-			public Desc(int d)
+			public DescEnum(int d)
 			{
 				DescItemIdx = d;
 			}
 
 			public int DescItemIdx { get; }
-			
-			public DataDisplay Display { get; set; } = new DataDisplay();  // data display
+
+			public int Column { get; set; } // the column to present this data item
+
+			public DataDisplay Display { get; set; } = new DataDisplay(); // data display
 			// information - font, format string, etc.
 		}
 
-		// management items
-		// only need the name property
-		public class MgmtEnum : RootEnum { }
+		// SubField class
+		// defines sub data items
+		// that is, data items that are
+		// a class or struct
+		public class SubDataEnum : DescEnum
+		{
+			public SubDataEnum() { }
+
+			public SubDataEnum(int d) : base(d)
+			{
+				SubDataIdx  = -1;
+				SubDataList = null;
+			}
+
+			public SubDataEnum[] SubDataList { get; set; }
+			public int      SubDataIdx  { get; set; }
+		}
+
 
 		// item class
 		// these are the data items read from the
 		// revision clouds & tags
-		public class DataEnum : Desc
+		public class DataEnum : SubDataEnum
 		{
 			private static int b = 0;
 
@@ -198,8 +299,12 @@ namespace TestConsoleApp
 
 			public int DataIdx { get; }
 
-			public int Column { get; set; }			// the column to present this data item
-			public EItemSource Source { get; set; }	// where the data came from (to allow changes)
+			public EFieldSource Source { get; set; } // where the data came from (to allow changes)
+		}
+
+		// management items
+		public class MgmtEnum : RootEnum
+		{
 		}
 
 		// filter class
@@ -214,109 +319,113 @@ namespace TestConsoleApp
 
 			public FilterEnum(EDataType type)
 			{
-				Type = type;
+				Type      = type;
 				FilterIdx = c++;
 			}
 
 			public int FilterIdx { get; }
 		}
-	
+
 		// compare classes
 		// these are sub-filter items that can
 		// be selected and can be compared
 		// using a specific type of comparison
 		public class CompareStrEnum : FilterEnum
-			{ public CompareStrEnum() : base(EDataType.STRING) { } }
+		{ public CompareStrEnum() : base(EDataType.STRING) {} }
 
 		public class CompareVisEnum : FilterEnum
-			{ public CompareVisEnum() : base(EDataType.VISIBILITY) { } }
+		{ public CompareVisEnum() : base(EDataType.VISIBILITY) {} }
 
 		public class CompareEIdEnum : FilterEnum
-			{ public CompareEIdEnum() : base(EDataType.ELEMENTID) { } }
+		{ public CompareEIdEnum() : base(EDataType.ELEMENTID) {} }
 
 		public class CompareBoolEnum : FilterEnum
-			{ public CompareBoolEnum() : base(EDataType.BOOL) { } }
+		{public CompareBoolEnum() : base(EDataType.BOOL) {} }
 
 		public class CompareIntEnum : FilterEnum
-		{ public CompareIntEnum() : base(EDataType.INT) { } }
+		{public CompareIntEnum() : base(EDataType.INT) {} }
 
-		#endregion
+		public class CompareOrderEnum : FilterEnum
+		{public CompareOrderEnum() : base(EDataType.ORDER) {} }
 
-		#region + Utility
+#endregion
+
+#region + Utility
 
 		public static DataEnum Clone(this DataEnum item)
 		{
-			DataEnum copy = new DataEnum(item.DescItemIdx,  item.DataIdx);
-			copy.Column = item.Column;
-			copy.Source = item.Source;
-			copy.Name = item.Name;
-			copy.Display.ColumnWidth = item.Display.ColumnWidth;
-			copy.Display.Font = item.Display.Font;
+			DataEnum copy = new DataEnum(item.DescItemIdx, item.DataIdx);
+
+			copy.Column               = item.Column;
+			copy.Source               = item.Source;
+			copy.Name                 = item.Name;
+			copy.Display.ColumnWidth  = item.Display.ColumnWidth;
+			copy.Display.Font         = item.Display.Font;
 			copy.Display.FormatString = item.Display.FormatString;
-			copy.Title = item.Title;
-			copy.Type = item.Type;
+			copy.Title                = item.Title;
+			copy.Type                 = item.Type;
 
 			return copy;
 		}
 
-		public static class ColumnHelpers
+#endregion
+
+#region + Column Helpers
+
+		public static void ResetColumnList()
 		{
-			public static void ResetColumnList()
+			ColumnList = new List<DataEnum>(PropertyCount);
+		}
+
+		public static IEnumerable<DataEnum> ItemsInColumnOrder()
+		{
+			foreach (DataEnum item in ColumnList)
 			{
-				ColumnList = new List<DataEnum>(PropertyCount);
-			}
-
-			public static IEnumerable<DataEnum> ItemsInColumnOrder()
-			{
-				foreach (DataEnum item in ColumnList)
-				{
-					yield return item;
-				}
-			}
-
-			public static void SetColumns(int col)
-			{
-				ResetColumnList();
-
-				foreach (DataEnum item in DataList)
-				{
-					item.Column = col;
-				}
-			}
-
-			public static void ResetColumnOrder()
-			{
-				ResetColumnList();
-
-				foreach (DataEnum item in DataList)
-				{
-					item.Column = item.DataIdx;
-					ColumnList.Insert(item.DataIdx, item);
-				}
-			}
-
-			public static void SetColumnOrder()
-			{
-				ResetColumnList();
-
-				foreach (DataEnum item in DataList)
-				{
-					if (item.Column < 0) continue;
-					ColumnList.Add(item);
-				}
-
-				ColumnList.Sort(CompareColumns);
-			}
-
-			private static int CompareColumns(DataEnum x, DataEnum y)
-			{
-				return x.Column.CompareTo(y.Column);
+				yield return item;
 			}
 		}
 
-		#endregion
+		public static void SetColumns(int col)
+		{
+			ResetColumnList();
 
-		#endregion
+			foreach (DataEnum item in DataList)
+			{
+				item.Column = col;
+			}
+		}
 
+		public static void ResetColumnOrder()
+		{
+			ResetColumnList();
+
+			foreach (DataEnum item in DataList)
+			{
+				item.Column = item.DataIdx;
+				ColumnList.Insert(item.DataIdx, item);
+			}
+		}
+
+		public static void SetColumnOrder()
+		{
+			ResetColumnList();
+
+			foreach (DataEnum item in DataList)
+			{
+				if (item.Column < 0) continue;
+				ColumnList.Add(item);
+			}
+
+			ColumnList.Sort(CompareColumns);
+		}
+
+		private static int CompareColumns(DataEnum x, DataEnum y)
+		{
+			return x.Column.CompareTo(y.Column);
+		}
+
+#endregion
+
+#endregion
 	}
 }

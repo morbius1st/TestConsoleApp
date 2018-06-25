@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Dynamic;
 using System.Reflection;
+
 using static TestConsoleApp.DataItems;
-using static TestConsoleApp.RevisionSelect;
-
-
 using static TestConsoleApp.RevisionFilters;
-using static TestConsoleApp.RevisionUtil;
+
 
 namespace TestConsoleApp
 {
@@ -37,8 +33,7 @@ namespace TestConsoleApp
 			DOES_NOT_CONTAIN ,
 		}
 
-
-		public static class CompareOps 
+		public static class ECompareOps 
 		{
 			public static CompareOpAny       ANY                    { get; } = new CompareOpAny      ();
 
@@ -63,7 +58,7 @@ namespace TestConsoleApp
 			public static CompareOpStrBinary DOES_NOT_CONTAIN       { get; } = new CompareOpStrBinary();
 
 
-			static CompareOps()
+			static ECompareOps()
 			{
 // just for testing the hierearchy
 //				//                       any     bool   basic     extended      string-un   string-bi
@@ -84,7 +79,7 @@ namespace TestConsoleApp
 //				// all                    Y        Y      Y           Y            Y	        Y
 //				ICompRoot[] r1 =        {ANY,    TRUE, NOT_EQUAL, GREATER_THEN, IS_EMPTY,   CONTAINS};
 
-				foreach (PropertyInfo p in typeof(CompareOps).GetProperties())
+				foreach (PropertyInfo p in typeof(ECompareOps).GetProperties())
 				{
 					CompareOpRoot r = (CompareOpRoot) p.GetValue(null);
 					r.Type = (CompareType) Enum.Parse(typeof(CompareType), p.Name);
@@ -94,17 +89,15 @@ namespace TestConsoleApp
 
 		#endregion
 
-		private FilterLists _filterList = new FilterLists();
+		private FilterLists _filterLists = new FilterLists();
 	
 		#region + Selection Criteria Class Elements
 
-		public RevisionFilters() { }
-
-		public int Count => _filterList.Count();
+		public int Count => _filterLists.Count();
 
 		public void Add(Criteria c)
 		{
-			_filterList.Add(c.FilterEnum, c);
+			_filterLists.Add(c.FilterEnum, c);
 		}
 
 		#endregion
@@ -113,7 +106,7 @@ namespace TestConsoleApp
 
 		public IEnumerator<KeyValuePair<FilterEnum, Filters>> GetEnumerator()
 		{
-			return _filterList.GetEnumerator();
+			return _filterLists.GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
@@ -123,11 +116,11 @@ namespace TestConsoleApp
 
 		#region + Criteria
 
-		public struct Criteria
+		public class Criteria
 		{
 			public FilterEnum FilterEnum { get;  }
 			public CompareOpRoot CompareOpr { get;  }
-			public TestValue TestValue { get;  }
+			public ItemValue TestValue { get;  }
 			public bool IgnoreCase { get;  }
 
 			// Any
@@ -146,7 +139,7 @@ namespace TestConsoleApp
 			{
 				FilterEnum = filterEnum;
 				CompareOpr = (CompareOpRoot) compareOpr;
-				TestValue = new TestValue(testValue);
+				TestValue = new ItemValue(testValue);
 				IgnoreCase = true;
 			}
 
@@ -156,7 +149,7 @@ namespace TestConsoleApp
 			{
 				FilterEnum = filterEnum;
 				CompareOpr =  (CompareOpRoot) compareOpr;
-				TestValue = new TestValue(testValue);
+				TestValue = new ItemValue(testValue);
 				IgnoreCase = true;
 			}
 
@@ -176,7 +169,7 @@ namespace TestConsoleApp
 			{
 				FilterEnum = filterEnum;
 				CompareOpr = (CompareOpRoot) compareOpr;
-				TestValue = new TestValue(testValue);
+				TestValue = new ItemValue(testValue);
 				IgnoreCase = true;
 			}
 
@@ -192,58 +185,32 @@ namespace TestConsoleApp
 
 			public Criteria(CompareStrEnum filterEnum,
 				ICompStringBinary compareOpr,
-				string testValue,
-				bool ignoreCase = true)
+				string testValue, bool ignoreCase = true)
 			{
 				FilterEnum = filterEnum;
 				CompareOpr = (CompareOpRoot) compareOpr;
-				TestValue = new TestValue(testValue);
+				TestValue = new ItemValue(testValue);
 				IgnoreCase = ignoreCase;
 			}
-		}
 
-		public class TestValue
-		{
-			public dynamic Value { get; private set; }
-
-			public bool? AsBool
+			// RevOrderCode
+				public Criteria(CompareOrderEnum filterEnum,
+				ICompStringUnary compareOpr)
 			{
-				get => Value;
-				set => Value = value;
+				FilterEnum = filterEnum;
+				CompareOpr = (CompareOpRoot) compareOpr;
+				TestValue = null;
+				IgnoreCase = true;
 			}
 
-			public int AsInt
+			public Criteria(CompareOrderEnum filterEnum,
+				ICompStringBinary compareOpr,
+				string testValue, bool ignoreCase = true)
 			{
-				get => Value;
-				set => Value = value;
-			}
-
-			public ElementId AsElementId
-			{
-				get => Value;
-				set => Value = value;
-			}
-
-			public RevisionVisibility AsVisibility
-			{
-				get => Value;
-				set => Value = value;
-			}
-
-			public string AsString
-			{
-				get => Value;
-				set => Value = value;
-			}
-
-			public string Type()
-			{
-				return Value.GetType().ToString();
-			}
-
-			public TestValue(dynamic x)
-			{
-				Value = x;
+				FilterEnum = filterEnum;
+				CompareOpr = (CompareOpRoot) compareOpr;
+				TestValue = new ItemValue(testValue);
+				IgnoreCase = ignoreCase;
 			}
 		}
 
@@ -257,20 +224,13 @@ namespace TestConsoleApp
 			CompareType Type { get; }
 		}
 
-		public interface ICompAny	//  : ICompStringUnary, ICompExtended, ICompBasic, ICompBool
-		{}
-		public interface ICompBasic  : ICompExtended, ICompString
-		{}
-		public interface ICompBool 
-		{}
-		public interface ICompExtended : ICompStringBinary, ICompString
-		{}
-		public interface ICompString
-		{}
-		public interface ICompStringUnary : ICompString
-		{}
-		public interface ICompStringBinary : ICompString
-		{}
+		public interface ICompAny {}
+		public interface ICompBasic  : ICompExtended {}
+		public interface ICompBool {}
+		public interface ICompExtended : ICompStringBinary {}
+		public interface ICompString {}
+		public interface ICompStringUnary : ICompString {}
+		public interface ICompStringBinary : ICompString {}
 
 		public class CompareOpRoot : ICompRoot
 		{
@@ -391,5 +351,4 @@ namespace TestConsoleApp
 
 		#endregion
 	}
-
 }

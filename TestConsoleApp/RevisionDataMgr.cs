@@ -11,7 +11,7 @@ namespace TestConsoleApp
 		// this is a kvp of <string, revdataitems2>
 		// the key is a sort key
 		// revdataitems2 is the dynamic array of revision data
-		private static RevisionData _originalData = new RevisionData();
+		private static RevisionData _masterRevData = new RevisionData();
 
 		// this is the selected revision data
 		private static RevisionData _preSelected;
@@ -21,14 +21,14 @@ namespace TestConsoleApp
 
 		public static void GetRevisions()
 		{
-			_originalData = RevisionSampleData.Init();
+			_masterRevData = RevitRevisions.Read();
 
 			ResetSelected();
 		}
 
 		public static void ResetSelected()
 		{
-			_preSelected = _originalData.Clone();
+			_preSelected = _masterRevData.Clone();
 			_selected = new RevisionData();
 		}
 
@@ -47,8 +47,7 @@ namespace TestConsoleApp
 
 			foreach (KeyValuePair<string, RevisionDataFields> kvp in _preSelected)
 			{
-
-				if (RevisionSelect.Compare(kvp.Value, filters))
+				if (RevisionSelect.Evaluate(kvp.Value, filters))
 				{
 					_selected.Add(kvp.Key, kvp.Value);
 				}
@@ -59,28 +58,19 @@ namespace TestConsoleApp
 		public static IEnumerable<KeyValuePair<string, RevisionDataFields>>
 			IterateRevisionData()
 		{
-			foreach (KeyValuePair<string, RevisionDataFields> kvp in _originalData)
-			{
-				yield return kvp;
-			}
+			return _masterRevData.GetEnumerable();
 		}
 
 		public static IEnumerable<KeyValuePair<string, RevisionDataFields>>
 			IteratePreSelected()
 		{
-			foreach (KeyValuePair<string, RevisionDataFields> kvp in _preSelected)
-			{
-				yield return kvp;
-			}
+			return _preSelected.GetEnumerable();
 		}
 
 		public static IEnumerable<KeyValuePair<string, RevisionDataFields>>
 			IterateSelected()
 		{
-			foreach (KeyValuePair<string, RevisionDataFields> kvp in _selected)
-			{
-				yield return kvp;
-			}
+			return _selected.GetEnumerable();
 		}
 
 	}

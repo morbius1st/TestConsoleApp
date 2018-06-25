@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using static TestConsoleApp.RevisionUtil;
 using static TestConsoleApp.RevisionFilters;
-using static TestConsoleApp.RevisionFilters.CompareOps;
+using static TestConsoleApp.RevisionFilters.ECompareOps;
 
 
 
@@ -14,6 +14,13 @@ namespace TestConsoleApp
 	public static class RevisionSelect
 	{
 		#region + Comparisons
+
+		public static bool Verify(RevOrderCode a, Criteria c)
+		{
+			string ax = a?.ToString() ?? "";
+
+			return Verify(ax, c);
+		}
 
 		public static bool Verify(bool a, Criteria c)
 		{
@@ -190,7 +197,7 @@ namespace TestConsoleApp
 		}
 
 		// compare one row versus the filters
-		public static bool Compare(RevisionDataFields items, RevisionFilters filters)
+		public static bool Evaluate(RevisionDataFields items, RevisionFilters filters)
 		{
 			// scan through the list of filter tests to determine if
 			// the provided information passes 
@@ -219,7 +226,7 @@ namespace TestConsoleApp
 			{
 				foreach (KeyValuePair<int, Criteria> kvpInner in kvpOuter.Value)
 				{
-					if (kvpInner.Value.CompareOpr == CompareOps.ANY)
+					if (kvpInner.Value.CompareOpr == ECompareOps.ANY)
 					{
 						result = true;
 					}

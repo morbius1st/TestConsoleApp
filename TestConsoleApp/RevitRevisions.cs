@@ -1,85 +1,23 @@
 ﻿using System;
 
+using static TestConsoleApp.DataItems.EDataFields;
+
 using static TestConsoleApp.RevisionUtil;
 
 namespace TestConsoleApp
 {
-	class RevisionSampleData
+	class RevitRevisions
 	{
 		#region + Sample Revision Data
 
-		// has two functions 
-		// translate the data read to the correct format
-		// basically nothing for most
-		// put the data in the correct order
-		private static RevisionDataFields MakeRevDataItem(dynamic[] items)
+		private static int count = 0;
+
+		public static RevisionData Read()
 		{
-			RevisionDataFields di = new RevisionDataFields();
-
-			int len = items.Length;
-			int last = len - 1;
-			int nextToLast = len - 2;
-
-			for (int i = 0; i < items.Length; i++)
-			{
-				int j = xlate[i];
-
-				switch (i)
-				{
-				case 0:		// selected
-					{
-						di[j] = bool.Parse(items[i]);
-						break;
-					}
-				case 1:		// sequence
-				case 13:	// tag elem id
-				case 14:	// cloud elem id
-					{
-						di[j] = Int32.Parse(items[i]);
-						break;
-					}
-				case 7:		// visibility
-					{
-						di[j] = Enum.Parse(typeof(RevisionVisibility), items[i]);
-						break;
-					}
-				case 10:
-					{
-						di[j] = DateTime.Parse(items[i]);
-						break;
-					}
-				default:	// all else - string
-					{
-						di[j] = items[i];
-						break;
-					}
-				}
-			}
-
-			return di;
+			return Scan();
 		}
 
-		private static int[] xlate =
-		{
-			0, // 0
-			1, // 1
-			3, // 2
-			4, // 3
-			5, // 4
-			6, // 5
-			7, // 6
-			8, // 7
-			2, // 8
-			9, // 9
-			10, //10
-			11, //11
-			12, //12
-			13, //13
-			14, //14
-
-		};
-
-		public static RevisionData Init()
+		public static RevisionData Scan()
 		{
 			RevisionData data = new RevisionData();
 
@@ -90,19 +28,19 @@ namespace TestConsoleApp
 				// order and translation order
 				"False",		// 0 =>  0 // selected
 				"1",			// 1 =>  1 // seq
-				"1",			// 2 =>  3 // alt id
-				".00",			// 3 =>  4 // type code
-				".00.00",		// 4 =>  5 // disc code
-				"BULLETIN 001",	// 5 =>  6 // delta title
-				"CS000",		// 6 =>  7 // sht num
-				"Hidden",		// 7 =>  8 // visibility
+				"1",			// 2 =>  3a // alt id
+				".00",			// 3 =>  3b // type code
+				".00.00",		// 4 =>  3c // disc code
+				"BULLETIN 001",	// 5 =>  4 // delta title
+				"CS000",		// 6 =>  5 // sht num
+				"Hidden",		// 7 =>  6 // visibility
 				"1",			// 8 =>  2 // rev id
-				"BULLETIN 001",	// 9 =>  9 // block title
-				"1/1/2018",		//10 => 10 // date
-				"pcc",			//11 => 11 // basis
-				"rev desc 1-cs000-000-1", //12 => 12 // desc
-				"-1",			//13 => 13 // tag elem id
-				"209594"		//14 => 14 // cloud elem id
+				"BULLETIN 001",	// 9 =>  7 // block title
+				"1/1/2018",		//10 =>  8 // date
+				"pcc",			//11 =>  9 // basis
+				"rev desc 1-cs000-000-1", //12 => 10 // desc
+				"-1",			//13 => 11 // tag elem id
+				"209594"		//14 => 12 // cloud elem id
 			};
 
 			data.Add("> >1.00.00.00<>CS000 <>BULLETIN 001 <>0002<<",
@@ -538,6 +476,95 @@ namespace TestConsoleApp
 
 
 			return data;
+		}
+
+		// translate the date read to the
+		// correct data index
+		// this the index to put the data into
+		// that is, data item read first (the 0 slot)
+		// gets placed into the "REV_SELECTED.DataIdx"
+		// position in the array
+		private static int[] xlate =
+		{
+			REV_SELECTED.DataIdx,					//  0
+			REV_SEQ.DescItemIdx,					//  1
+			REV_KEY_ORDER_CODE.DescItemIdx,			//  2 - ignore-+
+			REV_SUB_TYPE_CODE.DescItemIdx,			//  3 - ignore +--> put into a RevOrderCode
+			REV_SUB_DISCIPLINE_CODE.DescItemIdx,	//  4 - ignore-+
+			REV_KEY_DELTA_TITLE.DescItemIdx,		//  5
+			REV_KEY_SHEETNUM.DescItemIdx,			//  6
+			REV_ITEM_VISIBLE.DescItemIdx,			//  7
+			REV_ITEM_REVID.DescItemIdx,				//  8
+			REV_ITEM_BLOCK_TITLE.DescItemIdx,		//  9
+			REV_ITEM_DATE.DescItemIdx,				// 10
+			REV_ITEM_BASIS.DescItemIdx,				// 11
+			REV_ITEM_DESC.DescItemIdx,				// 12
+			REV_TAG_ELEM_ID.DescItemIdx,			// 13
+			REV_CLOUD_ELEM_ID.DescItemIdx,			// 14
+		};
+
+		// has two purposes: 
+		// translate the data read to the correct format
+		// basically nothing for most
+		// put the data in the correct order
+		private static RevisionDataFields MakeRevDataItem(dynamic[] items)
+		{
+			RevisionDataFields di = new RevisionDataFields();
+
+			di.Order = count++;
+
+			int len = items.Length;
+			int last = len - 1;
+			int nextToLast = len - 2;
+
+			for (int i = 0; i < items.Length; i++)
+			{
+				int j = xlate[i];
+
+				switch (i)
+				{
+				case 0:		// selected
+					{
+						di[j] = bool.Parse(items[i]);
+						break;
+					}
+				case 2:
+					{
+						RevOrderCode rc = new RevOrderCode();
+						rc.AltId = items[i++];
+						rc.TypeCode = items[i++];
+						rc.DisciplineCode = items[i];
+
+						di[j] = rc;
+
+						break;
+					}
+				case 1:		// sequence
+				case 13:	// tag elem id
+				case 14:	// cloud elem id
+					{
+						di[j] = Int32.Parse(items[i]);
+						break;
+					}
+				case 7:		// visibility
+					{
+						di[j] = Enum.Parse(typeof(RevisionVisibility), items[i]);
+						break;
+					}
+				case 10:
+					{
+						di[j] = DateTime.Parse(items[i]);
+						break;
+					}
+				default:	// all else - string
+					{
+						di[j] = items[i];
+						break;
+					}
+				}
+			}
+
+			return di;
 		}
 
 		#endregion

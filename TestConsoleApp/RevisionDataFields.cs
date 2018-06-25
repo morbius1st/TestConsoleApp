@@ -1,11 +1,73 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using static TestConsoleApp.DataItems;
 using static TestConsoleApp.DataItems.EDataFields;
-using static TestConsoleApp.RevisionUtil;
+
 
 namespace TestConsoleApp
 {
+	public interface SubData
+	{
+		string this[int idx] { get; set; }
+	}
+
+	public class RevOrderCode : IEquatable<RevOrderCode>, 
+		IComparable<RevOrderCode>, ICloneable<RevOrderCode>, SubData
+	{
+		private string[] _revOrderCode = new string[3];
+
+		public string AltId
+		{
+			get => _revOrderCode[REV_SUB_ALTID.SubDataIdx];
+			set => _revOrderCode[REV_SUB_ALTID.SubDataIdx] = value;
+		}
+		public string TypeCode
+		{
+			get => _revOrderCode[REV_SUB_TYPE_CODE.SubDataIdx];
+			set => _revOrderCode[REV_SUB_TYPE_CODE.SubDataIdx] = value;
+		}
+		public string DisciplineCode
+		{
+			get => _revOrderCode[REV_SUB_DISCIPLINE_CODE.SubDataIdx];
+			set => _revOrderCode[REV_SUB_DISCIPLINE_CODE.SubDataIdx] = value;
+		}
+
+		public bool Equals(RevOrderCode other) => 
+			ToString().Equals(other.ToString());
+
+		public int CompareTo(RevOrderCode other) =>
+			String.Compare(this.ToString(), other.ToString(), 
+				StringComparison.Ordinal);
+
+		public string this[int idx]
+		{
+			get => _revOrderCode[idx];
+			set => _revOrderCode[idx] = value;
+		}
+
+		public RevOrderCode Clone()
+		{
+			RevOrderCode copy = new RevOrderCode();
+
+			for (var i = 0; i < _revOrderCode.Length; i++)
+			{
+				copy[i] = _revOrderCode[i];
+			}
+
+			return copy;
+		}
+
+		object ICloneable.Clone()
+		{
+			return Clone();
+		}
+
+		public override string ToString()
+		{
+			return AltId + TypeCode + DisciplineCode;
+		}
+	}
 
 	public class RevisionDataFields : ICloneable<RevisionDataFields>
 	{
@@ -32,7 +94,14 @@ namespace TestConsoleApp
 
 			for (int i = 0; i < _revDataFields.Length; i++)
 			{
-				copy[i] = _revDataFields[i];
+				if (_revDataFields[i] is RevOrderCode)
+				{
+					copy[i] = ((RevOrderCode) _revDataFields[i]).Clone();
+				} 
+				else
+				{ 
+					copy[i] = _revDataFields[i];
+				}
 			}
 			return copy;
 		}
@@ -63,136 +132,108 @@ namespace TestConsoleApp
 
 		#endregion
 
-		#region + Data Access
-
-		public int? AsInt(DataEnum item)
-		{
-			if (item.Type != EDataType.INT) return null;
-
-			return (int) _revDataFields[item.DataIdx];
-		}
-
-		public bool? AsBool(DataEnum item)
-		{
-			if (item.Type != EDataType.BOOL) return null;
-
-			return (bool) _revDataFields[item.DataIdx];
-		}
-
-		public ElementId AsElementId(DataEnum item)
-		{
-			if (item.Type != EDataType.ELEMENTID) return null;
-
-			return (ElementId) _revDataFields[item.DataIdx];
-		}
-
-		public RevisionVisibility? AsRevVisibility(DataEnum item)
-		{
-			if (item.Type != EDataType.VISIBILITY) return null;
-
-			return (RevisionVisibility) _revDataFields[item.DataIdx];
-		}
-
-		public String AsString(DataEnum item)
-		{
-			if (item.Type != EDataType.STRING) return null;
-
-			return (string) _revDataFields[item.DataIdx];
-		}
-
-		#endregion
-
 		#region + Properties
 
 		public int Count => _revDataFields.Length;
 
 		public bool Selected
 		{
-			get => (bool) _revDataFields[REV_SELECTED.DataIdx];
+			get => _revDataFields[REV_SELECTED.DataIdx];
 			set => _revDataFields[REV_SELECTED.DataIdx] = value;
 		}
 		// read only
 		public int Sequence
 		{
-			get => (int) _revDataFields[REV_SEQ.DataIdx];
+			get => _revDataFields[REV_SEQ.DataIdx];
 			set => _revDataFields[REV_SEQ.DataIdx] = value;
+		}
+
+		public RevOrderCode OrderCode
+		{
+			get =>  _revDataFields[REV_KEY_ORDER_CODE.DataIdx];
+			set =>  _revDataFields[REV_KEY_ORDER_CODE.DataIdx] = value;
 		}
 
 		public string AltId
 		{
-			get => (string) _revDataFields[REV_KEY_ALTID.DataIdx];
-			set => _revDataFields[REV_KEY_ALTID.DataIdx] = value;
+			get => ((RevOrderCode) _revDataFields[REV_KEY_ORDER_CODE.DataIdx]).AltId;
+			set => _revDataFields[REV_KEY_ORDER_CODE.DataIdx].AltId = value;
 		}
 
 		public string TypeCode
 		{
-			get => (string) _revDataFields[REV_KEY_TYPE_CODE.DataIdx];
-			set => _revDataFields[REV_KEY_TYPE_CODE.DataIdx] = value;
+			get => ((RevOrderCode) _revDataFields[REV_KEY_ORDER_CODE.DataIdx]).TypeCode;
+			set => _revDataFields[REV_KEY_ORDER_CODE.DataIdx].TypeCode = value;
 		}
 
 		public string DisciplineCode
 		{
-			get => (string) _revDataFields[REV_KEY_DISCIPLINE_CODE.DataIdx];
-			set => _revDataFields[REV_KEY_DISCIPLINE_CODE.DataIdx] = value;
+			get => ((RevOrderCode) _revDataFields[REV_KEY_ORDER_CODE.DataIdx]).DisciplineCode;
+			set => _revDataFields[REV_KEY_ORDER_CODE.DataIdx].DisciplineCode = value;
 		}
 
 		public string DeltaTitle
 		{
-			get => (string) _revDataFields[ REV_KEY_DELTA_TITLE.DataIdx];
+			get => _revDataFields[ REV_KEY_DELTA_TITLE.DataIdx];
 			set => _revDataFields[ REV_KEY_DELTA_TITLE.DataIdx] = value;
 		}
 
 		public string ShtNum
 		{
-			get => (string) _revDataFields[ REV_KEY_SHEETNUM.DataIdx];
+			get => _revDataFields[ REV_KEY_SHEETNUM.DataIdx];
 			set => _revDataFields[ REV_KEY_SHEETNUM.DataIdx] = value;
 		}
 
 		public RevisionVisibility Visibility
 		{
-			get => (RevisionVisibility) _revDataFields[ REV_ITEM_VISIBLE.DataIdx];
+			get => _revDataFields[ REV_ITEM_VISIBLE.DataIdx];
 			set => _revDataFields[ REV_ITEM_VISIBLE.DataIdx] = value;
 		}
 
 		public string RevisionId
 		{
-			get => (string) _revDataFields[ REV_ITEM_REVID.DataIdx];
+			get => _revDataFields[ REV_ITEM_REVID.DataIdx];
 			set => _revDataFields[ REV_ITEM_REVID.DataIdx] = value;
 		}
 
-		public  string BlockTitle
+		public string BlockTitle
 		{
-			get => (string) _revDataFields[ REV_ITEM_BLOCK_TITLE.DataIdx];
+			get => _revDataFields[ REV_ITEM_BLOCK_TITLE.DataIdx];
 			set => _revDataFields[ REV_ITEM_BLOCK_TITLE.DataIdx] = value;
 		}
 
-		public  string RevisionDate
+		public string RevisionDate
 		{
-			get => (string) _revDataFields[ REV_ITEM_DATE.DataIdx];
+			get => _revDataFields[ REV_ITEM_DATE.DataIdx];
 			set => _revDataFields[ REV_ITEM_DATE.DataIdx] = value;
 		}
 
-		public  string Basis
+		public string Basis
 		{
-			get => (string) _revDataFields[ REV_ITEM_BASIS.DataIdx];
+			get => _revDataFields[ REV_ITEM_BASIS.DataIdx];
 			set => _revDataFields[ REV_ITEM_BASIS.DataIdx] = value;
 		}
 
-		public  ElementId TagElemId
+		public ElementId TagElemId
 		{
-			get => (ElementId) _revDataFields[ REV_TAG_ELEM_ID.DataIdx];
+			get => _revDataFields[ REV_TAG_ELEM_ID.DataIdx];
 			set => _revDataFields[ REV_TAG_ELEM_ID.DataIdx] = value;
 		}
 
-		public  ElementId CloudElemId
+		public ElementId CloudElemId
 		{
-			get => (ElementId) _revDataFields[ REV_CLOUD_ELEM_ID.DataIdx];
+			get => _revDataFields[ REV_CLOUD_ELEM_ID.DataIdx];
 			set => _revDataFields[ REV_CLOUD_ELEM_ID.DataIdx] = value;
 		}
-		public  string Description
+		public string Description
 		{
-			get => (string) _revDataFields[ REV_ITEM_DESC.DataIdx];
+			get => _revDataFields[ REV_ITEM_DESC.DataIdx];
 			set => _revDataFields[ REV_ITEM_DESC.DataIdx] = value;
+		}
+		public int Order
+		{
+			get => _revDataFields[ REV_MGMT_RECORD_ID.DataIdx];
+			set => _revDataFields[ REV_MGMT_RECORD_ID.DataIdx] = value;
 		}
 
 		#endregion
