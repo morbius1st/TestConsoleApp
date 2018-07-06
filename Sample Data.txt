@@ -1,0 +1,1225 @@
+                       item count| 72
+
+                              Key| > >1.00.00.00<>CS000               <>BULLETIN 001    <>0074<<
+                        Selected?| False
+                         Sequence| 1
+                          Xref Id| 1
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 001
+                     Sheet Number| CS000
+                       Visibility| Hidden
+                      Revision ID| 1
+                Title Block Title| BULLETIN 001
+                             Date| 1/1/2018
+                            Basis| pcc
+                      Description| rev desc 1-cs000-000-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 209594
+
+                              Key| > >1.00.00.00<>CS000               <>BULLETIN 001    <>0076<<
+                        Selected?| False
+                         Sequence| 1
+                          Xref Id| 1
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 001
+                     Sheet Number| CS000
+                       Visibility| Hidden
+                      Revision ID| 1
+                Title Block Title| BULLETIN 001
+                             Date| 1/1/2018
+                            Basis| pcc
+                      Description| rev desc 1-cs000-000-2
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 209594
+
+                              Key| > >1.00.00.00<>CS000               <>BULLETIN 001    <>0078<<
+                        Selected?| False
+                         Sequence| 1
+                          Xref Id| 1
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 001
+                     Sheet Number| CS000
+                       Visibility| Hidden
+                      Revision ID| 1
+                Title Block Title| BULLETIN 001
+                             Date| 1/1/2018
+                            Basis| rfi
+                      Description| rev desc 1-cs000-000-3
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 209594
+
+                              Key| > >1.00.00.00<>CS100               <>BULLETIN 001    <>0072<<
+                        Selected?| False
+                         Sequence| 1
+                          Xref Id| 1
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 001
+                     Sheet Number| CS100
+                       Visibility| Hidden
+                      Revision ID| 1
+                Title Block Title| BULLETIN 001
+                             Date| 1/1/2018
+                            Basis| owner rev
+                      Description| rev comment 1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 209594
+
+                              Key| > >1.10.00.00<>CS000               <>ASI 007         <>0085<<
+                        Selected?| False
+                         Sequence| 2
+                          Xref Id| 1
+                        Type Code| .10
+                  Discipline Code| .00.00
+                      Delta Title| ASI 007
+                     Sheet Number| CS000
+                       Visibility| TagVisible
+                      Revision ID| 
+                Title Block Title| ASI 007 (BULLETIN 001)
+                             Date| 1/7/2018
+                            Basis| owner rev
+                      Description| rev desc 1-cs000-007-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 213234
+
+                              Key| > >1.10.00.00<>CS000               <>ASI 007         <>0086<<
+                        Selected?| False
+                         Sequence| 2
+                          Xref Id| 1
+                        Type Code| .10
+                  Discipline Code| .00.00
+                      Delta Title| ASI 007
+                     Sheet Number| CS000
+                       Visibility| TagVisible
+                      Revision ID| 
+                Title Block Title| ASI 007 (BULLETIN 001)
+                             Date| 1/7/2018
+                            Basis| pcc
+                      Description| rev desc 1-cs000-007-2
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 213234
+
+                              Key| > >1.10.00.00<>CS000               <>ASI 007         <>0087<<
+                        Selected?| False
+                         Sequence| 2
+                          Xref Id| 1
+                        Type Code| .10
+                  Discipline Code| .00.00
+                      Delta Title| ASI 007
+                     Sheet Number| CS000
+                       Visibility| TagVisible
+                      Revision ID| 
+                Title Block Title| ASI 007 (BULLETIN 001)
+                             Date| 1/7/2018
+                            Basis| owner rev
+                      Description| rev desc 1-cs000-007-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 213234
+
+                              Key| > >1.10.00.00<>CS000               <>ASI 008         <>0137<<
+                        Selected?| False
+                         Sequence| 3
+                          Xref Id| 1
+                        Type Code| .10
+                  Discipline Code| .00.00
+                      Delta Title| ASI 008
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 008 (BULLETIN 001)
+                             Date| 1/8/2018
+                            Basis| owner rev
+                      Description| desc 001-008-000
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 214040
+
+                              Key| > >1.10.00.00<>CS100               <>ASI 007         <>0080<<
+                        Selected?| False
+                         Sequence| 2
+                          Xref Id| 1
+                        Type Code| .10
+                  Discipline Code| .00.00
+                      Delta Title| ASI 007
+                     Sheet Number| CS100
+                       Visibility| TagVisible
+                      Revision ID| 
+                Title Block Title| ASI 007 (BULLETIN 001)
+                             Date| 1/7/2018
+                            Basis| pcc
+                      Description| desc 001-xxx-0
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 213234
+
+                              Key| > >1.20.00.00<>CS000               <>RFI 101         <>0134<<
+                        Selected?| False
+                         Sequence| 4
+                          Xref Id| 1
+                        Type Code| .20
+                  Discipline Code| .00.00
+                      Delta Title| RFI 101
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| RFI 101 (BULLETIN 001)
+                             Date| 1/9/2018
+                            Basis| pcc
+                      Description| Desc RFI 101
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 227337
+
+                              Key| > >10.00.00.00<>CS000               <>BULLETIN 010    <>0098<<
+                        Selected?| False
+                         Sequence| 16
+                          Xref Id| 10
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 010
+                     Sheet Number| CS000
+                       Visibility| Hidden
+                      Revision ID| 10
+                Title Block Title| BULLETIN 010
+                             Date| 10/1/2018
+                            Basis| owner rev
+                      Description| rev desc cs000-010-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225505
+
+                              Key| > >11.00.00.00<>CS000               <>BULLETIN 011    <>0099<<
+                        Selected?| False
+                         Sequence| 17
+                          Xref Id| 11
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 011
+                     Sheet Number| CS000
+                       Visibility| TagVisible
+                      Revision ID| 11
+                Title Block Title| BULLETIN 011
+                             Date| 11/1/2018
+                            Basis| pcc
+                      Description| rev desc cs000-011-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225506
+
+                              Key| > >12.00.00.00<>CS000               <>BULLETIN 012    <>0100<<
+                        Selected?| False
+                         Sequence| 18
+                          Xref Id| 12
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 012
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 12
+                Title Block Title| BULLETIN 012
+                             Date| 12/1/2018
+                            Basis| rfi
+                      Description| rev desc cs000-012-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225507
+
+                              Key| > >13.00.00.00<>CS000               <>BULLETIN 013    <>0101<<
+                        Selected?| False
+                         Sequence| 19
+                          Xref Id| 13
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 013
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 13
+                Title Block Title| BULLETIN 013
+                             Date| 1/13/2019
+                            Basis| owner rev
+                      Description| rev desc cs000-013-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225508
+
+                              Key| > >14.00.00.00<>CS000               <>BULLETIN 014    <>0102<<
+                        Selected?| False
+                         Sequence| 20
+                          Xref Id| 14
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 014
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 14
+                Title Block Title| BULLETIN 014
+                             Date| 1/14/2019
+                            Basis| pcc
+                      Description| rev desc cs000-014-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225509
+
+                              Key| > >15.00.00.00<>CS000               <>BULLETIN 015    <>0103<<
+                        Selected?| False
+                         Sequence| 21
+                          Xref Id| 15
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 015
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 15
+                Title Block Title| BULLETIN 015
+                             Date| 1/15/2019
+                            Basis| pcc
+                      Description| rev desc cs000-015-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225757
+
+                              Key| > >16.00.00.00<>CS000               <>BULLETIN 016    <>0104<<
+                        Selected?| False
+                         Sequence| 22
+                          Xref Id| 16
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 016
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 16
+                Title Block Title| BULLETIN 016
+                             Date| 1/16/2019
+                            Basis| rfi
+                      Description| rev desc cs000-016-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225758
+
+                              Key| > >17.00.00.00<>CS000               <>BULLETIN 017    <>0105<<
+                        Selected?| False
+                         Sequence| 23
+                          Xref Id| 17
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 017
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 17
+                Title Block Title| BULLETIN 017
+                             Date| 1/17/2019
+                            Basis| rfi
+                      Description| rev desc cs000-017-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225759
+
+                              Key| > >18.00.00.00<>CS000               <>BULLETIN 018    <>0106<<
+                        Selected?| False
+                         Sequence| 24
+                          Xref Id| 18
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 018
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 18
+                Title Block Title| BULLETIN 018
+                             Date| 1/18/2019
+                            Basis| owner rev
+                      Description| rev desc cs000-018-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225760
+
+                              Key| > >19.00.00.00<>CS000               <>BULLETIN 019    <>0107<<
+                        Selected?| False
+                         Sequence| 25
+                          Xref Id| 19
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 019
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 19
+                Title Block Title| BULLETIN 019
+                             Date| 1/19/2019
+                            Basis| pcc
+                      Description| rev desc cs000-019-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225761
+
+                              Key| > >20.00.00.00<>CS000               <>BULLETIN 020    <>0108<<
+                        Selected?| False
+                         Sequence| 26
+                          Xref Id| 20
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 020
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 20
+                Title Block Title| BULLETIN 020
+                             Date| 1/20/2019
+                            Basis| rfi
+                      Description| rev desc cs000-020-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225762
+
+                              Key| > >21.00.00.00<>CS000               <>BULLETIN 021    <>0109<<
+                        Selected?| False
+                         Sequence| 27
+                          Xref Id| 21
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 021
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 21
+                Title Block Title| BULLETIN 021
+                             Date| 1/21/2019
+                            Basis| owner rev
+                      Description| rev desc cs000-021-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225763
+
+                              Key| > >22.00.00.00<>CS000               <>BULLETIN 022    <>0110<<
+                        Selected?| False
+                         Sequence| 28
+                          Xref Id| 22
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 022
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 22
+                Title Block Title| BULLETIN 022
+                             Date| 1/22/2019
+                            Basis| pcc
+                      Description| rev desc cs000-022-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225764
+
+                              Key| > >23.00.00.00<>CS000               <>BULLETIN 023    <>0111<<
+                        Selected?| False
+                         Sequence| 29
+                          Xref Id| 23
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 023
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 23
+                Title Block Title| BULLETIN 023
+                             Date| 1/23/2019
+                            Basis| rfi
+                      Description| rev desc cs000-023-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225765
+
+                              Key| > >23.00.00.00<>CS000               <>BULLETIN 023    <>0112<<
+                        Selected?| False
+                         Sequence| 29
+                          Xref Id| 23
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 023
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 23
+                Title Block Title| BULLETIN 023
+                             Date| 1/23/2019
+                            Basis| owner rev
+                      Description| rev desc cs000-023-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225765
+
+                              Key| > >24.00.00.00<>CS000               <>BULLETIN 024    <>0113<<
+                        Selected?| False
+                         Sequence| 30
+                          Xref Id| 24
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 024
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 24
+                Title Block Title| BULLETIN 024
+                             Date| 1/24/2019
+                            Basis| pcc
+                      Description| rev desc cs000-024-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225766
+
+                              Key| > >25.00.00.00<>CS000               <>BULLETIN 025    <>0114<<
+                        Selected?| False
+                         Sequence| 31
+                          Xref Id| 25
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 025
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 25
+                Title Block Title| BULLETIN 025
+                             Date| 1/25/2019
+                            Basis| pcc
+                      Description| rev desc cs000-025-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225767
+
+                              Key| > >3.00.00.00<>CS000               <>BULLETIN 003    <>0075<<
+                        Selected?| False
+                         Sequence| 5
+                          Xref Id| 3
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 003
+                     Sheet Number| CS000
+                       Visibility| Hidden
+                      Revision ID| 3
+                Title Block Title| BULLETIN 003
+                             Date| 3/1/2018
+                            Basis| rfi
+                      Description| rev desc 3-cs000-000-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 217279
+
+                              Key| > >3.00.00.00<>CS000               <>BULLETIN 003    <>0077<<
+                        Selected?| False
+                         Sequence| 5
+                          Xref Id| 3
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 003
+                     Sheet Number| CS000
+                       Visibility| Hidden
+                      Revision ID| 3
+                Title Block Title| BULLETIN 003
+                             Date| 3/1/2018
+                            Basis| owner rev
+                      Description| rev desc 3-cs000-000-2
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 217279
+
+                              Key| > >3.00.00.00<>CS000               <>BULLETIN 003    <>0079<<
+                        Selected?| False
+                         Sequence| 5
+                          Xref Id| 3
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 003
+                     Sheet Number| CS000
+                       Visibility| Hidden
+                      Revision ID| 3
+                Title Block Title| BULLETIN 003
+                             Date| 3/1/2018
+                            Basis| pcc
+                      Description| rev desc 3-cs000-000-3
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 217279
+
+                              Key| > >3.00.00.00<>CS100               <>BULLETIN 003    <>0073<<
+                        Selected?| False
+                         Sequence| 5
+                          Xref Id| 3
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 003
+                     Sheet Number| CS100
+                       Visibility| Hidden
+                      Revision ID| 3
+                Title Block Title| BULLETIN 003
+                             Date| 3/1/2018
+                            Basis| rfi
+                      Description| rev desc 003-xxx-0
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 217279
+
+                              Key| > >3.10.00.00<>CS000               <>ASI 010         <>0088<<
+                        Selected?| False
+                         Sequence| 6
+                          Xref Id| 3
+                        Type Code| .10
+                  Discipline Code| .00.00
+                      Delta Title| ASI 010
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 010 (BULLETIN 003)
+                             Date| 3/10/2018
+                            Basis| rfi
+                      Description| rev desc 3-cs000-010-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 217280
+
+                              Key| > >3.10.00.00<>CS000               <>ASI 010         <>0089<<
+                        Selected?| False
+                         Sequence| 6
+                          Xref Id| 3
+                        Type Code| .10
+                  Discipline Code| .00.00
+                      Delta Title| ASI 010
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 010 (BULLETIN 003)
+                             Date| 3/10/2018
+                            Basis| owner rev
+                      Description| rev desc 3-cs000-010-2
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 217280
+
+                              Key| > >3.10.00.00<>CS000               <>ASI 010         <>0090<<
+                        Selected?| False
+                         Sequence| 6
+                          Xref Id| 3
+                        Type Code| .10
+                  Discipline Code| .00.00
+                      Delta Title| ASI 010
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 010 (BULLETIN 003)
+                             Date| 3/10/2018
+                            Basis| pcc
+                      Description| rev desc 3-cs000-010-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 217280
+
+                              Key| > >3.10.00.00<>CS000               <>ASI 012         <>0138<<
+                        Selected?| False
+                         Sequence| 7
+                          Xref Id| 3
+                        Type Code| .10
+                  Discipline Code| .00.00
+                      Delta Title| ASI 012
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 012 (BULLETIN 003)
+                             Date| 3/12/2018
+                            Basis| pcc
+                      Description| desc 003-012-000
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 217281
+
+                              Key| > >3.10.00.00<>CS100               <>ASI 010         <>0081<<
+                        Selected?| False
+                         Sequence| 6
+                          Xref Id| 3
+                        Type Code| .10
+                  Discipline Code| .00.00
+                      Delta Title| ASI 010
+                     Sheet Number| CS100
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 010 (BULLETIN 003)
+                             Date| 3/10/2018
+                            Basis| pcc
+                      Description| rev desc 003-010-0
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 217280
+
+                              Key| > >3.20.00.00<>CS000               <>RFI 301         <>0135<<
+                        Selected?| False
+                         Sequence| 8
+                          Xref Id| 3
+                        Type Code| .20
+                  Discipline Code| .00.00
+                      Delta Title| RFI 301
+                     Sheet Number| CS000
+                       Visibility| Hidden
+                      Revision ID| 
+                Title Block Title| RFI 301 (BULLETIN 003)
+                             Date| 3/13/2018
+                            Basis| pcc
+                      Description| Desc RFI 301
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 227336
+
+                              Key| > >5.00.00.00<>CS000               <>BULLETIN 005    <>0082<<
+                        Selected?| False
+                         Sequence| 9
+                          Xref Id| 5
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 005
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 5
+                Title Block Title| BULLETIN 005
+                             Date| 5/1/2018
+                            Basis| owner rev
+                      Description| rev desc 005-xxx-0
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 218278
+
+                              Key| > >5.00.00.00<>CS000               <>BULLETIN 005    <>0083<<
+                        Selected?| False
+                         Sequence| 9
+                          Xref Id| 5
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 005
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 5
+                Title Block Title| BULLETIN 005
+                             Date| 5/1/2018
+                            Basis| pcc
+                      Description| rev desc 005-xxx-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 218278
+
+                              Key| > >5.00.00.00<>CS000               <>BULLETIN 005    <>0084<<
+                        Selected?| False
+                         Sequence| 9
+                          Xref Id| 5
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 005
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 5
+                Title Block Title| BULLETIN 005
+                             Date| 5/1/2018
+                            Basis| rfi
+                      Description| rev desc 005-xxx-2
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 218278
+
+                              Key| > >5.00.00.00<>CS000               <>BULLETIN 005    <>0091<<
+                        Selected?| False
+                         Sequence| 9
+                          Xref Id| 5
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 005
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 5
+                Title Block Title| BULLETIN 005
+                             Date| 5/1/2018
+                            Basis| owner rev
+                      Description| rev desc 005-xxx-4
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 218278
+
+                              Key| > >5.00.00.00<>CS000               <>BULLETIN 005    <>0092<<
+                        Selected?| False
+                         Sequence| 9
+                          Xref Id| 5
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 005
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 5
+                Title Block Title| BULLETIN 005
+                             Date| 5/1/2018
+                            Basis| pcc
+                      Description| rev desc 005-xxx-5
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 218278
+
+                              Key| > >5.00.00.00<>CS000               <>BULLETIN 005    <>0093<<
+                        Selected?| False
+                         Sequence| 9
+                          Xref Id| 5
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 005
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 5
+                Title Block Title| BULLETIN 005
+                             Date| 5/1/2018
+                            Basis| rfi
+                      Description| rev desc 005-xxx-0
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 218278
+
+                              Key| > >6.00.00.00<>CS000               <>BULLETIN 006    <>0094<<
+                        Selected?| False
+                         Sequence| 10
+                          Xref Id| 6
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 006
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 6
+                Title Block Title| BULLETIN 006
+                             Date| 6/1/2018
+                            Basis| owner rev
+                      Description| rev desc cs000-006-xx1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225501
+
+                              Key| > >6.00.00.00<>CS000               <>BULLETIN 006    <>0117<<
+                        Selected?| False
+                         Sequence| 10
+                          Xref Id| 6
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 006
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 6
+                Title Block Title| BULLETIN 006
+                             Date| 6/1/2018
+                            Basis| pcc
+                      Description| rev desc cs000-006-xx2
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225501
+
+                              Key| > >6.00.07.00<>1A A201             <>BULLETIN 006    <>0119<<
+                        Selected?| False
+                         Sequence| 10
+                          Xref Id| 6
+                        Type Code| .00
+                  Discipline Code| .07.00
+                      Delta Title| BULLETIN 006
+                     Sheet Number| 1A A201
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 6
+                Title Block Title| BULLETIN 006
+                             Date| 6/1/2018
+                            Basis| owner rev
+                      Description| rev desc 1A A201 -006-xxx-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225501
+
+                              Key| > >6.00.07.00<>1A A201             <>BULLETIN 006    <>0122<<
+                        Selected?| False
+                         Sequence| 10
+                          Xref Id| 6
+                        Type Code| .00
+                  Discipline Code| .07.00
+                      Delta Title| BULLETIN 006
+                     Sheet Number| 1A A201
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 6
+                Title Block Title| BULLETIN 006
+                             Date| 6/1/2018
+                            Basis| pcc
+                      Description| rev desc 1A A201 -006-xxx-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225501
+
+                              Key| > >6.00.07.00<>1A A202             <>BULLETIN 006    <>0124<<
+                        Selected?| False
+                         Sequence| 10
+                          Xref Id| 6
+                        Type Code| .00
+                  Discipline Code| .07.00
+                      Delta Title| BULLETIN 006
+                     Sheet Number| 1A A202
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 6
+                Title Block Title| BULLETIN 006
+                             Date| 6/1/2018
+                            Basis| pcc
+                      Description| rev desc 1A A202 -006-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225501
+
+                              Key| > >6.00.07.00<>1B A201             <>BULLETIN 006    <>0129<<
+                        Selected?| False
+                         Sequence| 10
+                          Xref Id| 6
+                        Type Code| .00
+                  Discipline Code| .07.00
+                      Delta Title| BULLETIN 006
+                     Sheet Number| 1B A201
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 6
+                Title Block Title| BULLETIN 006
+                             Date| 6/1/2018
+                            Basis| owner rev
+                      Description| rev desc 1B A201 -006-xxx-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225501
+
+                              Key| > >6.00.07.00<>1B A201             <>BULLETIN 006    <>0132<<
+                        Selected?| False
+                         Sequence| 10
+                          Xref Id| 6
+                        Type Code| .00
+                  Discipline Code| .07.00
+                      Delta Title| BULLETIN 006
+                     Sheet Number| 1B A201
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 6
+                Title Block Title| BULLETIN 006
+                             Date| 6/1/2018
+                            Basis| rfi
+                      Description| rev desc 1B A201 -006-xxx-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225501
+
+                              Key| > >6.00.07.00<>AA A2.20-201.10     <>BULLETIN 006    <>0139<<
+                        Selected?| False
+                         Sequence| 10
+                          Xref Id| 6
+                        Type Code| .00
+                  Discipline Code| .07.00
+                      Delta Title| BULLETIN 006
+                     Sheet Number| AA A2.20-201.10
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 6
+                Title Block Title| BULLETIN 006
+                             Date| 6/1/2018
+                            Basis| owner rev
+                      Description| 
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225501
+
+                              Key| > >6.00.07.00<>AA A2.20-201.10     <>BULLETIN 006    <>0142<<
+                        Selected?| False
+                         Sequence| 10
+                          Xref Id| 6
+                        Type Code| .00
+                  Discipline Code| .07.00
+                      Delta Title| BULLETIN 006
+                     Sheet Number| AA A2.20-201.10
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 6
+                Title Block Title| BULLETIN 006
+                             Date| 6/1/2018
+                            Basis| rfi
+                      Description| 
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225501
+
+                              Key| > >6.10.00.00<>CS000               <>ASI 013         <>0115<<
+                        Selected?| False
+                         Sequence| 11
+                          Xref Id| 6
+                        Type Code| .10
+                  Discipline Code| .00.00
+                      Delta Title| ASI 013
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 013 (BULLETIN 006)
+                             Date| 6/2/2018
+                            Basis| rfi
+                      Description| rev desc cs000-006-013
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226131
+
+                              Key| > >6.10.00.00<>CS000               <>ASI 013         <>0118<<
+                        Selected?| False
+                         Sequence| 11
+                          Xref Id| 6
+                        Type Code| .10
+                  Discipline Code| .00.00
+                      Delta Title| ASI 013
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 013 (BULLETIN 006)
+                             Date| 6/2/2018
+                            Basis| owner rev
+                      Description| rev desc cs000-006-013-2
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226131
+
+                              Key| > >6.10.07.00<>1A A201             <>ASI 013         <>0120<<
+                        Selected?| False
+                         Sequence| 11
+                          Xref Id| 6
+                        Type Code| .10
+                  Discipline Code| .07.00
+                      Delta Title| ASI 013
+                     Sheet Number| 1A A201
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 013 (BULLETIN 006)
+                             Date| 6/2/2018
+                            Basis| rfi
+                      Description| rev desc 1A A201 -006-013-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226131
+
+                              Key| > >6.10.07.00<>1A A201             <>ASI 013         <>0123<<
+                        Selected?| False
+                         Sequence| 11
+                          Xref Id| 6
+                        Type Code| .10
+                  Discipline Code| .07.00
+                      Delta Title| ASI 013
+                     Sheet Number| 1A A201
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 013 (BULLETIN 006)
+                             Date| 6/2/2018
+                            Basis| pcc
+                      Description| rev desc 1A A201 -006-013-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226131
+
+                              Key| > >6.10.07.00<>1A A202             <>ASI 013         <>0125<<
+                        Selected?| False
+                         Sequence| 11
+                          Xref Id| 6
+                        Type Code| .10
+                  Discipline Code| .07.00
+                      Delta Title| ASI 013
+                     Sheet Number| 1A A202
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 013 (BULLETIN 006)
+                             Date| 6/2/2018
+                            Basis| rfi
+                      Description| rev desc 1A A202 -006-013-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226131
+
+                              Key| > >6.10.07.00<>1A A202             <>ASI 013         <>0126<<
+                        Selected?| False
+                         Sequence| 11
+                          Xref Id| 6
+                        Type Code| .10
+                  Discipline Code| .07.00
+                      Delta Title| ASI 013
+                     Sheet Number| 1A A202
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 013 (BULLETIN 006)
+                             Date| 6/2/2018
+                            Basis| owner rev
+                      Description| rev desc 1A A202 -006-013-2
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226131
+
+                              Key| > >6.10.07.00<>1B A201             <>ASI 013         <>0130<<
+                        Selected?| False
+                         Sequence| 11
+                          Xref Id| 6
+                        Type Code| .10
+                  Discipline Code| .07.00
+                      Delta Title| ASI 013
+                     Sheet Number| 1B A201
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 013 (BULLETIN 006)
+                             Date| 6/2/2018
+                            Basis| pcc
+                      Description| rev desc 1B A201 -006-013-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226131
+
+                              Key| > >6.10.07.00<>1B A201             <>ASI 013         <>0133<<
+                        Selected?| False
+                         Sequence| 11
+                          Xref Id| 6
+                        Type Code| .10
+                  Discipline Code| .07.00
+                      Delta Title| ASI 013
+                     Sheet Number| 1B A201
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 013 (BULLETIN 006)
+                             Date| 6/2/2018
+                            Basis| owner rev
+                      Description| rev desc 1B A201 -006-013-2
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226131
+
+                              Key| > >6.10.07.00<>AA A2.20-201.10     <>ASI 013         <>0140<<
+                        Selected?| False
+                         Sequence| 11
+                          Xref Id| 6
+                        Type Code| .10
+                  Discipline Code| .07.00
+                      Delta Title| ASI 013
+                     Sheet Number| AA A2.20-201.10
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 013 (BULLETIN 006)
+                             Date| 6/2/2018
+                            Basis| pcc
+                      Description| 
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226131
+
+                              Key| > >6.10.07.00<>AA A2.20-201.10     <>ASI 013         <>0143<<
+                        Selected?| False
+                         Sequence| 11
+                          Xref Id| 6
+                        Type Code| .10
+                  Discipline Code| .07.00
+                      Delta Title| ASI 013
+                     Sheet Number| AA A2.20-201.10
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 
+                Title Block Title| ASI 013 (BULLETIN 006)
+                             Date| 6/2/2018
+                            Basis| owner rev
+                      Description| 
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226131
+
+                              Key| > >6.20.00.00<>CS000               <>RFI 601         <>0116<<
+                        Selected?| False
+                         Sequence| 12
+                          Xref Id| 6
+                        Type Code| .20
+                  Discipline Code| .00.00
+                      Delta Title| RFI 601
+                     Sheet Number| CS000
+                       Visibility| TagVisible
+                      Revision ID| 
+                Title Block Title| RFI 601 (BULLETIN 006)
+                             Date| 6/3/2018
+                            Basis| pcc
+                      Description| rev desc cs000-006-301
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226383
+
+                              Key| > >6.20.00.00<>CS000               <>RFI 601         <>0136<<
+                        Selected?| False
+                         Sequence| 12
+                          Xref Id| 6
+                        Type Code| .20
+                  Discipline Code| .00.00
+                      Delta Title| RFI 601
+                     Sheet Number| CS000
+                       Visibility| TagVisible
+                      Revision ID| 
+                Title Block Title| RFI 601 (BULLETIN 006)
+                             Date| 6/3/2018
+                            Basis| pcc
+                      Description| Desc 601
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226383
+
+                              Key| > >6.20.07.00<>1A A201             <>RFI 601         <>0121<<
+                        Selected?| False
+                         Sequence| 12
+                          Xref Id| 6
+                        Type Code| .20
+                  Discipline Code| .07.00
+                      Delta Title| RFI 601
+                     Sheet Number| 1A A201
+                       Visibility| TagVisible
+                      Revision ID| 
+                Title Block Title| RFI 601 (BULLETIN 006)
+                             Date| 6/3/2018
+                            Basis| owner rev
+                      Description| rev desc 1A A201 -006-301-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226383
+
+                              Key| > >6.20.07.00<>1A A202             <>RFI 601         <>0127<<
+                        Selected?| False
+                         Sequence| 12
+                          Xref Id| 6
+                        Type Code| .20
+                  Discipline Code| .07.00
+                      Delta Title| RFI 601
+                     Sheet Number| 1A A202
+                       Visibility| TagVisible
+                      Revision ID| 
+                Title Block Title| RFI 601 (BULLETIN 006)
+                             Date| 6/3/2018
+                            Basis| pcc
+                      Description| rev desc 1A A202 -006-301-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226383
+
+                              Key| > >6.20.07.00<>1A A202             <>RFI 601         <>0128<<
+                        Selected?| False
+                         Sequence| 12
+                          Xref Id| 6
+                        Type Code| .20
+                  Discipline Code| .07.00
+                      Delta Title| RFI 601
+                     Sheet Number| 1A A202
+                       Visibility| TagVisible
+                      Revision ID| 
+                Title Block Title| RFI 601 (BULLETIN 006)
+                             Date| 6/3/2018
+                            Basis| rfi
+                      Description| rev desc 1A A202 -006-301-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226383
+
+                              Key| > >6.20.07.00<>1B A201             <>RFI 601         <>0131<<
+                        Selected?| False
+                         Sequence| 12
+                          Xref Id| 6
+                        Type Code| .20
+                  Discipline Code| .07.00
+                      Delta Title| RFI 601
+                     Sheet Number| 1B A201
+                       Visibility| TagVisible
+                      Revision ID| 
+                Title Block Title| RFI 601 (BULLETIN 006)
+                             Date| 6/3/2018
+                            Basis| rfi
+                      Description| rev desc 1B A201 -006-301-1
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226383
+
+                              Key| > >6.20.07.00<>AA A2.20-201.10     <>RFI 601         <>0141<<
+                        Selected?| False
+                         Sequence| 12
+                          Xref Id| 6
+                        Type Code| .20
+                  Discipline Code| .07.00
+                      Delta Title| RFI 601
+                     Sheet Number| AA A2.20-201.10
+                       Visibility| TagVisible
+                      Revision ID| 
+                Title Block Title| RFI 601 (BULLETIN 006)
+                             Date| 6/3/2018
+                            Basis| rfi
+                      Description| 
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 226383
+
+                              Key| > >7.00.00.00<>CS000               <>BULLETIN 007    <>0095<<
+                        Selected?| False
+                         Sequence| 13
+                          Xref Id| 7
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 007
+                     Sheet Number| CS000
+                       Visibility| Hidden
+                      Revision ID| 7
+                Title Block Title| BULLETIN 007
+                             Date| 7/1/2018
+                            Basis| owner rev
+                      Description| rev desc cs000-007-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225502
+
+                              Key| > >8.00.00.00<>CS000               <>BULLETIN 008    <>0096<<
+                        Selected?| False
+                         Sequence| 14
+                          Xref Id| 8
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 008
+                     Sheet Number| CS000
+                       Visibility| TagVisible
+                      Revision ID| 8
+                Title Block Title| BULLETIN 008
+                             Date| 8/1/2018
+                            Basis| pcc
+                      Description| rev desc cs000-008-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225503
+
+                              Key| > >9.00.00.00<>CS000               <>BULLETIN 009    <>0097<<
+                        Selected?| False
+                         Sequence| 15
+                          Xref Id| 9
+                        Type Code| .00
+                  Discipline Code| .00.00
+                      Delta Title| BULLETIN 009
+                     Sheet Number| CS000
+                       Visibility| CloudAndTagVisible
+                      Revision ID| 9
+                Title Block Title| BULLETIN 009
+                             Date| 9/1/2018
+                            Basis| rfi
+                      Description| rev desc cs000-009-xxx
+                      Tag Elem ID| -1
+                    Cloud Elem ID| 225504

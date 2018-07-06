@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using static TestConsoleApp.RevisionUtil;
+using static TestConsoleApp.RevisionTest;
 using static TestConsoleApp.RevisionFilters;
 using static TestConsoleApp.RevisionFilters.ECompareOps;
 
@@ -17,8 +17,15 @@ namespace TestConsoleApp
 
 		public static bool Verify(RevOrderCode a, Criteria c)
 		{
-			string ax = a?.ToString() ?? "";
+			string ax;
 
+			if (c.SubDataEnum != null)
+			{
+				ax = a?[c.SubDataEnum.SubDataIdx] ?? "";
+				return Verify(ax, c);
+			}
+
+			ax = a?.ToString() ?? "";
 			return Verify(ax, c);
 		}
 

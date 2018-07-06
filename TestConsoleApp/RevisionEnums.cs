@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Collections.Generic;
 //using static TestConsoleApp.DataItems.ColumnHelpers;
 
-using static TestConsoleApp.RevisionMetaData;
 using static TestConsoleApp.DataItems.EDataFields;
 
 namespace TestConsoleApp
@@ -34,7 +33,7 @@ namespace TestConsoleApp
 		public static List<DataEnum>   DataList ;
 		public static List<FilterEnum> FilterList ;
 
-		public static List<DataEnum> ColumnList;
+//		public static List<DataEnum> ColumnList;
 
 		public static class EDataFields
 		{
@@ -42,63 +41,62 @@ namespace TestConsoleApp
 			// create the data enums here - the order below defines the
 			// default column order
 			//
-			public static DataEnum REV_MGMT_RECORD_ID { get; } =                // => n/a	// (derived) the sequence number the data was 	   
-				new DataEnum();													//	        // read from the revit file
-			//																
-			public static CompareBoolEnum REV_SELECTED { get; } =				// =>  0	// (derived) flag that this data item has 
-				new CompareBoolEnum();											//			// been selected
-			//																
-			public static CompareIntEnum REV_SEQ { get; } =						// =>  1	// (from sequence) revision sequence number
-				new CompareIntEnum();											//			// for ordering only
-			//																
-			public static CompareStrEnum REV_ITEM_REVID { get; } =				// =>  2	// (from revision) revision id number or 		   
-				new CompareStrEnum();											//			// alphanumeric									
-			//																
-			public static CompareOrderEnum REV_KEY_ORDER_CODE { get; } =		// =>  3	// (derived) combnation of AltId, 
-				new CompareOrderEnum();											//			// Type_code, Discipline code (a structure)
-			//																
-			public static CompareStrEnum REV_KEY_DELTA_TITLE { get; } =			// =>  4	// (from issued to) (part of item key) 		   
-				new CompareStrEnum();											//			// simple name for this issuance (goes below the delta)			
-			//																			   
-			public static CompareStrEnum REV_KEY_SHEETNUM { get; } =			// =>  5	// (calculated) (part of item key) sheet 		   
-				new CompareStrEnum();											//			// number of this tag											
-			//																			   
-			public static CompareVisEnum REV_ITEM_VISIBLE { get; } =			// =>  6	// (from visibility)(calculated)) item 
-				new CompareVisEnum();											//			// visibility													
-			//																			   
-			public static CompareStrEnum REV_ITEM_BLOCK_TITLE { get; } =		// =>  7	// (from revision description) title for 		   
-				new CompareStrEnum();											//			// this issuance												
-			//																			   
-			public static DataEnum REV_ITEM_DATE { get; } =						// =>  8	// (from revision date) the date assigned 
-				new DataEnum();													//			// to the revision												
-			//																			   
-			public static CompareStrEnum REV_ITEM_BASIS { get; } =				// =>  9	// (from comment) the reason for the 			   
-				new CompareStrEnum();											//			// revision														
-			//																			   
-			public static CompareStrEnum REV_ITEM_DESC { get; } =				// => 10	// (from mark) the description of the 
-				new CompareStrEnum();											//			// revision														
-			//																			   
-			public static CompareEIdEnum REV_TAG_ELEM_ID { get; } =				// => 11	// the element id of the tag for this 
-				new CompareEIdEnum();											//			// data item													
-			//																		   
-			public static CompareEIdEnum REV_CLOUD_ELEM_ID { get; } =			// => 12	// the element id of of the cloud for 
-				new CompareEIdEnum();											//			// this data item
-			//																
-			public static MgmtEnum REV_MGMT_COLUMN { get; } =					// => n/a	// (derived) the title for the column field the	   
-				new MgmtEnum();													//			// column is only stored with the data description				
-			//																			   
-			public static MgmtEnum REV_KEY { get; } =							// => n/a	// (derived) the list key for the items
-				new MgmtEnum();													//
-			//																
-			public static SubDataEnum REV_SUB_ALTID { get; } =					// =>sub(0) // (from issued by) (part of REV_KEY_ORDER_CODE) 
-				new SubDataEnum();												//			// a cross-reference to the REV_REVID associated with this item
-			//																
-			public static SubDataEnum REV_SUB_TYPE_CODE { get; } =				// =>sub(1) // (derived) (part of REV_KEY_ORDER_CODE) code based  
-				new SubDataEnum();												//			// on the document type
-			//
-			public static SubDataEnum REV_SUB_DISCIPLINE_CODE { get; } =		// =>sub(2)	// (derived) (part of REV_KEY_ORDER_CODE) code based
-				new SubDataEnum();											    //			// on the discipline
-			//																										   
+            public static DataEnum              REV_MGMT_RECORD_ID { get; } =      // => n/a	// (derived) the sequence number the data was 	   
+                new DataEnum();                                                    //	        // read from the revit file
+                                                                                   //																
+            public static CompareBoolEnum       REV_SELECTED { get; } =            // =>  0	// (derived) flag that this data item has 
+                new CompareBoolEnum();                                             //			// been selected
+                                                                                   //																
+            public static CompareIntEnum        REV_SEQ { get; } =                 // =>  1	// (from sequence) revision sequence number
+                new CompareIntEnum();                                              //			// for ordering only
+                                                                                   // ***
+            public static CompareStrSortable    REV_SORT_ITEM_REVID { get; } =     // =>  2	// (from revision) revision id number or 		   
+                new CompareStrSortable();                                          //			// alphanumeric									
+                                                                                   // ***
+            public static CompareOrderEnum      REV_SORT_ORDER_CODE { get; } =     // =>  3	// (derived) combnation of AltId, 
+                new CompareOrderEnum();                                            //			// Type_code, Discipline code (a structure)
+                                                                                   // ***
+            public static CompareStrSortable    REV_SORT_DELTA_TITLE { get; } =    // =>  4	// (from issued to) (part of item key) 		   
+                new CompareStrSortable();                                          //			// simple name for this issuance (goes below the delta)			
+                                                                                   // ***
+            public static CompareStrSortable    REV_SORT_SHEETNUM { get; } =       // =>  5	// (calculated) (part of item key) sheet 		   
+                new CompareStrSortable();                                          //			// number of this tag											
+                                                                                   //																			   
+            public static CompareVisEnum        REV_ITEM_VISIBLE { get; } =        // =>  6	// (from visibility)(calculated)) item 
+                new CompareVisEnum();                                              //			// visibility													
+                                                                                   //																			   
+            public static CompareStrEnum        REV_ITEM_BLOCK_TITLE { get; } =    // =>  7	// (from revision description) title for 		   
+                new CompareStrEnum();                                              //			// this issuance												
+                                                                                   //																			   
+            public static DataEnum              REV_ITEM_DATE { get; } =           // =>  8	// (from revision date) the date assigned 
+                new DataEnum();                                                    //			// to the revision												
+                                                                                   // ***
+            public static CompareStrSortable    REV_SORT_ITEM_BASIS { get; } =     // =>  9	// (from comment) the reason for the 			   
+                new CompareStrSortable();                                          //			// revision														
+                                                                                   // ***
+            public static CompareStrSortable    REV_SORT_ITEM_DESC { get; } =      // => 10	// (from mark) the description of the 
+                new CompareStrSortable();                                          //			// revision														
+                                                                                   //																		   
+            public static CompareEIdEnum        REV_TAG_ELEM_ID { get; } =         // => 11	// the element id of the tag for this 
+                new CompareEIdEnum();                                              //			// data item													
+                                                                                   //																		   
+            public static CompareEIdEnum        REV_CLOUD_ELEM_ID { get; } =       // => 12	// the element id of of the cloud for 
+                new CompareEIdEnum();                                              //			// this data item
+                                                                                   //																
+            public static MgmtEnum              REV_MGMT_COLUMN { get; } =         // => n/a	// (derived) the title for the column field the	   
+                new MgmtEnum();                                                    //			// column is only stored with the data description				
+                                                                                   //																			   
+            public static SubRevOrderCodeEnum   REV_SUB_ALTID { get; } =           // =>sub(0) // (from issued by) (part of REV_SORT_ORDER_CODE) 
+                new SubRevOrderCodeEnum();                                         //			// a cross-reference to the REV_REVID associated with this item
+                                                                                   //																
+            public static SubRevOrderCodeEnum   REV_SUB_TYPE_CODE { get; } =       // =>sub(1) // (derived) (part of REV_SORT_ORDER_CODE) code based  
+                new SubRevOrderCodeEnum();                                         //			// on the document type
+                                                                                   //
+            public static SubRevOrderCodeEnum   REV_SUB_DISCIPLINE_CODE { get; } = // =>sub(2)	// (derived) (part of REV_SORT_ORDER_CODE) code based
+                new SubRevOrderCodeEnum();                                         //			// on the discipline
+                                                                                   //
+            public static DataEnum              REV_SORT_KEY { get; } =            //			// (derived) the key used to sort the date
+                new DataEnum();                                                    //
 		}
 
 		static DataItems()
@@ -112,7 +110,7 @@ namespace TestConsoleApp
 			DataList   = new List<DataEnum>(PropertyCount);
 			FilterList = new List<FilterEnum>(PropertyCount);
 
-			ResetColumnList();
+//			ResetColumnList();
 
 			// use reflection to access all of the data items
 			// update the data item's name with its variable name
@@ -125,18 +123,18 @@ namespace TestConsoleApp
 
 				RootList.Add(r);
 
-				if (r is DescEnum d)
+				if (r is DescEnum ds)
 				{
-					DescList.Insert(d.DescItemIdx, d);
+					DescList.Insert(ds.DescItemIdx, ds);
+//
+//					ds.Column = -1;
 				}
 
 				if (r is DataEnum)
 				{
-					DataEnum i = (DataEnum) r;
+					DataEnum de = (DataEnum) r;
 
-					DataList.Insert(i.DataIdx, i);
-
-					ColumnList.Insert(i.DataIdx, i);
+					DataList.Insert(de.DataIdx, de);
 				}
 
 				if (r is FilterEnum)
@@ -147,7 +145,7 @@ namespace TestConsoleApp
 				}
 			}
 
-			REV_KEY_ORDER_CODE.SubDataList = new []
+			REV_SORT_ORDER_CODE.SubDataList = new []
 			{
 				REV_SUB_ALTID,
 				REV_SUB_TYPE_CODE,
@@ -161,10 +159,23 @@ namespace TestConsoleApp
 
 			// update the column list and set the column
 			// for each field based on the above order
-			ResetColumnOrder();
+//			ResetColumnOrder();
+
+			// setup the revision meta data
+			RevisionMetaData.Init();
+
+
+			RevColumns<DataEnum> co = RevColumnOrder.Default;
+
+			RevColumnOrder.Default.Start(REV_SORT_ITEM_REVID, 
+				REV_SORT_ORDER_CODE, REV_SORT_DELTA_TITLE, REV_SORT_SHEETNUM,
+				REV_ITEM_VISIBLE, REV_ITEM_BLOCK_TITLE, REV_ITEM_DATE,
+				REV_SORT_ITEM_BASIS, REV_SORT_ITEM_DESC);
+
+			RevSortOrder.Default.Start(REV_SORT_ORDER_CODE, 
+				REV_SORT_DELTA_TITLE, REV_SORT_SHEETNUM);
 		}
 
-#region + Classes
 
 #region + Primary
 
@@ -176,7 +187,7 @@ namespace TestConsoleApp
 		   +>DescEnum
 		   | |  +----> int:					DescItemIdx	
 		   | |  +----> int:					Column
-		   | |  +----> DataDisplay:			Display
+		   | |  +----> RevisionDataDisplay:			Display
 		   | |  +----> (RootEnum):			(Name)
 		   | |  +----> (RootEnum):			(Type)
 		   | |  +----> (RootEnum):			(Title)
@@ -218,7 +229,6 @@ namespace TestConsoleApp
 
  		*/
 
-
 		// root class
 		// include properties that apply
 		// to every sub-class
@@ -229,6 +239,25 @@ namespace TestConsoleApp
 
 			public string[] Title { get; set; }
 				= new string[2]; // the title for this data item (column header)
+
+			public string FullTitle
+			{
+				get
+				{
+					string fullTitle = "";
+
+					for (int i = Title.Length - 1; i >= 0; i--)
+					{
+						fullTitle = Title[i] + fullTitle;
+
+						if (i == 0 || string.IsNullOrWhiteSpace(Title[i - 1])) break;
+
+						fullTitle = " " + fullTitle;
+					}
+
+					return fullTitle;
+				}
+			}
 
 			public RootEnum()
 			{
@@ -255,9 +284,9 @@ namespace TestConsoleApp
 
 			public int DescItemIdx { get; }
 
-			public int Column { get; set; } // the column to present this data item
+//			public int Column { get; set; } // the column to present this data item
 
-			public DataDisplay Display { get; set; } = new DataDisplay(); // data display
+			public RevisionDataDisplay Display { get; set; } = new RevisionDataDisplay(); // data display
 			// information - font, format string, etc.
 		}
 
@@ -276,7 +305,7 @@ namespace TestConsoleApp
 			}
 
 			public SubDataEnum[] SubDataList { get; set; }
-			public int      SubDataIdx  { get; set; }
+			public int SubDataIdx  { get; set; }
 		}
 
 
@@ -286,6 +315,9 @@ namespace TestConsoleApp
 		public class DataEnum : SubDataEnum
 		{
 			private static int b = 0;
+			public int DataIdx { get; }
+			// where the data came from (to allow changes)
+			public EFieldSource Source { get; set; }
 
 			public DataEnum()
 			{
@@ -296,16 +328,10 @@ namespace TestConsoleApp
 			{
 				DataIdx = i;
 			}
-
-			public int DataIdx { get; }
-
-			public EFieldSource Source { get; set; } // where the data came from (to allow changes)
 		}
 
 		// management items
-		public class MgmtEnum : RootEnum
-		{
-		}
+		public class MgmtEnum : RootEnum { }
 
 		// filter class
 		// these are sub-items that can be
@@ -317,6 +343,8 @@ namespace TestConsoleApp
 		{
 			private static int c = 0;
 
+			public FilterEnum() { }
+
 			public FilterEnum(EDataType type)
 			{
 				Type      = type;
@@ -326,12 +354,21 @@ namespace TestConsoleApp
 			public int FilterIdx { get; }
 		}
 
+		public interface ISortable { }
+
+		public interface ISubRevOrderCode { }
+
+		public class SubRevOrderCodeEnum : SubDataEnum, ISubRevOrderCode { }
+
 		// compare classes
 		// these are sub-filter items that can
 		// be selected and can be compared
 		// using a specific type of comparison
 		public class CompareStrEnum : FilterEnum
 		{ public CompareStrEnum() : base(EDataType.STRING) {} }
+
+		public class CompareStrSortable : FilterEnum, ISortable
+		{ public CompareStrSortable() : base(EDataType.STRING) {} }
 
 		public class CompareVisEnum : FilterEnum
 		{ public CompareVisEnum() : base(EDataType.VISIBILITY) {} }
@@ -345,8 +382,30 @@ namespace TestConsoleApp
 		public class CompareIntEnum : FilterEnum
 		{public CompareIntEnum() : base(EDataType.INT) {} }
 
-		public class CompareOrderEnum : FilterEnum
+		public class CompareOrderEnum : FilterEnum, ISortable
 		{public CompareOrderEnum() : base(EDataType.ORDER) {} }
+
+//		
+//		private static CompareStrSort cSort;
+//
+//		private static CompareStrEnum[] c1 =
+//		{
+//			REV_MGMT_RECORD_ID, REV_SELECTED, REV_SEQ, REV_SORT_ITEM_REVID,
+//			REV_SORT_ORDER_CODE, REV_SORT_DELTA_TITLE, REV_SORT_SHEETNUM,
+//			REV_ITEM_VISIBLE, REV_ITEM_BLOCK_TITLE, REV_ITEM_DATE,
+//			REV_SORT_ITEM_BASIS, REV_SORT_ITEM_DESC, REV_TAG_ELEM_ID, REV_CLOUD_ELEM_ID,
+//			cSort,
+//		};
+//
+//		private static CompareStrSort[] c2 =
+//		{
+//			REV_MGMT_RECORD_ID, REV_SELECTED, REV_SEQ, REV_SORT_ITEM_REVID,
+//			REV_SORT_ORDER_CODE, REV_SORT_DELTA_TITLE, REV_SORT_SHEETNUM,
+//			REV_ITEM_VISIBLE, REV_ITEM_BLOCK_TITLE, REV_ITEM_DATE,
+//			REV_SORT_ITEM_BASIS, REV_SORT_ITEM_DESC, REV_TAG_ELEM_ID, REV_CLOUD_ELEM_ID,
+//			cSort,
+//		};
+
 
 #endregion
 
@@ -356,14 +415,12 @@ namespace TestConsoleApp
 		{
 			DataEnum copy = new DataEnum(item.DescItemIdx, item.DataIdx);
 
-			copy.Column               = item.Column;
-			copy.Source               = item.Source;
-			copy.Name                 = item.Name;
-			copy.Display.ColumnWidth  = item.Display.ColumnWidth;
-			copy.Display.Font         = item.Display.Font;
-			copy.Display.FormatString = item.Display.FormatString;
-			copy.Title                = item.Title;
-			copy.Type                 = item.Type;
+//			copy.Column  = item.Column;
+			copy.Source  = item.Source;
+			copy.Name    = item.Name;
+			copy.Display = item.Display.Clone();
+			copy.Title   = item.Title;
+			copy.Type    = item.Type;
 
 			return copy;
 		}
@@ -371,61 +428,53 @@ namespace TestConsoleApp
 #endregion
 
 #region + Column Helpers
-
-		public static void ResetColumnList()
-		{
-			ColumnList = new List<DataEnum>(PropertyCount);
-		}
-
-		public static IEnumerable<DataEnum> ItemsInColumnOrder()
-		{
-			foreach (DataEnum item in ColumnList)
-			{
-				yield return item;
-			}
-		}
-
-		public static void SetColumns(int col)
-		{
-			ResetColumnList();
-
-			foreach (DataEnum item in DataList)
-			{
-				item.Column = col;
-			}
-		}
-
-		public static void ResetColumnOrder()
-		{
-			ResetColumnList();
-
-			foreach (DataEnum item in DataList)
-			{
-				item.Column = item.DataIdx;
-				ColumnList.Insert(item.DataIdx, item);
-			}
-		}
-
-		public static void SetColumnOrder()
-		{
-			ResetColumnList();
-
-			foreach (DataEnum item in DataList)
-			{
-				if (item.Column < 0) continue;
-				ColumnList.Add(item);
-			}
-
-			ColumnList.Sort(CompareColumns);
-		}
-
-		private static int CompareColumns(DataEnum x, DataEnum y)
-		{
-			return x.Column.CompareTo(y.Column);
-		}
+//
+//		public static void ResetColumnList()
+//		{
+//			ColumnList = new List<DataEnum>(PropertyCount);
+//		}
+//
+//		public static void SetColumns(int col)
+//		{
+//			ResetColumnList();
+//
+//			foreach (DataEnum item in DataList)
+//			{
+//				item.Column = col;
+//			}
+//		}
+//
+//		public static void ResetColumnOrder()
+//		{
+//			ResetColumnList();
+//
+//			foreach (DataEnum item in DataList)
+//			{
+//				item.Column = item.DataIdx;
+//				ColumnList.Insert(item.DataIdx, item);
+//			}
+//		}
+//
+//		public static void SetColumnOrder()
+//		{
+//			ResetColumnList();
+//
+//			foreach (DataEnum item in DataList)
+//			{
+//				if (item.Column < 0) continue;
+//				ColumnList.Add(item);
+//			}
+//
+//			ColumnList.Sort(CompareColumns);
+//		}
+//
+//		private static int CompareColumns(DataEnum x, DataEnum y)
+//		{
+//			return x.Column.CompareTo(y.Column);
+//		}
 
 #endregion
 
-#endregion
+
 	}
 }

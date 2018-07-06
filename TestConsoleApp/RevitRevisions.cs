@@ -1,8 +1,9 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using static TestConsoleApp.DataItems.EDataFields;
 
-using static TestConsoleApp.RevisionUtil;
+using static TestConsoleApp.DataItems.EDataFields;
+using static TestConsoleApp.DataItems;
 
 namespace TestConsoleApp
 {
@@ -12,10 +13,154 @@ namespace TestConsoleApp
 
 		private static int count = 0;
 
+		public static int MaxRevision = -1;
+
+		public static List<string[]> RevitRevisionInfo;
+
 		public static RevisionData Read()
 		{
+			RevitRevInfo();
+
+			MaxRevision = ScanForMaxInListOfStringArray(RevitRevisionInfo, 
+				(int) ERevitRevInfo.REV_ID);
+
 			return Scan();
 		}
+
+		// has two purposes: 
+		// translate the data read to the correct format
+		// basically nothing for most
+		// put the data in the correct order
+		// [i] = is the order from the above
+		// [j] = the correct order in the array
+		private static RevisionDataFields MakeRevDataItem(dynamic[] items)
+		{
+			RevisionDataFields di = new RevisionDataFields();
+
+			di.Order = count++;
+
+			for (int i = 0; i < items.Length; i++)
+			{
+				DataEnum d = xlate[i];
+				int j = d.DataIdx;
+
+				switch (i)
+				{
+				// selected
+				case 0:		
+					{
+						di[j] = bool.Parse(items[i]);
+						break;
+					}
+				// rev order code
+				case 2:
+					{
+						RevOrderCode rc = new RevOrderCode();
+						rc.AltId = items[i++];
+						REV_SUB_ALTID.Display.DataWidth = rc.AltId.Length;
+
+						rc.TypeCode = items[i++];
+						REV_SUB_TYPE_CODE.Display.DataWidth = rc.TypeCode.Length;
+
+						rc.DisciplineCode = items[i];
+						REV_SUB_DISCIPLINE_CODE.Display.DataWidth = rc.DisciplineCode.Length;
+
+						di[j] = rc;
+
+						items[i] = rc;
+
+						break;
+					}
+				// sequence
+				case 1:
+				// tag elem id
+				case 13:	
+				// cloud elem id
+				case 14:	
+					{
+						di[j] = Int32.Parse(items[i]);
+						break;
+					}
+				// visibility
+				case 7:		
+					{
+						di[j] = Enum.Parse(typeof(RevisionVisibility), items[i]);
+						break;
+					}
+				// date
+				case 10:
+					{
+						di[j] = DateTime.Parse(items[i]);
+						break;
+					}
+				default:	// all else - string
+					{
+						di[j] = items[i];
+						break;
+					}
+				}
+
+				d.Display.DataWidth = (items[i]?.ToString() ?? "").Length;
+
+			}
+
+			return di;
+		}
+
+		// scan the revit revisions to determine the 
+		// largest revision (bulletin or addenda)
+		private static int ScanForMaxInListOfStringArray(List<string[]> list, int idx)
+		{
+			int max = -1;
+
+			foreach (string[] s in list)
+			{
+				if (s[idx].Length == 0)
+				{
+					continue;
+				}
+
+				int test = Int32.Parse(s[idx]);
+
+				if (test > max) max = test;
+			}
+
+			return max;
+		}
+
+		private static DataEnum[] xlate =
+		{
+			//  0
+			REV_SELECTED,
+			//  1
+			REV_SEQ,
+			//  2
+			REV_SORT_ORDER_CODE,
+			//  3 -> put into a RevOrderCode
+			REV_SORT_ORDER_CODE,
+			//  4 -> put into a RevOrderCode
+			REV_SORT_ORDER_CODE,
+			//  5
+			REV_SORT_DELTA_TITLE,
+			//  6
+			REV_SORT_SHEETNUM,
+			//  7
+			REV_ITEM_VISIBLE,
+			//  8
+			REV_SORT_ITEM_REVID,
+			//  9
+			REV_ITEM_BLOCK_TITLE,
+			// 10
+			REV_ITEM_DATE,
+			// 11
+			REV_SORT_ITEM_BASIS,
+			// 12
+			REV_SORT_ITEM_DESC,
+			// 13
+			REV_TAG_ELEM_ID,
+			// 14
+			REV_CLOUD_ELEM_ID,
+		};
 
 		public static RevisionData Scan()
 		{
@@ -38,13 +183,15 @@ namespace TestConsoleApp
 				"BULLETIN 001",	// 9 =>  7 // block title
 				"1/1/2018",		//10 =>  8 // date
 				"pcc",			//11 =>  9 // basis
-				"rev desc 1-cs000-000-1", //12 => 10 // desc
+				"rev desc 1-cs000-000-1 this description has been made extra "
+					+ "long in order to test what happens when a description is "
+					+ "very long.  I've made this description into two"
+					+ "sentences to test this also", //12 => 10 // desc
 				"-1",			//13 => 11 // tag elem id
 				"209594"		//14 => 12 // cloud elem id
 			};
 
-			data.Add("> >1.00.00.00<>CS000 <>BULLETIN 001 <>0002<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
 
 			Items = new dynamic[]
 			{
@@ -66,8 +213,7 @@ namespace TestConsoleApp
 
 			};
 
-			data.Add("> >1.00.00.00<>CS000 <>BULLETIN 001 <>0004<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
 
 			Items = new dynamic[]
 			{
@@ -88,8 +234,7 @@ namespace TestConsoleApp
 				"209594",
 			};
 
-			data.Add("> >1.00.00.00<>CS000 <>BULLETIN 001 <>0006<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
 
 			Items = new dynamic[]
 			{
@@ -110,8 +255,7 @@ namespace TestConsoleApp
 				"209594",
 			};
 
-			data.Add("> >1.00.00.00<>CS100 <>BULLETIN 001 <>0000<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
 
 			Items = new dynamic[]
 			{
@@ -132,8 +276,7 @@ namespace TestConsoleApp
 				"213234",
 			};
 
-			data.Add("> >1.10.00.00<>CS000 <>ASI 007 <>0013<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
 
 			Items = new dynamic[]
 			{
@@ -154,8 +297,7 @@ namespace TestConsoleApp
 				"213234",
 			};
 
-			data.Add("> >1.10.00.00<>CS000 <>ASI 007 <>0014<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
 
 			Items = new dynamic[]
 			{
@@ -176,8 +318,7 @@ namespace TestConsoleApp
 				"213234",
 			};
 
-			data.Add("> >1.10.00.00<>CS000 <>ASI 007 <>0015<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
 
 			Items = new dynamic[]
 			{
@@ -198,113 +339,9 @@ namespace TestConsoleApp
 				"214040",
 			};
 
-			data.Add("> >1.10.00.00<>CS000 <>ASI 008 <>0065<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
 
-			Items = new dynamic[]
-			{
-				"False",
-				"12",
-				"6",
-				".20",
-				".07.00",
-				"RFI 601",
-				"1A A201",
-				"TagVisible",
-				"",
-				"RFI 601 (BULLETIN 006)",
-				"6/3/2018",
-				"owner rev",
-				"rev desc 1A A201 -006-301-1",
-				"-1",
-				"226383",
-			};
-			data.Add("> >6.20.07.00<>1A A201             <>RFI 601         <>0121<<",
-				MakeRevDataItem(Items));
-
-			Items = new dynamic[]
-			{
-				"False",
-				"12",
-				"6",
-				".20",
-				".07.00",
-				"RFI 601",
-				"1A A202",
-				"TagVisible",
-				"",
-				"RFI 601 (BULLETIN 006)",
-				"6/3/2018",
-				"pcc",
-				"rev desc 1A A202 -006-301-1",
-				"-1",
-				"226383",
-			};
-			data.Add("> >6.20.07.00<>1A A202             <>RFI 601         <>0127<<",
-				MakeRevDataItem(Items));
-
-			Items = new dynamic[]
-			{
-				"False",
-				"12",
-				"6",
-				".20",
-				".07.00",
-				"RFI 601",
-				"1A A202",
-				"TagVisible",
-				"",
-				"RFI 601 (BULLETIN 006)",
-				"6/3/2018",
-				"rfi",
-				"rev desc 1A A202 -006-301-1",
-				"-1",
-				"226383",
-			};
-			data.Add("> >6.20.07.00<>1A A202             <>RFI 601         <>0128<<",
-				MakeRevDataItem(Items));
-
-			Items = new dynamic[]
-			{
-				"False",
-				"12",
-				"6",
-				".20",
-				".07.00",
-				"RFI 601",
-				"1B A201",
-				"TagVisible",
-				"",
-				"RFI 601 (BULLETIN 006)",
-				"6/3/2018",
-				"rfi",
-				"rev desc 1B A201 -006-301-1",
-				"-1",
-				"226383",
-			};
-			data.Add("> >6.20.07.00<>1B A201             <>RFI 601         <>0131<<",
-				MakeRevDataItem(Items));
-
-			Items = new dynamic[]
-			{
-				"False",
-				"12",
-				"6",
-				".20",
-				".07.00",
-				"RFI 601",
-				"AA A2.20-201.10",
-				"TagVisible",
-				"",
-				"RFI 601 (BULLETIN 006)",
-				"6/3/2018",
-				"rfi",
-				"",
-				"-1",
-				"226383",
-			};
-			data.Add("> >6.20.07.00<>AA A2.20-201.10     <>RFI 601         <>0141<<",
-				MakeRevDataItem(Items));
+			
 
 			Items = new dynamic[]
 			{
@@ -324,8 +361,7 @@ namespace TestConsoleApp
 				"-1",
 				"226131",
 			};
-			data.Add("> >6.10.07.00<>1A A201             <>ASI 013         <>0120<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
 
 			Items = new dynamic[]
 			{
@@ -345,8 +381,7 @@ namespace TestConsoleApp
 				"-1",
 				"226131",
 			};
-			data.Add("> >6.10.07.00<>1A A201             <>ASI 013         <>0123<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
 
 			Items = new dynamic[]
 			{
@@ -366,8 +401,7 @@ namespace TestConsoleApp
 				"-1",
 				"226131",
 			};
-			data.Add("> >6.10.07.00<>1A A202             <>ASI 013         <>0125<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
 
 			Items = new dynamic[]
 			{
@@ -387,8 +421,7 @@ namespace TestConsoleApp
 				"-1",
 				"226131",
 			};
-			data.Add("> >6.10.07.00<>1A A202             <>ASI 013         <>0126<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
 
 			Items = new dynamic[]
 			{
@@ -408,8 +441,7 @@ namespace TestConsoleApp
 				"-1",
 				"226131",
 			};
-			data.Add("> >6.10.07.00<>1B A201             <>ASI 013         <>0130<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
 
 			Items = new dynamic[]
 			{
@@ -429,8 +461,7 @@ namespace TestConsoleApp
 				"-1",
 				"226131",
 			};
-			data.Add("> >6.10.07.00<>1B A201             <>ASI 013         <>0133<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
 
 			Items = new dynamic[]
 			{
@@ -450,8 +481,7 @@ namespace TestConsoleApp
 				"-1",
 				"226131",
 			};
-			data.Add("> >6.10.07.00<>AA A2.20-201.10     <>ASI 013         <>0140<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
 
 			Items = new dynamic[]
 			{
@@ -471,8 +501,153 @@ namespace TestConsoleApp
 				"-1",
 				"226131",
 			};
-			data.Add("> >6.10.07.00<>AA A2.20-201.10     <>ASI 013         <>0143<<",
-				MakeRevDataItem(Items));
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 006
+			Items = new dynamic[]
+			{
+				"False",
+				"9",
+				"6",
+				".00",
+				".00.00",
+				"BULLETIN 006",
+				"CS000",
+				"CloudAndTagVisible",
+				"6",
+				"BULLETIN 006",
+				"6/1/2018",
+				"owner rev",
+				"rev desc 1-cs000-006-xx1",
+				"-1",
+				"225501",
+
+			};
+
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 006
+			Items = new dynamic[]
+			{
+				"False",
+				"10",
+				"7",
+				".00",
+				".00.00",
+				"BULLETIN 007",
+				"CS000",
+				"CloudAndTagVisible",
+				"7",
+				"BULLETIN 007",
+				"7/1/2018",
+				"owner rev",
+				"rev desc 1-cs000-006-xx1",
+				"-1",
+				"225501",
+
+			};
+
+			data.Add(MakeRevDataItem(Items));
+
+			Items = new dynamic[]
+			{
+				"False",
+				"12",
+				"7",
+				".20",
+				".07.00",
+				"RFI 701",
+				"1A A201",
+				"TagVisible",
+				"",
+				"RFI 701 (BULLETIN 007)",
+				"7/3/2018",
+				"owner rev",
+				"rev desc 1A A201 -007-301-1",
+				"-1",
+				"227383",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			Items = new dynamic[]
+			{
+				"False",
+				"12",
+				"7",
+				".20",
+				".07.00",
+				"RFI 701",
+				"1A A202",
+				"TagVisible",
+				"",
+				"RFI 701 (BULLETIN 007)",
+				"7/3/2018",
+				"pcc",
+				"rev desc 1A A202 -007-301-1",
+				"-1",
+				"227383",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			Items = new dynamic[]
+			{
+				"False",
+				"12",
+				"7",
+				".20",
+				".07.00",
+				"RFI 701",
+				"1A A202",
+				"TagVisible",
+				"",
+				"RFI 701 (BULLETIN 007)",
+				"7/3/2018",
+				"rfi",
+				"rev desc 1A A202 -007-301-1",
+				"-1",
+				"227383",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			Items = new dynamic[]
+			{
+				"False",
+				"12",
+				"7",
+				".20",
+				".07.00",
+				"RFI 701",
+				"1B A201",
+				"TagVisible",
+				"",
+				"RFI 701 (BULLETIN 007)",
+				"7/3/2018",
+				"rfi",
+				"rev desc 1B A201 -007-301-1",
+				"-1",
+				"226383",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			Items = new dynamic[]
+			{
+				"False",
+				"12",
+				"7",
+				".20",
+				".07.00",
+				"RFI 701",
+				"AA A2.20-201.10",
+				"TagVisible",
+				"",
+				"RFI 701 (BULLETIN 007)",
+				"7/3/2018",
+				"rfi",
+				"",
+				"-1",
+				"227383",
+			};
+			data.Add(MakeRevDataItem(Items));
 
 
 			return data;
@@ -484,87 +659,180 @@ namespace TestConsoleApp
 		// that is, data item read first (the 0 slot)
 		// gets placed into the "REV_SELECTED.DataIdx"
 		// position in the array
-		private static int[] xlate =
+
+		enum ERevitRevInfo
 		{
-			REV_SELECTED.DataIdx,					//  0
-			REV_SEQ.DescItemIdx,					//  1
-			REV_KEY_ORDER_CODE.DescItemIdx,			//  2 - ignore-+
-			REV_SUB_TYPE_CODE.DescItemIdx,			//  3 - ignore +--> put into a RevOrderCode
-			REV_SUB_DISCIPLINE_CODE.DescItemIdx,	//  4 - ignore-+
-			REV_KEY_DELTA_TITLE.DescItemIdx,		//  5
-			REV_KEY_SHEETNUM.DescItemIdx,			//  6
-			REV_ITEM_VISIBLE.DescItemIdx,			//  7
-			REV_ITEM_REVID.DescItemIdx,				//  8
-			REV_ITEM_BLOCK_TITLE.DescItemIdx,		//  9
-			REV_ITEM_DATE.DescItemIdx,				// 10
-			REV_ITEM_BASIS.DescItemIdx,				// 11
-			REV_ITEM_DESC.DescItemIdx,				// 12
-			REV_TAG_ELEM_ID.DescItemIdx,			// 13
-			REV_CLOUD_ELEM_ID.DescItemIdx,			// 14
-		};
+			SEQ_NUM,
+			REV_ID,
+			ALT_ID,
+			ISSUED,
+			BLOCK_TITLE,
+			DELTA_TITLE,
+			REV_DATE,
+			NUM_TYPE,
+			VISIBILITY
+		}
 
-		// has two purposes: 
-		// translate the data read to the correct format
-		// basically nothing for most
-		// put the data in the correct order
-		private static RevisionDataFields MakeRevDataItem(dynamic[] items)
+		private static void RevitRevInfo()
 		{
-			RevisionDataFields di = new RevisionDataFields();
-
-			di.Order = count++;
-
-			int len = items.Length;
-			int last = len - 1;
-			int nextToLast = len - 2;
-
-			for (int i = 0; i < items.Length; i++)
+			RevitRevisionInfo = new List<string[]>
 			{
-				int j = xlate[i];
-
-				switch (i)
+				new string[]
 				{
-				case 0:		// selected
-					{
-						di[j] = bool.Parse(items[i]);
-						break;
-					}
-				case 2:
-					{
-						RevOrderCode rc = new RevOrderCode();
-						rc.AltId = items[i++];
-						rc.TypeCode = items[i++];
-						rc.DisciplineCode = items[i];
+					"1",
+					"1",
+					"1",
+					"False",
+					"BULLETIN 001",
+					"BULLETIN 001",
+					"1/1/2018",
+					"Alphanumeric",
+					"Hidden"
+				},
 
-						di[j] = rc;
+				new string[]
+				{
+					"2",
+					"",
+					"1",
+					"False",
+					"ASI 007 (BULLETIN 001)",
+					"ASI 007",
+					"1/7/2018",
+					"None",
+					"TagVisible"
+				},
 
-						break;
-					}
-				case 1:		// sequence
-				case 13:	// tag elem id
-				case 14:	// cloud elem id
-					{
-						di[j] = Int32.Parse(items[i]);
-						break;
-					}
-				case 7:		// visibility
-					{
-						di[j] = Enum.Parse(typeof(RevisionVisibility), items[i]);
-						break;
-					}
-				case 10:
-					{
-						di[j] = DateTime.Parse(items[i]);
-						break;
-					}
-				default:	// all else - string
-					{
-						di[j] = items[i];
-						break;
-					}
-				}
-			}
+				new string[]
+				{
+					"3",
+					"",
+					"1",
+					"False",
+					"ASI 008 (BULLETIN 001)",
+					"ASI 008",
+					"1/8/2018",
+					"None",
+					"CloudAndTagVisible"
+				},
 
-			return di;
+				new string[]
+				{
+					"4",
+					"",
+					"1",
+					"False",
+					"RFI 101 (BULLETIN 001)",
+					"RFI 101",
+					"1/9/2018",
+					"None",
+					"CloudAndTagVisible"
+				},
+
+				new string[]
+				{
+					"5",
+					"3",
+					"3",
+					"False",
+					"BULLETIN 003",
+					"BULLETIN 003",
+					"3/1/2018",
+					"Alphanumeric",
+					"Hidden"
+				},
+
+				new string[]
+				{
+					"6",
+					"",
+					"3",
+					"False",
+					"ASI 010 (BULLETIN 003)",
+					"ASI 010",
+					"3/10/2018",
+					"None",
+					"CloudAndTagVisible"
+				},
+
+				new string[]
+				{
+					"7",
+					"",
+					"3",
+					"False",
+					"ASI 012 (BULLETIN 003)",
+					"ASI 012",
+					"3/12/2018",
+					"None",
+					"CloudAndTagVisible"
+				},
+
+				new string[]
+				{
+					"8",
+					"",
+					"3",
+					"False",
+					"RFI 301 (BULLETIN 003)",
+					"RFI 301",
+					"3/13/2018",
+					"None",
+					"Hidden"
+				},
+
+				new string[]
+				{
+					"9",
+					"5",
+					"5",
+					"False",
+					"BULLETIN 005",
+					"BULLETIN 005",
+					"5/1/2018",
+					"Alphanumeric",
+					"CloudAndTagVisible"
+				},
+
+				new string[]
+				{
+					"10",
+					"6",
+					"6",
+					"False",
+					"BULLETIN 006",
+					"BULLETIN 006",
+					"6/1/2018",
+					"Alphanumeric",
+					"CloudAndTagVisible",
+				},
+
+				new string[]
+				{
+					"11",
+					"",
+					"6",
+					"False",
+					"ASI 013 (BULLETIN 006)",
+					"ASI 013",
+					"6/2/2018",
+					"None",
+					"CloudAndTagVisible",
+				},
+
+				new string[]
+				{
+					"12",
+					"",
+					"6",
+					"False",
+					"RFI 601 (BULLETIN 006)",
+					"RFI 601",
+					"6/3/2018",
+					"None",
+					"TagVisible"
+				},
+			};
 		}
 
 		#endregion

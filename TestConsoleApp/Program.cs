@@ -4,16 +4,20 @@
 //RevisionDataFields
 //    v    -> dynamic[]  (_revDataFields)
 //    |
-//    +---------------------------+------> RevisionDataMgr --> RevisioinSelect
-//                                |
-//RevisionData                    |
-//    v    -> SortedList<string,  v
-//    |               RevisionDataFields>         
+//    +--------------------+------> RevisionDataMgr --> RevisioinSelect
+//                         |
+//RevisionData             v
+//    v    -> List<RevisionDataFields>         
 //    +------------+         (_revisionData)
 //                 |
 //RevisionDataMgr  v
-//        -> RevisionData (_masterRevData)
-//        -> RevisionData (_preSelected)
+//                        // the complete list of revit revision data, etc.
+//        -> RevisionData (_masterRevData) 
+//                        // a copy of the master date & a reduced set 
+//                        // of revision data when selecting from a 
+//                        // prior selection set
+//        -> RevisionData (_preSelected)   
+//                        // the selected data
 //        -> RevisionData (_selected)
 //     
 //RevisionFilters
@@ -31,10 +35,10 @@
 //
 //RevisionEnums
 //        -> List<RootEnum>           (RootList)
-//        -> List<DescEnum>               (DescList)
+//        -> List<DescEnum>           (DescList)
 //        -> List<DataEnum>           (DataList)
 //        -> List<FilterEnum>         (FilterList)
-//        -> List<MgmtEnum>           (MgmtList)
+//
 //        -> List<DataEnum>           (ColumnList)
 
 
@@ -46,7 +50,7 @@ namespace TestConsoleApp
 
 		static void Main(string[] args)
 		{
-			RevisionUtil.Process();
+			RevisionTest.Process();
 
 			Console.Write("Waiting:");
 			Console.ReadKey();

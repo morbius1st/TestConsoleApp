@@ -120,8 +120,9 @@ namespace TestConsoleApp
 		{
 			public FilterEnum FilterEnum { get;  }
 			public CompareOpRoot CompareOpr { get;  }
-			public ItemValue TestValue { get;  }
-			public bool IgnoreCase { get;  }
+			public ItemValue TestValue { get;  } = null;
+			public bool IgnoreCase { get;  } = true;
+			public SubDataEnum SubDataEnum { get; } = null;
 
 			// Any
 			public Criteria(FilterEnum filterEnum,
@@ -129,8 +130,8 @@ namespace TestConsoleApp
 			{
 				FilterEnum = filterEnum;
 				CompareOpr = (CompareOpRoot) compareOprAny;
-				TestValue = null;
-				IgnoreCase = true;
+//				TestValue = null;
+//				IgnoreCase = true;
 			}
 
 			// basic / RevitVisibility
@@ -140,7 +141,7 @@ namespace TestConsoleApp
 				FilterEnum = filterEnum;
 				CompareOpr = (CompareOpRoot) compareOpr;
 				TestValue = new ItemValue(testValue);
-				IgnoreCase = true;
+//				IgnoreCase = true;
 			}
 
 			// basic / ElementId
@@ -150,7 +151,7 @@ namespace TestConsoleApp
 				FilterEnum = filterEnum;
 				CompareOpr =  (CompareOpRoot) compareOpr;
 				TestValue = new ItemValue(testValue);
-				IgnoreCase = true;
+//				IgnoreCase = true;
 			}
 
 			// bool
@@ -159,8 +160,8 @@ namespace TestConsoleApp
 			{
 				FilterEnum = filterEnum;
 				CompareOpr = compareOpr;
-				TestValue = null;
-				IgnoreCase = true;
+//				TestValue = null;
+//				IgnoreCase = true;
 			}
 
 			// extended
@@ -170,7 +171,27 @@ namespace TestConsoleApp
 				FilterEnum = filterEnum;
 				CompareOpr = (CompareOpRoot) compareOpr;
 				TestValue = new ItemValue(testValue);
-				IgnoreCase = true;
+//				IgnoreCase = true;
+			}
+
+			// strings
+			public Criteria(CompareStrSortable filterEnum,
+				ICompStringUnary compareOpr)
+			{
+				FilterEnum = filterEnum;
+				CompareOpr = (CompareOpRoot) compareOpr;
+//				TestValue = null;
+//				IgnoreCase = true;
+			}
+
+			public Criteria(CompareStrSortable filterEnum,
+				ICompStringBinary compareOpr,
+				string testValue, bool ignoreCase = true)
+			{
+				FilterEnum = filterEnum;
+				CompareOpr = (CompareOpRoot) compareOpr;
+				TestValue = new ItemValue(testValue);
+				IgnoreCase = ignoreCase;
 			}
 
 			// strings
@@ -179,8 +200,8 @@ namespace TestConsoleApp
 			{
 				FilterEnum = filterEnum;
 				CompareOpr = (CompareOpRoot) compareOpr;
-				TestValue = null;
-				IgnoreCase = true;
+//				TestValue = null;
+//				IgnoreCase = true;
 			}
 
 			public Criteria(CompareStrEnum filterEnum,
@@ -194,18 +215,40 @@ namespace TestConsoleApp
 			}
 
 			// RevOrderCode
-				public Criteria(CompareOrderEnum filterEnum,
+			// unary
+			public Criteria(CompareOrderEnum filterEnum,
 				ICompStringUnary compareOpr)
 			{
 				FilterEnum = filterEnum;
 				CompareOpr = (CompareOpRoot) compareOpr;
-				TestValue = null;
-				IgnoreCase = true;
+			}
+
+			public Criteria(CompareOrderEnum filterEnum,
+				ICompStringUnary compareOpr, 
+				ISubRevOrderCode subDataEnum = null)
+			{
+				FilterEnum = filterEnum;
+				CompareOpr = (CompareOpRoot) compareOpr;
+				SubDataEnum = subDataEnum as SubDataEnum;
+			}
+
+			// binary
+			public Criteria(CompareOrderEnum filterEnum,
+				ICompStringBinary compareOpr,
+				string testValue,
+				ISubRevOrderCode subDataEnum = null, 
+				bool ignoreCase = true)
+			{
+				FilterEnum = filterEnum;
+				CompareOpr = (CompareOpRoot) compareOpr;
+				SubDataEnum = subDataEnum as SubDataEnum;
+				TestValue = new ItemValue(testValue);
+				IgnoreCase = ignoreCase;
 			}
 
 			public Criteria(CompareOrderEnum filterEnum,
 				ICompStringBinary compareOpr,
-				string testValue, bool ignoreCase = true)
+				string testValue, bool ignoreCase)
 			{
 				FilterEnum = filterEnum;
 				CompareOpr = (CompareOpRoot) compareOpr;

@@ -150,38 +150,38 @@ namespace TestConsoleApp
 
 		public RevOrderCode OrderCode
 		{
-			get =>  _revDataFields[REV_KEY_ORDER_CODE.DataIdx];
-			set =>  _revDataFields[REV_KEY_ORDER_CODE.DataIdx] = value;
+			get =>  _revDataFields[REV_SORT_ORDER_CODE.DataIdx];
+			set =>  _revDataFields[REV_SORT_ORDER_CODE.DataIdx] = value;
 		}
 
 		public string AltId
 		{
-			get => ((RevOrderCode) _revDataFields[REV_KEY_ORDER_CODE.DataIdx]).AltId;
-			set => _revDataFields[REV_KEY_ORDER_CODE.DataIdx].AltId = value;
+			get => ((RevOrderCode) _revDataFields[REV_SORT_ORDER_CODE.DataIdx]).AltId;
+			set => _revDataFields[REV_SORT_ORDER_CODE.DataIdx].AltId = value;
 		}
 
 		public string TypeCode
 		{
-			get => ((RevOrderCode) _revDataFields[REV_KEY_ORDER_CODE.DataIdx]).TypeCode;
-			set => _revDataFields[REV_KEY_ORDER_CODE.DataIdx].TypeCode = value;
+			get => ((RevOrderCode) _revDataFields[REV_SORT_ORDER_CODE.DataIdx]).TypeCode;
+			set => _revDataFields[REV_SORT_ORDER_CODE.DataIdx].TypeCode = value;
 		}
 
 		public string DisciplineCode
 		{
-			get => ((RevOrderCode) _revDataFields[REV_KEY_ORDER_CODE.DataIdx]).DisciplineCode;
-			set => _revDataFields[REV_KEY_ORDER_CODE.DataIdx].DisciplineCode = value;
+			get => ((RevOrderCode) _revDataFields[REV_SORT_ORDER_CODE.DataIdx]).DisciplineCode;
+			set => _revDataFields[REV_SORT_ORDER_CODE.DataIdx].DisciplineCode = value;
 		}
 
 		public string DeltaTitle
 		{
-			get => _revDataFields[ REV_KEY_DELTA_TITLE.DataIdx];
-			set => _revDataFields[ REV_KEY_DELTA_TITLE.DataIdx] = value;
+			get => _revDataFields[ REV_SORT_DELTA_TITLE.DataIdx];
+			set => _revDataFields[ REV_SORT_DELTA_TITLE.DataIdx] = value;
 		}
 
 		public string ShtNum
 		{
-			get => _revDataFields[ REV_KEY_SHEETNUM.DataIdx];
-			set => _revDataFields[ REV_KEY_SHEETNUM.DataIdx] = value;
+			get => _revDataFields[ REV_SORT_SHEETNUM.DataIdx];
+			set => _revDataFields[ REV_SORT_SHEETNUM.DataIdx] = value;
 		}
 
 		public RevisionVisibility Visibility
@@ -192,8 +192,8 @@ namespace TestConsoleApp
 
 		public string RevisionId
 		{
-			get => _revDataFields[ REV_ITEM_REVID.DataIdx];
-			set => _revDataFields[ REV_ITEM_REVID.DataIdx] = value;
+			get => _revDataFields[ REV_SORT_ITEM_REVID.DataIdx];
+			set => _revDataFields[ REV_SORT_ITEM_REVID.DataIdx] = value;
 		}
 
 		public string BlockTitle
@@ -210,8 +210,8 @@ namespace TestConsoleApp
 
 		public string Basis
 		{
-			get => _revDataFields[ REV_ITEM_BASIS.DataIdx];
-			set => _revDataFields[ REV_ITEM_BASIS.DataIdx] = value;
+			get => _revDataFields[ REV_SORT_ITEM_BASIS.DataIdx];
+			set => _revDataFields[ REV_SORT_ITEM_BASIS.DataIdx] = value;
 		}
 
 		public ElementId TagElemId
@@ -225,15 +225,23 @@ namespace TestConsoleApp
 			get => _revDataFields[ REV_CLOUD_ELEM_ID.DataIdx];
 			set => _revDataFields[ REV_CLOUD_ELEM_ID.DataIdx] = value;
 		}
+		
 		public string Description
 		{
-			get => _revDataFields[ REV_ITEM_DESC.DataIdx];
-			set => _revDataFields[ REV_ITEM_DESC.DataIdx] = value;
+			get => _revDataFields[ REV_SORT_ITEM_DESC.DataIdx];
+			set => _revDataFields[ REV_SORT_ITEM_DESC.DataIdx] = value;
 		}
+
 		public int Order
 		{
 			get => _revDataFields[ REV_MGMT_RECORD_ID.DataIdx];
 			set => _revDataFields[ REV_MGMT_RECORD_ID.DataIdx] = value;
+		}
+
+		public string SortKey
+		{
+			get => _revDataFields[ REV_SORT_KEY.DataIdx];
+			set => _revDataFields[ REV_SORT_KEY.DataIdx] = value;
 		}
 
 		#endregion
