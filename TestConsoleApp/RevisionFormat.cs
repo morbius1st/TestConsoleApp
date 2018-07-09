@@ -37,35 +37,29 @@ namespace TestConsoleApp
 		// exactly ColWidth in size
 		// and then the margins are added to
 		// the left / right sides resp.
-		public static string FormatTitle(string[] titles, 
-			RevisionDataDisplay dd, int row, char filler = (char) 0)
+		public static string FormatForColumn(string value, 
+			RevisionDataDisplay dd, 
+			char left = ' ', char right = ' ', 
+			Justification justification = Justification.UNDEFINED)
 		{
-			if (string.IsNullOrWhiteSpace(titles[row])) return "";
+			if (string.IsNullOrWhiteSpace(value)) value = "";
 
-			string formatted = Abbreviate(titles[row], 
-				dd.ColWidth, '…');
+			string formatted;
 
-			formatted = Justify(formatted, dd.JustifyColumn, dd.ColWidth);
+			formatted = Abbreviate(value, dd.ColWidth, '…');
 
-			formatted = ApplyMargin(formatted, dd.MarginLeft, dd.MarginRight, filler);
-
-			return formatted;
-		}
-
-		public static string FormatTitle(string[] titles)
-		{
-			if (titles == null) return "";
-
-			string formatted = "";
-
-			for (int i = titles.Length - 1; i >= 0; i--)
+			if (justification == Justification.UNDEFINED)
 			{
-				formatted = titles[i] + formatted;
-
-				if (i == 0 || string.IsNullOrWhiteSpace(titles[i - 1])) break;
-
-				formatted = " " + formatted;
+				formatted = Justify(formatted, dd.JustifyColumn, dd.ColWidth, left, right);
 			}
+			else
+			{
+				formatted = Justify(formatted, justification, dd.ColWidth, left, right);
+			}
+
+			formatted = ApplyMargin(formatted, dd.MarginLeft, 
+				dd.MarginRight, left, right);
+
 			return formatted;
 		}
 
@@ -106,30 +100,35 @@ namespace TestConsoleApp
 		}
 
 		public static string Justify(string formatted, 
-			Justification justifyColumn, int width)
+			Justification justifyColumn, int width, char left = ' ', char right = ' ')
 		{
+			string result = formatted;
+
 			switch (justifyColumn)
 			{
 			case Justification.LEFT:
 				{
-					return formatted.PadRight(width);
+					result = formatted.PadRight(width, left);
+					break;
 				}
 			case Justification.CENTER:
 				{
-					return formatted.PadCenter(width);
+					result = formatted.PadCenter(width, left, right);
+					break;
 				}
 			case Justification.RIGHT:
 				{
-					return formatted.PadLeft(width);
+					result = formatted.PadLeft(width, right);
+					break;
 				}
 			}
-			return formatted;
+			return result;
 		}
 
 		private static string ApplyMargin(string value,
-			int marginLeft, int marginRight, char filler = ' ')
+			int marginLeft, int marginRight, char left = ' ', char right = ' ')
 		{
-			return value.PadLeft(marginLeft,filler).PadRight(marginRight, filler);
+			return new string(left, marginLeft) + value + new string(right, marginRight);
 		}
 
 

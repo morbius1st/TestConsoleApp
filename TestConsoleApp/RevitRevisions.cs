@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using static TestConsoleApp.DataItems.EDataFields;
 
-using static TestConsoleApp.DataItems.EDataFields;
+using static TestConsoleApp.RevisionTest;
 using static TestConsoleApp.DataItems;
 
 namespace TestConsoleApp
@@ -35,9 +35,9 @@ namespace TestConsoleApp
 		// [j] = the correct order in the array
 		private static RevisionDataFields MakeRevDataItem(dynamic[] items)
 		{
-			RevisionDataFields di = new RevisionDataFields();
+			RevisionDataFields df = new RevisionDataFields();
 
-			di.Order = count++;
+			df.Order = count++;
 
 			for (int i = 0; i < items.Length; i++)
 			{
@@ -49,7 +49,7 @@ namespace TestConsoleApp
 				// selected
 				case 0:		
 					{
-						di[j] = bool.Parse(items[i]);
+						df[j] = bool.Parse(items[i]);
 						break;
 					}
 				// rev order code
@@ -65,7 +65,7 @@ namespace TestConsoleApp
 						rc.DisciplineCode = items[i];
 						REV_SUB_DISCIPLINE_CODE.Display.DataWidth = rc.DisciplineCode.Length;
 
-						di[j] = rc;
+						df[j] = rc;
 
 						items[i] = rc;
 
@@ -78,24 +78,24 @@ namespace TestConsoleApp
 				// cloud elem id
 				case 14:	
 					{
-						di[j] = Int32.Parse(items[i]);
+						df[j] = Int32.Parse(items[i]);
 						break;
 					}
 				// visibility
 				case 7:		
 					{
-						di[j] = Enum.Parse(typeof(RevisionVisibility), items[i]);
+						df[j] = Enum.Parse(typeof(RevisionVisibility), items[i]);
 						break;
 					}
 				// date
 				case 10:
 					{
-						di[j] = DateTime.Parse(items[i]);
+						df[j] = DateTime.Parse(items[i]);
 						break;
 					}
 				default:	// all else - string
 					{
-						di[j] = items[i];
+						df[j] = items[i];
 						break;
 					}
 				}
@@ -104,7 +104,39 @@ namespace TestConsoleApp
 
 			}
 
-			return di;
+			// "fix" the type code and the disc code
+			df = UpdateCodes(df);
+
+//			CompareCodes(df);
+
+			return df;
+		}
+
+		private static RevisionDataFields UpdateCodes(RevisionDataFields df)
+		{
+			df.OrderCode.TypeCode = GetTypeSortCode(df.DeltaTitle);
+			df.OrderCode.DisciplineCode  = GetDisciplineSortCode(df.ShtNum);
+
+			return df;
+		}
+
+		private static void CompareCodes(RevisionDataFields df)
+		{
+
+			string typeCode = GetTypeSortCode(df.DeltaTitle);
+			string discCode = GetDisciplineSortCode(df.ShtNum);
+
+			Console.WriteLine("adjusting sort codes");
+			Console.WriteLine("sheet number| " + df.ShtNum);
+			Console.WriteLine("alt id| " + df.OrderCode.AltId);
+			Console.WriteLine("type code current| " + df.OrderCode.TypeCode 
+				+ "  calc'd| " + typeCode 
+				+ "  match?| " + (typeCode == df.OrderCode.TypeCode ? "yes" : "*** no ***"));
+			Console.WriteLine("disc code current| " + df.OrderCode.DisciplineCode 
+				+ "  calc'd| " + discCode
+				+ "  match?| " + (discCode == df.OrderCode.DisciplineCode ? "yes" : "*** no ***"));
+			Console.Write(nl);
+
 		}
 
 		// scan the revit revisions to determine the 
@@ -477,7 +509,7 @@ namespace TestConsoleApp
 				"ASI 013 (BULLETIN 006)",
 				"6/2/2018",
 				"pcc",
-				"",
+				"Revision description ASI 013-01",
 				"-1",
 				"226131",
 			};
@@ -497,11 +529,12 @@ namespace TestConsoleApp
 				"ASI 013 (BULLETIN 006)",
 				"6/2/2018",
 				"owner rev",
-				"",
+				"Revision description ASI 013-02",
 				"-1",
 				"226131",
 			};
 			data.Add(MakeRevDataItem(Items));
+
 
 			// bulletin 006
 			Items = new dynamic[]
@@ -526,126 +559,227 @@ namespace TestConsoleApp
 
 			data.Add(MakeRevDataItem(Items));
 
-			// bulletin 006
+
+
+			// bulletin 007 - CS000 - description 1
 			Items = new dynamic[]
 			{
-				"False",
-				"10",
-				"7",
-				".00",
-				".00.00",
-				"BULLETIN 007",
-				"CS000",
-				"CloudAndTagVisible",
-				"7",
-				"BULLETIN 007",
-				"7/1/2018",
-				"owner rev",
-				"rev desc 1-cs000-006-xx1",
-				"-1",
-				"225501",
-
-			};
-
-			data.Add(MakeRevDataItem(Items));
-
-			Items = new dynamic[]
-			{
-				"False",
-				"12",
-				"7",
-				".20",
-				".07.00",
-				"RFI 701",
-				"1A A201",
-				"TagVisible",
-				"",
-				"RFI 701 (BULLETIN 007)",
-				"7/3/2018",
-				"owner rev",
-				"rev desc 1A A201 -007-301-1",
-				"-1",
-				"227383",
+				"False",  "10",  "7",  ".00",  ".00.00",  "BULLETIN 007",  "CS000",  "CloudAndTagVisible",  "7",  "BULLETIN 007",  "7/1/2018",  "owner rev",  "rev desc 1-cs000-007-xx1",  "-1",  "225501",
 			};
 			data.Add(MakeRevDataItem(Items));
 
+			// bulletin 007 - CS000 - description 1
 			Items = new dynamic[]
 			{
-				"False",
-				"12",
-				"7",
-				".20",
-				".07.00",
-				"RFI 701",
-				"1A A202",
-				"TagVisible",
-				"",
-				"RFI 701 (BULLETIN 007)",
-				"7/3/2018",
-				"pcc",
-				"rev desc 1A A202 -007-301-1",
-				"-1",
-				"227383",
+				"False",  "10",  "7",  ".00",  ".00.00",  "BULLETIN 007",  "CS000",  "CloudAndTagVisible",  "7",  "BULLETIN 007",  "7/1/2018",  "owner rev",  "rev desc 1-cs000-007-xx1",  "-1",  "225501",
 			};
 			data.Add(MakeRevDataItem(Items));
 
+			// bulletin 007 - CS000 - description 1
 			Items = new dynamic[]
 			{
-				"False",
-				"12",
-				"7",
-				".20",
-				".07.00",
-				"RFI 701",
-				"1A A202",
-				"TagVisible",
-				"",
-				"RFI 701 (BULLETIN 007)",
-				"7/3/2018",
-				"rfi",
-				"rev desc 1A A202 -007-301-1",
-				"-1",
-				"227383",
+				"False",  "10",  "7",  ".00",  ".00.00",  "BULLETIN 007",  "CS000",  "CloudAndTagVisible",  "7",  "BULLETIN 007",  "7/1/2018",  "owner rev",  "rev desc 1-cs000-007-xx1",  "-1",  "225501",
 			};
 			data.Add(MakeRevDataItem(Items));
 
+			// bulletin 007 - CS000 - description 2
 			Items = new dynamic[]
 			{
-				"False",
-				"12",
-				"7",
-				".20",
-				".07.00",
-				"RFI 701",
-				"1B A201",
-				"TagVisible",
-				"",
-				"RFI 701 (BULLETIN 007)",
-				"7/3/2018",
-				"rfi",
-				"rev desc 1B A201 -007-301-1",
-				"-1",
-				"226383",
+				"False",  "10",  "7",  ".00",  ".00.00",  "BULLETIN 007",  "CS000",  "CloudAndTagVisible",  "7",  "BULLETIN 007",  "7/1/2018",  "owner rev",  "rev desc 2-cs000-007-xx1",  "-1",  "225501",
 			};
 			data.Add(MakeRevDataItem(Items));
 
+
+
+
+			// bulletin 007 - 1A A201 - description 1
 			Items = new dynamic[]
 			{
-				"False",
-				"12",
-				"7",
-				".20",
-				".07.00",
-				"RFI 701",
-				"AA A2.20-201.10",
-				"TagVisible",
-				"",
-				"RFI 701 (BULLETIN 007)",
-				"7/3/2018",
-				"rfi",
-				"",
-				"-1",
-				"227383",
+				"False",  "10",  "7",  ".00",  ".00.00",  "BULLETIN 007",  "1A A201",  "CloudAndTagVisible",  "7",  "BULLETIN 007",  "7/1/2018",  "owner rev",  "rev desc 1-1A A201-007-xx1",  "-1",  "225501",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 007 - 1A A201 - description 1
+			Items = new dynamic[]
+			{
+				"False",  "10",  "7",  ".00",  ".00.00",  "BULLETIN 007",  "1A A201",  "CloudAndTagVisible",  "7",  "BULLETIN 007",  "7/1/2018",  "owner rev",  "rev desc 1-1A A201-007-xx1",  "-1",  "225501",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 007 - 1A A201 - description 1
+			Items = new dynamic[]
+			{
+				"False",  "10",  "7",  ".00",  ".00.00",  "BULLETIN 007",  "1A A201",  "CloudAndTagVisible",  "7",  "BULLETIN 007",  "7/1/2018",  "owner rev",  "rev desc 1-1A A201-007-xx1",  "-1",  "225501",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 007 - 1A A201 - description 2
+			Items = new dynamic[]
+			{
+				"False",  "10",  "7",  ".00",  ".00.00",  "BULLETIN 007",  "1A A201",  "CloudAndTagVisible",  "7",  "BULLETIN 007",  "7/1/2018",  "owner rev",  "rev desc 2-1A A201-007-xx1",  "-1",  "225501",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+
+
+			// bulletin 007 - 1A A202 - description 1
+			Items = new dynamic[]
+			{
+				"False",  "10",  "7",  ".00",  ".00.00",  "BULLETIN 007",  "1A A202",  "CloudAndTagVisible",  "7",  "BULLETIN 007",  "7/1/2018",  "owner rev",  "rev desc 1-1A A202-007-xx1",  "-1",  "225501",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 007 - 1A A202 - description 1
+			Items = new dynamic[]
+			{
+				"False",  "10",  "7",  ".00",  ".00.00",  "BULLETIN 007",  "1A A202",  "CloudAndTagVisible",  "7",  "BULLETIN 007",  "7/1/2018",  "owner rev",  "rev desc 1-1A A202-007-xx1",  "-1",  "225501",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 007 - 1A A202 - description 1
+			Items = new dynamic[]
+			{
+				"False",  "10",  "7",  ".00",  ".00.00",  "BULLETIN 007",  "1A A202",  "CloudAndTagVisible",  "7",  "BULLETIN 007",  "7/1/2018",  "owner rev",  "rev desc 1-1A A202-007-xx1",  "-1",  "225501",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 007 - 1A A202 - description 2
+			Items = new dynamic[]
+			{
+				"False",  "10",  "7",  ".00",  ".00.00",  "BULLETIN 007",  "1A A202",  "CloudAndTagVisible",  "7",  "BULLETIN 007",  "7/1/2018",  "owner rev",  "rev desc 2-1A A202-007-xx1",  "-1",  "225501",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+
+
+
+
+
+			// bulletin 007 / ASI 107 - sheet AA A2.20-201.10 - description 1
+			Items = new dynamic[]
+			{
+				"False",  "11",  "7",  ".10",  ".07.00",  "ASI 107",  "AA A2.20-201.10",  "CloudAndTagVisible",  "",  "ASI 107 (BULLETIN 007)",  "7/2/2018",  "owner change",  "Revision description RFI 107-01",  "-1", "226131",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 007 / ASI 107 - sheet AA A2.20-201.10 - description 1
+			Items = new dynamic[]
+			{
+				"False",  "11",  "7",  ".10",  ".07.00",  "ASI 107",  "AA A2.20-201.10",  "CloudAndTagVisible",  "",  "ASI 107 (BULLETIN 007)",  "7/2/2018",  "owner change",  "Revision description RFI 107-01",  "-1", "226131",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 007 / ASI 107 - sheet AA A2.20-201.10 - description 2
+			Items = new dynamic[]
+			{
+				"False",  "11",  "7",  ".10",  ".07.00",  "ASI 107",  "AA A2.20-201.10",  "CloudAndTagVisible",  "",  "ASI 107 (BULLETIN 007)",  "7/2/2018",  "owner change",  "Revision description RFI 107-02",  "-1", "226131",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 007 / ASI 107 - sheet AA A2.20-201.10 - description 3
+			Items = new dynamic[]
+			{
+				"False",  "11",  "7",  ".10",  ".07.00",  "ASI 107",  "AA A2.20-201.10",  "CloudAndTagVisible",  "",  "ASI 107 (BULLETIN 007)",  "7/2/2018",  "owner change",  "Revision description RFI 107-03",  "-1", "226131",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+
+
+			// bulletin 007 / ASI 107 - sheet AA A2.20-202.10 - description 1
+			Items = new dynamic[]
+			{
+				"False",  "11",  "7",  ".10",  ".07.00",  "ASI 107",  "AA A2.20-202.10",  "CloudAndTagVisible",  "",  "ASI 107 (BULLETIN 007)",  "7/2/2018",  "owner change",  "Revision description RFI 107-01",  "-1",  "226131",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 007 / ASI 107 - sheet AA A2.20-202.10 - description 2
+			Items = new dynamic[]
+			{
+				"False",  "11",  "7",  ".10",  ".07.00",  "ASI 107",  "AA A2.20-202.10",  "CloudAndTagVisible",  "",  "ASI 107 (BULLETIN 007)",  "7/2/2018",  "owner change",  "Revision description RFI 107-02",  "-1",  "226131",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 007 / ASI 107 - sheet AA A2.20-202.10 - description 3
+			Items = new dynamic[]
+			{
+				"False",  "11",  "7",  ".10",  ".07.00",  "ASI 107",  "AA A2.20-202.10",  "CloudAndTagVisible",  "",  "ASI 107 (BULLETIN 007)",  "7/2/2018",  "owner change",  "Revision description RFI 107-03",  "-1",  "226131",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 007 / ASI 107 - sheet AA A2.20-202.10 - description 4
+			Items = new dynamic[]
+			{
+				"False",  "11",  "7",  ".10",  ".07.00",  "ASI 107",  "AA A2.20-202.10",  "CloudAndTagVisible",  "",  "ASI 107 (BULLETIN 007)",  "7/2/2018",  "owner change",  "Revision description RFI 107-04",  "-1",  "226131",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 007 / ASI 107 - sheet AA A2.20-202.10 - description 5
+			Items = new dynamic[]
+			{
+				"False",  "11",  "7",  ".10",  ".07.00",  "ASI 107",  "AA A2.20-202.10",  "CloudAndTagVisible",  "",  "ASI 107 (BULLETIN 007)",  "7/2/2018",  "owner change",  "Revision description RFI 107-05",  "-1",  "226131",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 007 / ASI 107 - sheet AA A2.20-202.10 - description 5
+			Items = new dynamic[]
+			{
+				"False",  "11",  "7",  ".10",  ".07.00",  "ASI 107",  "AA A2.20-202.10",  "CloudAndTagVisible",  "",  "ASI 107 (BULLETIN 007)",  "7/2/2018",  "owner change",  "Revision description RFI 107-05",  "-1",  "226131",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+			// bulletin 007 / ASI 107 - sheet AA A2.20-202.10 - description 5
+			Items = new dynamic[]
+			{
+				"False",  "11",  "7",  ".10",  ".07.00",  "ASI 107",  "AA A2.20-202.10",  "CloudAndTagVisible",  "",  "ASI 107 (BULLETIN 007)",  "7/2/2018",  "owner change",  "Revision description RFI 107-05",  "-1",  "226131",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+
+
+
+
+
+
+			// bulletin 007 / RFI 701 - sheet 1A A201 - description 1
+			Items = new dynamic[]
+			{
+				"False",  "12",  "7",  ".20",  ".07.00",  "RFI 701",  "1A A201",  "TagVisible",  "",  "RFI 701 (BULLETIN 007)",  "7/3/2018",  "owner rev",  "rev desc rfi 701",  "-1",  "227383",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+
+
+			// bulletin 007 / RFI 701 - sheet 1A A202 - description 1
+			Items = new dynamic[]
+			{
+				"False",  "12",  "7",  ".20",  ".07.00",  "RFI 701",  "1A A202",  "TagVisible",  "",  "RFI 701 (BULLETIN 007)",  "7/3/2018",  "pcc",  "rev desc rfi 701",  "-1",  "227383",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+
+
+			// bulletin 007 / RFI 701 - sheet 1A A202 - description 1
+			Items = new dynamic[]
+			{
+				"False",  "12",  "7",  ".20",  ".07.00",  "RFI 701",  "1A A202",  "TagVisible",  "",  "RFI 701 (BULLETIN 007)",  "7/3/2018",  "rfi",  "rev desc rfi 701",  "-1", "227383",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+
+
+			// bulletin 007 / RFI 701 - sheet 1B A201 - description 1
+			Items = new dynamic[]
+			{
+				"False",  "12",  "7",  ".20",  ".07.00",  "RFI 701",  "1B A201",  "TagVisible",  "",  "RFI 701 (BULLETIN 007)",  "7/3/2018",  "rfi",  "rev desc rfi 701",  "-1",  "226383",
+			};
+			data.Add(MakeRevDataItem(Items));
+
+
+
+			// bulletin 007 / RFI 701 - sheet AA A2.20-201.10 - description 1
+			Items = new dynamic[]
+			{
+				"False",  "12",  "7",  ".20",  ".07.00",  "RFI 701",  "AA A2.20-201.10",  "TagVisible",  "",  "RFI 701 (BULLETIN 007)",  "7/3/2018",  "rfi",  "rev desc rfi 701",  "-1",  "227383",
 			};
 			data.Add(MakeRevDataItem(Items));
 
@@ -679,15 +813,15 @@ namespace TestConsoleApp
 			{
 				new string[]
 				{
-					"1",
-					"1",
-					"1",
-					"False",
-					"BULLETIN 001",
-					"BULLETIN 001",
-					"1/1/2018",
-					"Alphanumeric",
-					"Hidden"
+					"1",				// seq
+					"1",				// rev id
+					"1",				// alt_id
+					"False",			// issued
+					"BULLETIN 001",		// block title
+					"BULLETIN 001",		// delta title
+					"1/1/2018",			// rev date
+					"Alphanumeric",		// number type
+					"Hidden"			// visibility
 				},
 
 				new string[]
@@ -832,9 +966,90 @@ namespace TestConsoleApp
 					"None",
 					"TagVisible"
 				},
+
+				
+				new string[]
+				{
+					"13",
+					"7",
+					"7",
+					"False",
+					"BULLETIN 007",
+					"BULLETIN 007",
+					"7/1/2018",
+					"Alphanumeric",
+					"CloudAndTagVisible",
+				},
+
 			};
 		}
 
 		#endregion
+
+		public static string GetTypeSortCode(string revDeltaTitle)
+		{
+			string result = ".99";
+
+			switch (revDeltaTitle.Substring(0,3).ToUpper())
+			{
+			case "BUL":
+				{
+					result = ".00";
+					break;
+				}
+			case "ASI":
+				{
+					result = ".10";
+					break;
+				}
+			case "RFI":
+				{
+					result = ".20";
+					break;
+				}
+			}
+			return result;
+		}
+
+		// note: must be careful here as L will also match LS, Lt & LV
+		// so longer letter codes must occur before shorter
+		// letter codes - don't place these is ID code order
+		private static string[ , ] disicplineSortCodes = new string[,]
+		{
+			{"CS",	"00.00" },
+			{"T",	"00.02" },
+			{"LS",	"00.04" },
+			{"A",	"07.00" },
+			{"ID",	"09.00" },
+			{"S",	"11.00" },
+		};
+
+		public static string GetDisciplineSortCode(string shtNum)
+		{
+			string result = ".99";
+			string shtNumPrefix = shtNum.ToUpper();
+
+			int p = shtNumPrefix.IndexOf(' ');
+
+			if (p > 0)
+			{
+				shtNumPrefix = shtNumPrefix.Substring(p + 1);
+			}
+
+			// read through each item and check for a match
+			for (int i = 0; i < disicplineSortCodes.Length; i++)
+			{
+				if (shtNumPrefix.Substring(0, disicplineSortCodes[i, 0].Length)
+					== disicplineSortCodes[i, 0])
+				{
+					result = "." + disicplineSortCodes[i, 1];
+					break;
+				}
+			}
+
+			return result;
+		}
+
+
 	}
 }

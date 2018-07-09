@@ -2,12 +2,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using X = Microsoft.Office.Interop.Excel;
 using static Microsoft.Office.Interop.Excel.XlHAlign;
 
 using static TestConsoleApp.DataItems;
-using static TestConsoleApp.RevisionFormat;
+using static TestConsoleApp.RevisionTest;
 
 #endregion
 
@@ -24,52 +25,76 @@ namespace TestConsoleApp
 	{
 		private const int TITLE_ROW = 1;
 
+		private const string LOCATION = @"B:\Programming\VisualStudioProjects\TestConsoleApp";
+		private const string SOURCE_FILE_NAME = @"RevisionPivotTable.xlsx";
+		private const string OUTPUT_FILE_NAME = @"ProjectPivotTable.xlsx";
+
+		private const string WKS_DATA = "RevisionsData";
+		private const string WKS_PIVOT = "PivotTable";
+
+		private const string PIVOT_TABLE_NAME = "Revisions";
+
 		public static bool ExportToExcel(RevisionData revisionData, 
 			RevOrderMgr om)
 		{
+			int row = TITLE_ROW;
+
+//			string inFile = Path.Combine(LOCATION, SOURCE_FILE_NAME);
+//			string outFile = Path.Combine(LOCATION, OUTPUT_FILE_NAME);
+//
+//			if (!File.Exists(inFile))
+//			{
+//				Console.WriteLine("template file does not exist");
+//				Console.WriteLine(nl);
+//				return false;
+//			}
+//
+//			File.Copy(inFile, outFile, true);
+//
+//			if (!File.Exists(outFile))
+//			{
+//				Console.WriteLine("file does not exist");
+//				Console.WriteLine(nl);
+//				return false;
+//			}
+
+			string outFile = GetOutputFile(Settings.Info.TemplatePathAndFileName, 
+				Settings.Info.ExcelPathAndFileName);
+
 			X.Application excel = new X.Application();
+			if (excel == null) return false;
 
-			X.Worksheet ws = GetWorksheet(excel);
+			X.Workbook wb = excel.Workbooks.Open(outFile);
+			X.Worksheet wsData = wb.Sheets[WKS_DATA] as X.Worksheet;
 
-			if (ws == null) return false;
+			if (wsData == null) return false;
 
-			ws.Name = "Revisions";
+			wsData.Name = WKS_DATA;
 
 			excel.Visible = false;
 
-			int row = TITLE_ROW;
-
-			ExportColumnTitles(ws, row, om);
+			ExportColumnTitles(wsData, row, om);
 
 			row++;
 
-			X.Range range = ws.Range[ws.Cells[row, 1], 
-				ws.Cells[RevisionDataMgr.SelectedCount + TITLE_ROW, 
-					om.ColumnOrder.Count]];
+			X.Range range = GetRange(wsData, row,
+				RevisionDataMgr.SelectedCount, 1, om.ColumnOrder.Count);
 
-			range.Cells.NumberFormat = "@";
+			FormatDataCells(range);
 
-			ExportRevisionData(RevisionDataMgr.IterateSelected(), row, ws, om);
+			ExportRevisionData(RevisionDataMgr.IterateSelected(), row, wsData, om);
 
-			range.EntireColumn.AutoFit();
+			AdjustColumnWidthInRange(range.Columns, 1.5);
 
-			foreach (X.Range col in range.Columns)
-			{
-				col.ColumnWidth += 1.5;
-			}
+			X.Worksheet wsPivot = wb.Sheets[WKS_PIVOT] as X.Worksheet;
+
+			X.PivotTable pivotTable = (X.PivotTable) wsPivot.PivotTables(PIVOT_TABLE_NAME);
+
+			pivotTable.RefreshTable();
 
 			excel.Visible = true;
 
 			return true;
-		}
-
-		private static X.Worksheet GetWorksheet(X.Application excel)
-		{
-			if (excel == null) return null;
-
-			X.Workbook wb = excel.Workbooks.Add(Missing.Value);
-
-			return  wb.Sheets.Item[1] as X.Worksheet;
 		}
 
 		private static void ExportColumnTitles(X.Worksheet ws, int row, RevOrderMgr om)
@@ -123,5 +148,56 @@ namespace TestConsoleApp
 
 			ws.Cells[row, col] = RevisionFormat.Format(data, descEnum.Display);
 		}
+
+		private static X.Range GetRange(X.Worksheet ws,
+			int startRow, int rowCount,
+			int startColumn, int columnsWide)
+		{
+			return ws.Range[ws.Cells[startRow, startColumn], 
+				ws.Cells[startRow + rowCount, startColumn + columnsWide]];
+		}
+
+		private static void AdjustColumnWidth(X.Range col, double adjustAmt)
+		{
+			col.ColumnWidth += adjustAmt;
+		}
+
+		private static void AdjustColumnWidthInRange(X.Range rangeOfColumns, 
+			double adjustAmt)
+		{
+			foreach (X.Range col in rangeOfColumns)
+			{
+				col.EntireColumn.AutoFit();
+				AdjustColumnWidth(col, adjustAmt);
+			}
+		}
+
+		private static string GetOutputFile(string source, string destinition)
+		{
+			if (!File.Exists(source))
+			{
+				Console.WriteLine("template file (" + source 
+					+ ") does not exist");
+				Console.WriteLine(nl);
+				return null;
+			}
+
+			File.Copy(source, destinition, true);
+
+			if (!File.Exists(destinition))
+			{
+				Console.WriteLine("could create destinition excel file");
+				Console.WriteLine(nl);
+				return null;
+			}
+
+			return destinition;
+		}
+
+		private static void FormatDataCells(X.Range range)
+		{
+			range.Cells.NumberFormat = "@";
+		}
+
 	}
 }

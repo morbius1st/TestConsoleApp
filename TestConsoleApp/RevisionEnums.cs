@@ -164,16 +164,15 @@ namespace TestConsoleApp
 			// setup the revision meta data
 			RevisionMetaData.Init();
 
-
-			RevColumns<DataEnum> co = RevColumnOrder.Default;
-
-			RevColumnOrder.Default.Start(REV_SORT_ITEM_REVID, 
-				REV_SORT_ORDER_CODE, REV_SORT_DELTA_TITLE, REV_SORT_SHEETNUM,
-				REV_ITEM_VISIBLE, REV_ITEM_BLOCK_TITLE, REV_ITEM_DATE,
-				REV_SORT_ITEM_BASIS, REV_SORT_ITEM_DESC);
-
-			RevSortOrder.Default.Start(REV_SORT_ORDER_CODE, 
-				REV_SORT_DELTA_TITLE, REV_SORT_SHEETNUM);
+//			RevColumns<DataEnum> co = RevColumnOrder.Default;
+//
+//			RevColumnOrder.Default.Start(REV_SORT_ITEM_REVID, 
+//				REV_SORT_ORDER_CODE, REV_SORT_DELTA_TITLE, REV_SORT_SHEETNUM,
+//				REV_ITEM_VISIBLE, REV_ITEM_BLOCK_TITLE, REV_ITEM_DATE,
+//				REV_SORT_ITEM_BASIS, REV_SORT_ITEM_DESC);
+//
+//			RevSortOrder.Default.Start(REV_SORT_ORDER_CODE, 
+//				REV_SORT_DELTA_TITLE, REV_SORT_SHEETNUM);
 		}
 
 

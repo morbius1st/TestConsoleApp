@@ -32,7 +32,7 @@ namespace TestConsoleApp
 			ConfigItem(REV_SORT_ITEM_REVID    , "Rev", "Id"              , 
 				REV_SOURCE_CLOUD  , new RevisionDataDisplay(  4, null, fmt_str, RIGHT, RIGHT));
 			ConfigItem(REV_SORT_ORDER_CODE    , "Order", "Code"              , 
-				REV_SOURCE_DERIVED, new RevisionDataDisplay(  14, null, fmt_str, RIGHT, RIGHT));
+				REV_SOURCE_DERIVED, new RevisionDataDisplay(  12, null, fmt_str, RIGHT, RIGHT));
 			ConfigItem(REV_ITEM_BLOCK_TITLE   , "Revision", "Block Title", 
 				REV_SOURCE_CLOUD  , new RevisionDataDisplay(  16, null, fmt_str, LEFT, RIGHT));
 			ConfigItem(REV_ITEM_DATE          , "", "Date"               , 
@@ -99,6 +99,7 @@ namespace TestConsoleApp
 
 		public enum Justification
 		{
+			UNDEFINED = -2,
 			LEFT = -1,
 			CENTER = 0,
 			RIGHT = 1

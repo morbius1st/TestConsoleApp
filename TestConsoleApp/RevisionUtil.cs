@@ -27,30 +27,17 @@ namespace TestConsoleApp
 	{
 		// one click operation to collect and 
 		// display the current data
-		public static RevOrderMgr OneClick()
+		public static bool OneClick()
 		{
-			RevisionFilters rf = new RevisionFilters();
-
-			Criteria c = new Criteria(REV_SORT_ORDER_CODE , EQUAL, 
-				RevitRevisions.MaxRevision.ToString(), REV_SUB_ALTID);
-
-			rf.Add(c);
-
 			RevisionDataMgr.ResetPreSelected();
 
-			bool result = RevisionDataMgr.Select(rf);
+			bool result = RevisionDataMgr.Select(Settings.Info.oneClickFilter);
 
-			if (!result) return null;
+			if (!result) return false;
 
-			RevOrderMgr om = new RevOrderMgr();
-			om.SortOrder = new RevSortOrder();
+			RevisionDataMgr.SortSelected(Settings.Info.oneClickOrderMgr);
 
-			om.SortOrder.Start(REV_SORT_ORDER_CODE, REV_SORT_SHEETNUM,
-				REV_SORT_DELTA_TITLE, REV_SORT_ITEM_BASIS);
-
-			RevisionDataMgr.SortSelected(om);
-
-			return om;
+			return true;
 		}
 
 	}
@@ -69,7 +56,7 @@ namespace TestConsoleApp
 	public static class Extensions
 	{
 		public static string PadCenter(this string s, int  w, 
-			char cl = (char) 32, char cr = (char) 0)
+			char cl = ' ', char cr = (char) 0)
 		{
 			if (s == null || s.Length >= w) return s;
 

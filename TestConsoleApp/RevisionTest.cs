@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using static TestConsoleApp.DataItems;
@@ -9,13 +10,16 @@ using static TestConsoleApp.RevisionFilters;
 using static TestConsoleApp.RevisionSelect;
 using static TestConsoleApp.RevisionVisibility;
 using static TestConsoleApp.RevisionFormat;
-using static TestConsoleApp.RevColumnOrder;
+using static TestConsoleApp.RevisionMetaData;
 
 namespace TestConsoleApp
 {
 	public class RevisionTest
 	{
-		public static int Switch = 0;
+		// test list rev order = 0
+		// test list filters (list criteria) = 3
+		// create excel = 50
+		public static int Switch = 50;
 
 		public static string nl = Environment.NewLine;
 
@@ -85,7 +89,7 @@ namespace TestConsoleApp
 				{
 					Process10();
 					break;
-				}			
+				}
 			case 11:
 				{
 					Process11();
@@ -94,6 +98,11 @@ namespace TestConsoleApp
 			case 12:
 				{
 					Process12();
+					break;
+				}			
+			case 50:
+				{
+					Process50();
 					break;
 				}
 			}
@@ -109,6 +118,7 @@ namespace TestConsoleApp
 			ListMetaData();
 
 			RevOrderMgr om = new RevOrderMgr();
+
 			 // list the default column order info
 			ListRevOrder(om);
 
@@ -167,7 +177,8 @@ namespace TestConsoleApp
 			ListColumnHeadersInColumnOrder(ro);
 			ListDataInColumnOrder(RevisionDataMgr.IterateRevisionData(), ro, false, 3);
 		}
-		
+
+		// uses listfilters		
 		// create list compare filters
 		public static void Process3()
 		{
@@ -203,6 +214,7 @@ namespace TestConsoleApp
 			if (!result)
 			{
 				Console.WriteLine("no data selected");
+				Console.Write(nl);
 			}
 			else
 			{
@@ -478,6 +490,7 @@ namespace TestConsoleApp
 			}
 			else
 			{
+				Console.WriteLine("first pass selection");
 				// if anything selected
 				// how the header
 				ListColumnHeadersInColumnOrder(ro);
@@ -497,6 +510,7 @@ namespace TestConsoleApp
 				}
 				else
 				{
+					Console.WriteLine("second pass selection");
 					// if anything selected
 					// how the header
 					ListColumnHeadersInColumnOrder(ro);
@@ -610,9 +624,9 @@ namespace TestConsoleApp
 		// test oneclick
 		public static void Process11()
 		{
-			RevOrderMgr om = RevisionUtil.OneClick();
+			bool result = RevisionUtil.OneClick();
 
-			if (om == null)
+			if (!result)
 			{
 				Console.WriteLine("nothing found");
 				return;
@@ -621,18 +635,71 @@ namespace TestConsoleApp
 			ListSelected();
 		}
 
-		// send data to excel
+		// test settings
 		public static void Process12()
 		{
-			RevOrderMgr om = RevisionUtil.OneClick();
+			RevOrderMgr om = new RevOrderMgr();
 
-			if (om == null)
+			Console.WriteLine("read settings");
+			Console.Write(nl);
+			Console.WriteLine("project number| " + Settings.Info.ProjectNumber);
+			Console.WriteLine("  project name| " + Settings.Info.ProjectName);
+			Console.WriteLine(" template file| " + Settings.Info.TemplatePathAndFileName);
+			Console.WriteLine("    excel file| " + Settings.Info.ExcelPathAndFileName);
+
+//			ListRevOrder(Settings.settings.oneClickOrder);
+			Console.Write(nl);
+			Console.WriteLine("one click column order");
+			ListOrder(Settings.Info.oneClickOrderMgr.ColumnOrder);
+
+// these work	
+//			Console.Write(nl);
+//			Console.WriteLine("default column order - direct");
+//			ListOrder(RevColumnOrder.Default);
+//			
+//			Console.Write(nl);
+//			Console.WriteLine("default column order - via mgr");
+//			ListOrder(om.DefaultColumnOrder);
+
+			Console.Write(nl);
+			Console.WriteLine("one click sort order");
+			ListOrder(Settings.Info.oneClickOrderMgr.SortOrder);
+
+// these work
+//			Console.Write(nl);
+//			Console.WriteLine("default sort order - direct");
+//			ListOrder(RevSortOrder.Default);
+//
+//			Console.Write(nl);
+//			Console.WriteLine("default sort order - via mgr");
+//			ListOrder(om.DefaultSortOrder);
+
+			Console.Write(nl);
+			Console.WriteLine("one click critera");
+			ListFilters(Settings.Info.oneClickFilter);
+
+		}
+		
+		
+		// send data to excel
+		// using one click settings
+		public static void Process50()
+		{
+			// one-click, get the data
+			bool result = RevisionUtil.OneClick();
+
+			// list the selected data
+			Console.WriteLine("exporting to excel");
+			ListSelected();
+
+			if (!result)
 			{
 				Console.WriteLine("nothing found");
 				return;
 			}
 
-			bool good = RevisionDataMgr.ExportToExcel(om);
+			// export the data 
+			bool good = RevisionDataMgr.ExportToExcel(Settings.Info.oneClickOrderMgr);
 
 			if (!good)
 			{
@@ -771,16 +838,16 @@ namespace TestConsoleApp
 			f.Add(c);
 
 			// bool - bool
-			c = new Criteria(REV_SELECTED, FALSE);
-			f.Add(c);
+//			c = new Criteria(REV_SELECTED, FALSE);
+//			f.Add(c);
 
 			// basic - visibility
 			c = new Criteria(REV_ITEM_VISIBLE, EQUAL, TagVisible);
 			f.Add(c);
 			
-			// string unary
-			c = new Criteria(REV_SORT_ITEM_REVID, EQUAL, "1");
-			f.Add(c);
+//			// string unary
+//			c = new Criteria(REV_SORT_ITEM_REVID, EQUAL, "1");
+//			f.Add(c);
 			
 			// string binary
 			c = new Criteria(REV_SORT_SHEETNUM, STARTS_WITH, "c");
@@ -789,9 +856,9 @@ namespace TestConsoleApp
 			f.Add(c);
 
 			
-			// string unary - RevOrderCode
-			c = new Criteria(REV_SORT_ORDER_CODE, IS_EMPTY);
-			f.Add(c);
+//			// string unary - RevOrderCode
+//			c = new Criteria(REV_SORT_ORDER_CODE, IS_EMPTY);
+//			f.Add(c);
 
 			// string binary - RevOrderCode
 			c = new Criteria(REV_SORT_ORDER_CODE, STARTS_WITH, "1", true);
@@ -849,7 +916,7 @@ namespace TestConsoleApp
 		// adjust the column order values
 		private static RevOrderMgr ModifyColumnOrder()
 		{
-			RevOrderMgr om = RevisionUtil.OneClick();
+			RevOrderMgr om = new RevOrderMgr();
 
 			om.ColumnOrder.Start(REV_SELECTED);								// 0
 			om.ColumnOrder.Add(REV_SEQ, REV_SORT_SHEETNUM, REV_ITEM_DATE);	// 1, 2
@@ -910,65 +977,67 @@ namespace TestConsoleApp
 
 				foreach (KeyValuePair<int, Criteria> kvpInner in kvpOutter.Value)
 				{
-					
-					Console.WriteLine("      op type| " + kvpInner.Value.CompareOpr.Type.ToString());
-					Console.WriteLine("           op| " + kvpInner.Value.CompareOpr.GetType().Name);
+					ListCriteria(kvpInner.Value);
 
-					switch (kvpOutter.Key.Type)
-					{
-					case EDataType.BOOL:
-						{
-							Console.WriteLine("test val bool| " + 
-								(kvpInner.Value.TestValue?.AsBool.ToString() ?? "null"));
-							break;
-						}
-					case EDataType.ELEMENTID:
-						{
-							Console.WriteLine("test val Eid | " +
-								(kvpInner.Value.TestValue?.AsElementId.ToString() ?? "null"));
-							break;
-						}
-					case EDataType.INT:
-						{
-							Console.WriteLine("test val int | " + 
-								(kvpInner.Value.TestValue?.AsInt.ToString() ?? "null"));
-							break;
-						}
-					case EDataType.ORDER:
-					case EDataType.STRING:
-						{
-							if (kvpInner.Value.CompareOpr is ICompStringUnary)
-							{
-								Console.WriteLine("test val str | unary");
-							}
-							else
-							{
-								Console.WriteLine("test val str | binary| " +
-									(kvpInner.Value.TestValue?.AsString ?? "null"));
-							}
-
-							break;
-						}
-					case EDataType.VISIBILITY:
-						{
-							Console.WriteLine("test val vis | " + 
-								(kvpInner.Value.TestValue?.AsVisibility.ToString() ?? "null"));
-							break;
-						}
-					}
-					Console.Write(nl);
+//					
+//					Console.WriteLine("      op type| " + kvpInner.Value.CompareOpr.Type.ToString());
+//					Console.WriteLine("           op| " + kvpInner.Value.CompareOpr.GetType().Name);
+//
+//					switch (kvpOutter.Key.Type)
+//					{
+//					case EDataType.BOOL:
+//						{
+//							Console.WriteLine("test val bool| " + 
+//								(kvpInner.Value.TestValue?.AsBool.ToString() ?? "null"));
+//							break;
+//						}
+//					case EDataType.ELEMENTID:
+//						{
+//							Console.WriteLine("test val Eid | " +
+//								(kvpInner.Value.TestValue?.AsElementId.ToString() ?? "null"));
+//							break;
+//						}
+//					case EDataType.INT:
+//						{
+//							Console.WriteLine("test val int | " + 
+//								(kvpInner.Value.TestValue?.AsInt.ToString() ?? "null"));
+//							break;
+//						}
+//					case EDataType.ORDER:
+//					case EDataType.STRING:
+//						{
+//							if (kvpInner.Value.CompareOpr is ICompStringUnary)
+//							{
+//								Console.WriteLine("test val str | unary");
+//							}
+//							else
+//							{
+//								Console.WriteLine("test val str | binary| " +
+//									(kvpInner.Value.TestValue?.AsString ?? "null"));
+//							}
+//
+//							break;
+//						}
+//					case EDataType.VISIBILITY:
+//						{
+//							Console.WriteLine("test val vis | " + 
+//								(kvpInner.Value.TestValue?.AsVisibility.ToString() ?? "null"));
+//							break;
+//						}
+//					}
+//					Console.Write(nl);
 				}
 				Console.Write(nl);
 			}
 		}
-		
-		public static void ListColumnHeadersInColumnOrder(RevOrderMgr om)
+
+		public static void ListColumnHeadersInColumnOrder(RevOrderMgr om, bool subData = false)
 		{
-			ListColHeaders(0, om);
-			ListColHeaders(1, om);
+			ListColHeaders(0, om, subData);
+			ListColHeaders(1, om, subData);
 		}
 
-		private static void ListColHeaders(int row, RevOrderMgr om)
+		private static void ListColHeaders(int row, RevOrderMgr om, bool subData)
 		{
 			if (row == 0)
 			{
@@ -981,31 +1050,34 @@ namespace TestConsoleApp
 
 			foreach (DataEnum item in om.ColumnOrder.Iterate())
 			{
-				ListARowTitle(item, row);
+				ListARowTitle(item, row, subData);
 			}
 
 			Console.Write(nl);
 		}
 
-		private static void ListARowTitle(SubDataEnum item, int row)
+		private static void ListARowTitle(SubDataEnum item, int row, bool subData)
 		{
 			string title;
+			RevisionDataDisplay dd = item.Display;
+
 			char spacer = item.Title[row].Equals("") ? ' ' : '-';
 
-			int width = item.Display.ColWidth == 0 ? 10 : item.Display.ColWidth;
-
-			title = item.Title[row].PadCenter(item.Display.ColWidth, spacer);
-				title = title.PadCenter(width, spacer);
+			title = FormatForColumn(item.Title[row], dd, 
+				spacer, spacer, Justification.CENTER);
 
 			Console.Write(title);
 
 			Console.Write("|"); // space between columns
 
-			if (item.SubDataList != null)
+			if (subData)
 			{
-				foreach (SubDataEnum subDataEnum in item.SubDataList)
+				if (item.SubDataList != null)
 				{
-					ListARowTitle(subDataEnum, row);
+					foreach (SubDataEnum subDataEnum in item.SubDataList)
+					{
+						ListARowTitle(subDataEnum, row, false);
+					}
 				}
 			}
 		}
@@ -1013,8 +1085,8 @@ namespace TestConsoleApp
 		// list based on raw read data order
 		private static void ListDataInColumnOrder(
 			IEnumerable<RevisionDataFields> iEnumerable,
-			RevOrderMgr om, 
-			bool header, int qty = 0)
+			RevOrderMgr om, bool header, int qty = 0, 
+			bool subData = false)
 		{
 			int i = 0;
 			
@@ -1026,7 +1098,7 @@ namespace TestConsoleApp
 					Console.WriteLine($"{"data item",24} | {i,-4:D}");
 				}
 
-				ListDataItemInColumnOrder(i, kvp, om);
+				ListDataItemInColumnOrder(i, kvp, om, subData);
 
 				if (++i == qty) break;
 			}
@@ -1034,7 +1106,8 @@ namespace TestConsoleApp
 		}
 
 		public static void ListDataItemInColumnOrder(int idx, 
-			RevisionDataFields items, RevOrderMgr om)
+			RevisionDataFields items, RevOrderMgr om,
+			bool subData)
 		{
 			Console.Write($"| {idx,3:D} |");
 
@@ -1043,14 +1116,17 @@ namespace TestConsoleApp
 
 			foreach (DataEnum d in om.ColumnOrder.Iterate())
 			{
-				ListAnItem(items[d.DataIdx], d);
+				ListAnItem(items[d.DataIdx], d, subData);
 
-				if (d.SubDataList != null)
+				if (subData)
 				{
-					for (int i = 0; i < d.SubDataList.Length; i++)
+					if (d.SubDataList != null)
 					{
-						ListAnItem(((SubData) items[d.DataIdx])[i], 
-							d.SubDataList[i]);
+						for (int i = 0; i < d.SubDataList.Length; i++)
+						{
+							ListAnItem(((SubData) items[d.DataIdx])[i], 
+								d.SubDataList[i], false);
+						}
 					}
 				}
 			}
@@ -1058,41 +1134,23 @@ namespace TestConsoleApp
 
 		}
 
-		public static void ListAnItem(dynamic data, DescEnum dataEnum)
+		public static void ListAnItem(dynamic data, DescEnum dataEnum, 
+			bool subData)
 		{
-			string dataFormatted = string.Format(dataEnum.Display.FormatString,
+			RevisionDataDisplay dd = dataEnum.Display;
+
+			string dataFormatted;
+
+			dataFormatted = string.Format(dd.FormatString,
 					data?? "");
 
-			int colWidth = dataEnum.Display.ColWidth;
-
-			dataFormatted = Justify(dataFormatted,
-				dataEnum.Display.JustifyColumn, colWidth);
-
-//				switch (dataEnum.Display.JustifyColumn)
-//				{
-//				case RevisionMetaData.Justification.LEFT:
-//					{
-//						dataFormatted = dataFormatted.PadRight(colWidth);
-//						break;
-//					}
-//				case RevisionMetaData.Justification.CENTER:
-//					{
-//						dataFormatted = dataFormatted.PadCenter(colWidth);
-//						break;
-//					}
-//				case RevisionMetaData.Justification.RIGHT:
-//					{
-//						dataFormatted = dataFormatted.PadLeft(colWidth);
-//						break;
-//					}
-//				}
+			dataFormatted = FormatForColumn(dataFormatted, dd);
 
 				Console.Write(dataFormatted);
 				Console.Write("|");
 		}
 
 		// modify then list on column property order
-
 		private static void ListMetaData()
 		{
 			string fmtx = String.Format(
@@ -1186,10 +1244,10 @@ namespace TestConsoleApp
 
 					RevisionDataDisplay d = ix.Display;
 
-					string sampleColumn = RevisionFormat.FormatTitle(
-						new []{"", "now is the time for all good men"}, d, 1);
-					string sampleKey = RevisionFormat.FormatTitle(
-						new []{"", "key"}, d, 1);
+					string sampleColumn = RevisionFormat.FormatForColumn(
+						"now is the time for all good men", d);
+					string sampleKey = RevisionFormat.FormatForColumn(
+						"key", d);
 
 					Console.WriteLine(fmtDisplay, 
 						d.MarginLeft, d.MarginRight, d.FormatString);
@@ -1362,39 +1420,81 @@ namespace TestConsoleApp
 		{
 			Console.Write(nl);
 			Console.WriteLine(" *** order ***");
-			Console.WriteLine("column count| " + om.ColumnOrder.Count);
-			Console.WriteLine("  sort count| " + om.SortOrder.Count);
+			Console.WriteLine("    column count| " + om.ColumnOrder.Count);
+			Console.WriteLine("      sort count| " + om.SortOrder.Count);
+			Console.WriteLine("def column count| " + RevColumnOrder.Default.Count);
+			Console.WriteLine("  def sort count| " + RevSortOrder.Default.Count);
 			Console.Write(nl);
 
+			Console.WriteLine(" *** column order ***");
 			if (om.ColumnOrder.Count == 0)
 			{
-				Console.WriteLine("columns to display not set - listing default");
+				Console.WriteLine("column order not set - listing default");
 				Console.Write(nl);
+
+				ListOrder(om.DefaultColumnOrder);
 			}
-
-
-			Console.WriteLine(" *** column order ***");
-			foreach (DataEnum dataEnum in om.ColumnOrder.Iterate())
+			else
 			{
-				Console.WriteLine("column | " + dataEnum.FullTitle);
+				Console.WriteLine("column order found");
+				Console.Write(nl);
+
+				ListOrder(om.ColumnOrder);
 			}
+
 
 			Console.Write(nl);
 			Console.WriteLine(" *** sort order ***");
 			if (om.SortOrder.Count == 0)
 			{
-				Console.WriteLine("no sort order to display");
+				Console.WriteLine("sort order not set - listing default");
 				Console.Write(nl);
+
+				ListOrder(om.DefaultSortOrder);
 			} 
 			else 
 			{
-				foreach (DataEnum Isortable in om.SortOrder.Iterate())
-				{
-					Console.WriteLine("column | " + Isortable.FullTitle);
-					Console.Write(nl);
-				}
+				Console.WriteLine("sort order found");
+				Console.Write(nl);
+
+				ListOrder(om.SortOrder);
 			}
 
+			Console.Write(nl);
 		}
+
+		private static void ListOrder(IRevOrder revOrder)
+		{
+			Console.WriteLine("        type | " + revOrder.GetType().Name);
+			Console.WriteLine("       count | " + revOrder.Count);
+
+			if (revOrder.Count == 0)
+			{
+				Console.WriteLine("*** no order items ***");
+				Console.Write(nl);
+				return;
+			}
+
+			foreach (DataEnum column in revOrder.itemize())
+			{
+				Console.WriteLine("      column | " + column.FullTitle);
+			}
+		}
+
+		private static void ListCriteria(Criteria c)
+		{
+			const string isNull = "** is null **"; 
+
+			Console.WriteLine("      op type| " + c.CompareOpr.Type);
+			Console.WriteLine("           op| " + c.CompareOpr.GetType().Name);
+
+			Console.WriteLine("     test val| " + (c.TestValue?.Value ?? isNull));
+			Console.WriteLine("  ignore case| " + c.IgnoreCase);
+			Console.WriteLine("  filter name| " + (c.FilterEnum?.Name ?? isNull));
+			Console.WriteLine(" filter title| " + (c.FilterEnum?.FullTitle ?? isNull));
+			Console.WriteLine("subdata title| " + (c.SubDataEnum?.FullTitle ?? isNull));
+			Console.Write(nl);
+		}
+
 	}
 }

@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\UtilityLibrary\UtilityLibrary\CsUtilities.cs">
+      <Link>References\CsUtilities.cs</Link>
+    </Compile>
     <Compile Include="ItemValue.cs" />
     <Compile Include="RevisionOrder.cs" />
     <Compile Include="RevisionDataDisplay.cs" />
@@ -60,6 +63,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RevitSimulate.cs" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

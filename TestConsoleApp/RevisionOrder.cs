@@ -21,22 +21,51 @@ using static TestConsoleApp.RevisionUtil;
 // defines which columns to present and 
 // which columns on which to sort the data
 // 
+
 namespace TestConsoleApp
 {
-
-	public abstract class RevColumns<T> : ICloneable
+	public class RevOrderMgr
 	{
-		protected static RevColumns<T> _default;
+		public RevColumns<DataEnum, RevColumnOrder> 
+			DefaultColumnOrder => RevColumnOrder.Default;
 
-		protected List<T> _columns { get; set; }
+		public RevColumns<ISortable, RevSortOrder> 
+			DefaultSortOrder => RevSortOrder.Default;
 
-		public int Count => _columns.Count;
+		public RevColumnOrder ColumnOrder { get; set; } 
+			= new RevColumnOrder();
 
-		protected abstract void SetDefault();
+		public RevSortOrder SortOrder { get; set; } 
+			= new RevSortOrder();
+
+	}
+
+	public interface IRevOrder
+	{
+		int Count { get; }
+
+		IEnumerable itemize();
+	}
+
+	public abstract class RevColumns<T, U> : ICloneable<U>, IRevOrder
+		where U : RevColumns<T, U>, new()
+	{
+		protected static U _default;
+
+		public List<T> Columns { get; protected set; }
+
+		public int Count => Columns.Count;
+
+		public virtual U Default { get; set; }
+
+		protected abstract void SetToDefault();
+//		{
+//			Columns = Default.Columns.Clone();
+//		}
 
 		public void Reset()
 		{
-			_columns = new List<T>(DataList.Count);
+			Columns = new List<T>(DataList.Count);
 		}
 
 		public void Start(params T[] cols)
@@ -52,22 +81,24 @@ namespace TestConsoleApp
 
 			foreach (T col in cols)
 			{
-				if (_columns.Contains(col)) continue;
+				if (Columns.Contains(col)) continue;
 				
-				_columns.Add(col);
+				Columns.Add(col);
 			}
 		}
 
 		public abstract IEnumerable<T> Iterate();
 
-		public List<T> Clone()
+		public IEnumerable itemize()
 		{
-			List<T> copy = new List<T>();
+			return Iterate();
+		}
 
-			foreach (T column in _columns)
-			{
-				copy.Add(column);
-			}
+		public U Clone()
+		{
+			U copy = new U();
+
+			copy.Columns = Columns.Clone();
 
 			return copy;
 		}
@@ -78,195 +109,70 @@ namespace TestConsoleApp
 		}
 	} 
 
-	public class RevColumnOrder : RevColumns<DataEnum>
+	public class RevColumnOrder : 
+		RevColumns<DataEnum, RevColumnOrder>
 	{
 		public RevColumnOrder()
 		{
-			_columns = new List<DataEnum>(DataList.Count);
+			Columns = new List<DataEnum>(DataList.Count);
 		}
 
-		public static RevColumns<DataEnum> Default {
+		public new static RevColumnOrder Default {
 			get
 			{
-				if (_default == null) _default = new RevColumnOrder();
-
+				if (_default == null) _default = Settings.Info.DefaultColumnOrder;
 				return _default;
 			}
 			set => _default = value;
 		}
 
-		protected override void SetDefault()
+		protected override void SetToDefault()
 		{
-			if (Default == null) Default = new RevColumnOrder();
-
-			if (Default.Count > 0)
-			{
-				_columns = Default.Clone();
-			}
-			else
-			{
-				if (_columns.Count == 0)
-				{
-					foreach (DataEnum de in DataList)
-					{
-						_columns.Add(de);
-					}
-				}
-			}
+			Columns = Default.Columns.Clone();
 		}
 
 		public override IEnumerable<DataEnum> Iterate()
 		{
-			if (_columns == null || _columns.Count == 0) SetDefault();
+			if (Columns == null || Columns.Count == 0) SetToDefault();
 
-			foreach (DataEnum de in _columns)
+			foreach (DataEnum de in Columns)
 			{
 				yield return de;
 			}
 		}
-
 	}
 
-	public class RevSortOrder : RevColumns<ISortable>
+	public class RevSortOrder : 
+		RevColumns<ISortable, RevSortOrder>
 	{
 		public RevSortOrder()
 		{
-			_columns = new List<ISortable>(DataList.Count);
+			Columns = new List<ISortable>(DataList.Count);
 		}
 
-		public static RevColumns<ISortable> Default {
+		public new static RevSortOrder Default {
 			get
 			{
-				if (_default == null) _default = new RevSortOrder();
-
+				if (_default == null) _default = Settings.Info.DefaultSortOrder;
 				return _default;
 			}
 			set => _default = value;
 		}
-
-		protected override void SetDefault()
+		
+		protected override void SetToDefault()
 		{
-			if (Default == null) Default = new RevSortOrder();
-
-			if (Default.Count > 0)
-			{
-				_columns = Default.Clone();
-			}
+			Columns = Default.Columns.Clone();
 		}
 
 		public override IEnumerable<ISortable> Iterate()
 		{
-			if (_columns == null || _columns.Count == 0) yield break;
+			if (Columns == null || Columns.Count == 0) SetToDefault();
 
-			foreach (ISortable so in _columns)
+			foreach (ISortable so in Columns)
 			{
 				yield return so;
 			}
 		}
-
 	}
 
-	public class RevOrderMgr
-	{
-		public RevColumnOrder ColumnOrder { get; set; } 
-			= new RevColumnOrder();
-
-		public RevSortOrder SortOrder { get; set; } 
-			= new RevSortOrder();
-
-	}
-
-
-
-//
-//	public class RevisionOrder<T> where T : DataEnum
-//	{
-//		public static RevisionOrder<DataEnum> 
-//			DefaultColumns { get; private set; } = new RevisionOrder<DataEnum>();
-//
-//		private static RevisionOrder<ISortable> sort = new RevisionOrder<ISortable>();
-//
-//		private List<T> _columns;
-//
-//		public int Count => _columns.Count;
-//
-//		public RevisionOrder()
-//		{
-//			Reset();
-//		}
-//
-//		public void SetDefault(params DataEnum[] de)
-//		{
-//			if (DefaultColumns.Count > 0) return;
-//
-//			foreach (DataEnum dataEnum in de)
-//			{
-//				DefaultColumns.Add(de);
-//			}
-//		}
-//
-////		public static void SetStdColumns(params DataEnum[] cols)
-////		{
-////			_columnsDefault = new List<DataEnum>(DataList.Count);
-////
-////			foreach (DataEnum de in cols)
-////			{
-////				if (_columnsDefault.Contains(de)) continue;
-////
-////				_columnsDefault.Add(de);
-////			}
-////		}
-////
-////		private void SetStdColumns()
-////		{
-////			if (_columnsDefault.Count > 0)
-////			{
-////				_columns = _columnsDefault.Clone();
-////			}
-////			else
-////			{
-////				foreach (DataEnum item in DataList)
-////				{
-////					_columns.Add(item);
-////				}
-////			}
-////		}
-//
-//		public void Reset()
-//		{
-//			_columns = new List<T>(DataList.Count);
-//		}
-//
-//
-//		public void Start(params T[] cols)
-//		{
-//			Reset();
-//
-//			Add(cols);
-//		}
-//
-//		public void Add(params T[] cols)
-//		{
-//			if (cols.Length == 0) return;
-//
-//			foreach (T de in cols)
-//			{
-//				if (!_columns.Contains(de))
-//				{
-//					_columns.Add(de);
-//				}
-//			}
-//		}
-//
-//
-//		public IEnumerable<T> IterateColumns()
-//		{
-//			if (_columns.Count == 0) SetStdColumns();
-//
-//			foreach (DataEnum de in _columns)
-//			{
-//				yield return de;
-//			}
-//		}
-//	}
 }
