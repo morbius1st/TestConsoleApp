@@ -30,14 +30,23 @@ namespace TestConsoleApp
 		private const string DEF_SOURCE_FILENAME = @"RevisionPivotTable.xlsx";
 		private const string DEF_DESTINITION_FILENAME = @"ProjectPivotTable.xlsx";
 
+		private const string DEF_WKS_DATA = "RevisionsData";
+		private const string DEF_WKS_PIVOT = "PivotTable";
 
-		public static Settings Info { get; private set; }
+		private const string DEF_PIVOT_TABLE_NAME = "Revisions";
+
+
+		public static Settings Setg { get; private set; }
+
+		public string ProjectNumber { get; private set; }
+		public string ProjectName { get; private set; }
 
 		public string TemplatePathAndFileName { get; set; }
 		public string ExcelPathAndFileName { get; set; }
 
-		public string ProjectNumber { get; private set; }
-		public string ProjectName { get; private set; }
+		public string ExcelDataWorksheetName { get; set; }
+		public string ExcelPivotWorksheetName { get; set; }
+		public string ExcelPivotTableName { get; set; }
 
 
 		// one click Info
@@ -47,8 +56,8 @@ namespace TestConsoleApp
 	
 		static Settings()
 		{
-			Info = new Settings();
-			Info.ReadSettings();
+			Setg = new Settings();
+			Setg.ReadSettings();
 		}
 		
 		public bool SaveSettings()
@@ -67,6 +76,8 @@ namespace TestConsoleApp
 			ReadTemplateLocation();
 
 			ReadExcelFileLocation();
+
+			ReadExcelSettings();
 		}
 
 		public RevColumnOrder DefaultColumnOrder
@@ -195,6 +206,29 @@ namespace TestConsoleApp
 				AssemblyDirectory, DEF_DESTINITION_FILENAME);
 		}
 
+		private void ReadExcelSettings()
+		{
+			const bool GotExcelDataWorksheetName = false;
+			const bool GotExcelPivotWorksheetName = false;
+			const bool GotExcelPivotTableName = false;
+
+			if (!GotExcelDataWorksheetName)
+			{
+				ExcelDataWorksheetName = DEF_WKS_DATA;
+			}
+
+			if (!GotExcelPivotWorksheetName)
+			{
+				ExcelPivotWorksheetName = DEF_WKS_PIVOT;
+			}
+
+			if (!GotExcelPivotTableName)
+			{
+				ExcelPivotTableName = DEF_PIVOT_TABLE_NAME;
+			}
+
+		}
+
 		#endregion
 
 		#endregion
@@ -221,8 +255,8 @@ namespace TestConsoleApp
 		{
 			RevSortOrder so = new RevSortOrder();
 
-			so.Start(REV_SORT_ORDER_CODE, 
-				REV_SORT_DELTA_TITLE, REV_SORT_SHEETNUM);
+			so.Start(REV_SORT_ORDER_CODE, REV_SORT_DELTA_TITLE, 
+				REV_SORT_SHEETNUM);
 
 			return so;
 		}
@@ -237,24 +271,18 @@ namespace TestConsoleApp
 				REV_SORT_ITEM_BASIS, REV_SORT_ITEM_DESC);
 
 			return co;
-
-
-//			return DefColumnOrder();
 		}
 
 		private RevSortOrder DefaultOneClickSortOrder()
 		{
 			RevSortOrder so = new RevSortOrder();
 
-			so.Start(REV_SORT_SHEETNUM, 
-				REV_SORT_ORDER_CODE, 
-				REV_SORT_DELTA_TITLE);
+			// provide description at the end ti allow
+			// aggregating the data when exported to excel
+			so.Start(REV_SORT_ORDER_CODE, REV_SORT_DELTA_TITLE, 
+				REV_SORT_SHEETNUM, REV_SORT_ITEM_DESC);
 
 			return so;
-
-
-
-//			return DefSortOrder();
 		}
 
 		private Criteria DefaultOneClickCriteria()

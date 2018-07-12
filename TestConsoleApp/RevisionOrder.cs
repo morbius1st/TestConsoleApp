@@ -120,7 +120,7 @@ namespace TestConsoleApp
 		public new static RevColumnOrder Default {
 			get
 			{
-				if (_default == null) _default = Settings.Info.DefaultColumnOrder;
+				if (_default == null) _default = Settings.Setg.DefaultColumnOrder;
 				return _default;
 			}
 			set => _default = value;
@@ -153,7 +153,7 @@ namespace TestConsoleApp
 		public new static RevSortOrder Default {
 			get
 			{
-				if (_default == null) _default = Settings.Info.DefaultSortOrder;
+				if (_default == null) _default = Settings.Setg.DefaultSortOrder;
 				return _default;
 			}
 			set => _default = value;

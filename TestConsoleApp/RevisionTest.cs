@@ -642,15 +642,15 @@ namespace TestConsoleApp
 
 			Console.WriteLine("read settings");
 			Console.Write(nl);
-			Console.WriteLine("project number| " + Settings.Info.ProjectNumber);
-			Console.WriteLine("  project name| " + Settings.Info.ProjectName);
-			Console.WriteLine(" template file| " + Settings.Info.TemplatePathAndFileName);
-			Console.WriteLine("    excel file| " + Settings.Info.ExcelPathAndFileName);
+			Console.WriteLine("project number| " + Settings.Setg.ProjectNumber);
+			Console.WriteLine("  project name| " + Settings.Setg.ProjectName);
+			Console.WriteLine(" template file| " + Settings.Setg.TemplatePathAndFileName);
+			Console.WriteLine("    excel file| " + Settings.Setg.ExcelPathAndFileName);
 
 //			ListRevOrder(Settings.settings.oneClickOrder);
 			Console.Write(nl);
 			Console.WriteLine("one click column order");
-			ListOrder(Settings.Info.oneClickOrderMgr.ColumnOrder);
+			ListOrder(Settings.Setg.oneClickOrderMgr.ColumnOrder);
 
 // these work	
 //			Console.Write(nl);
@@ -663,7 +663,7 @@ namespace TestConsoleApp
 
 			Console.Write(nl);
 			Console.WriteLine("one click sort order");
-			ListOrder(Settings.Info.oneClickOrderMgr.SortOrder);
+			ListOrder(Settings.Setg.oneClickOrderMgr.SortOrder);
 
 // these work
 //			Console.Write(nl);
@@ -676,7 +676,7 @@ namespace TestConsoleApp
 
 			Console.Write(nl);
 			Console.WriteLine("one click critera");
-			ListFilters(Settings.Info.oneClickFilter);
+			ListFilters(Settings.Setg.oneClickFilter);
 
 		}
 		
@@ -699,7 +699,7 @@ namespace TestConsoleApp
 			}
 
 			// export the data 
-			bool good = RevisionDataMgr.ExportToExcel(Settings.Info.oneClickOrderMgr);
+			bool good = RevisionDataMgr.ExportToExcel(Settings.Setg.oneClickOrderMgr);
 
 			if (!good)
 			{

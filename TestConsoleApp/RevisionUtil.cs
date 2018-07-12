@@ -31,11 +31,11 @@ namespace TestConsoleApp
 		{
 			RevisionDataMgr.ResetPreSelected();
 
-			bool result = RevisionDataMgr.Select(Settings.Info.oneClickFilter);
+			bool result = RevisionDataMgr.Select(Settings.Setg.oneClickFilter);
 
 			if (!result) return false;
 
-			RevisionDataMgr.SortSelected(Settings.Info.oneClickOrderMgr);
+			RevisionDataMgr.SortSelected(Settings.Setg.oneClickOrderMgr);
 
 			return true;
 		}

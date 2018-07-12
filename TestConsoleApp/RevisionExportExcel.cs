@@ -3,12 +3,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using X = Microsoft.Office.Interop.Excel;
 using static Microsoft.Office.Interop.Excel.XlHAlign;
 
 using static TestConsoleApp.DataItems;
 using static TestConsoleApp.RevisionTest;
+using static TestConsoleApp.Settings;
+
+using static TestConsoleApp.DataItems.EDataFields;
 
 #endregion
 
@@ -25,51 +29,25 @@ namespace TestConsoleApp
 	{
 		private const int TITLE_ROW = 1;
 
-		private const string LOCATION = @"B:\Programming\VisualStudioProjects\TestConsoleApp";
-		private const string SOURCE_FILE_NAME = @"RevisionPivotTable.xlsx";
-		private const string OUTPUT_FILE_NAME = @"ProjectPivotTable.xlsx";
-
-		private const string WKS_DATA = "RevisionsData";
-		private const string WKS_PIVOT = "PivotTable";
-
-		private const string PIVOT_TABLE_NAME = "Revisions";
-
-		public static bool ExportToExcel(RevisionData revisionData, 
+		public static bool ExportToExcel(RevisionData selected, 
 			RevOrderMgr om)
 		{
+			List<List<string>> data = 
+				AggregateData(selected, om, REV_SORT_ITEM_DESC);
+			
 			int row = TITLE_ROW;
 
-//			string inFile = Path.Combine(LOCATION, SOURCE_FILE_NAME);
-//			string outFile = Path.Combine(LOCATION, OUTPUT_FILE_NAME);
-//
-//			if (!File.Exists(inFile))
-//			{
-//				Console.WriteLine("template file does not exist");
-//				Console.WriteLine(nl);
-//				return false;
-//			}
-//
-//			File.Copy(inFile, outFile, true);
-//
-//			if (!File.Exists(outFile))
-//			{
-//				Console.WriteLine("file does not exist");
-//				Console.WriteLine(nl);
-//				return false;
-//			}
-
-			string outFile = GetOutputFile(Settings.Info.TemplatePathAndFileName, 
-				Settings.Info.ExcelPathAndFileName);
+			string outFile = SetUpOutputFile(Setg.TemplatePathAndFileName, 
+				Setg.ExcelPathAndFileName);
 
 			X.Application excel = new X.Application();
 			if (excel == null) return false;
 
 			X.Workbook wb = excel.Workbooks.Open(outFile);
-			X.Worksheet wsData = wb.Sheets[WKS_DATA] as X.Worksheet;
+			X.Worksheet wsData = 
+				wb.Sheets[Setg.ExcelDataWorksheetName] as X.Worksheet;
 
 			if (wsData == null) return false;
-
-			wsData.Name = WKS_DATA;
 
 			excel.Visible = false;
 
@@ -77,18 +55,22 @@ namespace TestConsoleApp
 
 			row++;
 
-			X.Range range = GetRange(wsData, row,
-				RevisionDataMgr.SelectedCount, 1, om.ColumnOrder.Count);
+			//                           startRow         row count
+			X.Range range = GetRange(wsData, row, data.Count, 
+			// startCol   colCount
+				1, om.ColumnOrder.Count);
 
 			FormatDataCells(range);
 
-			ExportRevisionData(RevisionDataMgr.IterateSelected(), row, wsData, om);
+			ExportToExcel(data, row, wsData, om);
 
 			AdjustColumnWidthInRange(range.Columns, 1.5);
 
-			X.Worksheet wsPivot = wb.Sheets[WKS_PIVOT] as X.Worksheet;
+			X.Worksheet wsPivot = 
+				wb.Sheets[Setg.ExcelPivotWorksheetName] as X.Worksheet;
 
-			X.PivotTable pivotTable = (X.PivotTable) wsPivot.PivotTables(PIVOT_TABLE_NAME);
+			X.PivotTable pivotTable = 
+				(X.PivotTable) wsPivot.PivotTables(Setg.ExcelPivotTableName);
 
 			pivotTable.RefreshTable();
 
@@ -96,6 +78,94 @@ namespace TestConsoleApp
 
 			return true;
 		}
+
+		private static List<List<string>> AggregateData(RevisionData selected,
+			RevOrderMgr om, DataEnum field)
+		{
+			// rows x columns
+			List<List<string>> rawTableData = FormatTableData(selected, om);
+			List<List<string>> finalTableData = new List<List<string>>();
+
+			int newRow = 0;
+
+			int maxRawRows = rawTableData.Count;
+
+			finalTableData.Add(rawTableData[0].Clone());
+
+			for (int i = 1; i < rawTableData.Count; i++)
+			{
+				bool result = true;
+
+				foreach (DataEnum item in om.SortOrder.Columns)
+				{
+					if (item.Equals(field)) continue;
+
+					if (!rawTableData[i-1][item.DataIdx].
+						Equals(rawTableData[i][item.DataIdx]))
+					{
+						finalTableData.Add(rawTableData[i].Clone());
+						newRow++;
+						result = false;
+						break;
+					}
+				}
+
+				if (result)
+				{
+					if (!finalTableData[newRow][field.DataIdx]
+						.Equals(rawTableData[i][field.DataIdx]))
+					{
+						finalTableData[newRow][field.DataIdx] +=
+							nl + rawTableData[i][field.DataIdx];
+					}
+				}
+			}
+
+			Console.WriteLine("raw table data");
+			ListTableData(rawTableData);
+			Console.Write(nl);
+
+			Console.WriteLine("final table data");
+			ListTableData(finalTableData);
+
+
+			return finalTableData;
+		}
+
+		private static void ListTableData(List<List<string>> tableData)
+		{
+			foreach (List<string> list in tableData)
+			{
+				foreach (string s in list)
+				{
+					Console.Write(s + "  ");
+				}
+
+				Console.Write(nl);
+			}
+		}
+
+
+		private static List<List<string>> FormatTableData(RevisionData selected,
+			RevOrderMgr om)
+		{
+			// rows x columns
+			List<List<string>> tableData = new List<List<string>>();
+
+			foreach (RevisionDataFields rdf in selected.GetEnumerable())
+			{
+				List<string> rowData = new List<string>(new string[selected.Count]);
+
+				foreach (DataEnum d in om.ColumnOrder.itemize())
+				{
+					rowData[d.DataIdx] = (string.Format(d.Display.FormatString,
+						rdf[d.DataIdx]?? ""));
+				}
+				tableData.Add(rowData);
+			}
+			return tableData;
+		}
+
 
 		private static void ExportColumnTitles(X.Worksheet ws, int row, RevOrderMgr om)
 		{
@@ -120,21 +190,35 @@ namespace TestConsoleApp
 			string title = item.FullTitle;
 
 			ws.Cells[row, col] = title;
-//			ws.Columns[col].ColumnWidth = Math.Max(title.Length + 2, item.Display.DataWidth + 2);
-//			ws.Columns[col].ColumnWidth = item.Display.ColWidth + 2;
 		}
 
-		private static void ExportRevisionData(IEnumerable<RevisionDataFields> iEnumerable, 
+		private static void ExportToExcel(RevisionData selected, 
 			int startRow, X.Worksheet ws, RevOrderMgr om)
 		{
 			int row = startRow;
 
-			foreach (RevisionDataFields rdf in iEnumerable)
+			foreach (RevisionDataFields rdf in selected.GetEnumerable())
 			{
 				int col = 1;
 				foreach (DataEnum d in om.ColumnOrder.Iterate())
 				{
 					ExportAnItem(rdf[d.DataIdx], d, row, col++, ws);
+				}
+				row++;
+			}
+		}
+
+		private static void ExportToExcel(List<List<string>> data, 
+			int startRow, X.Worksheet ws, RevOrderMgr om)
+		{
+			int row = startRow;
+
+			foreach (List<string> field in data)
+			{
+				int col = 1;
+				foreach (DataEnum d in om.ColumnOrder.Iterate())
+				{
+					ws.Cells[row, col++] = field[d.DataIdx];
 				}
 				row++;
 			}
@@ -151,10 +235,10 @@ namespace TestConsoleApp
 
 		private static X.Range GetRange(X.Worksheet ws,
 			int startRow, int rowCount,
-			int startColumn, int columnsWide)
+			int startColumn, int colCount)
 		{
 			return ws.Range[ws.Cells[startRow, startColumn], 
-				ws.Cells[startRow + rowCount, startColumn + columnsWide]];
+				ws.Cells[startRow + rowCount, startColumn + colCount]];
 		}
 
 		private static void AdjustColumnWidth(X.Range col, double adjustAmt)
@@ -172,7 +256,7 @@ namespace TestConsoleApp
 			}
 		}
 
-		private static string GetOutputFile(string source, string destinition)
+		private static string SetUpOutputFile(string source, string destinition)
 		{
 			if (!File.Exists(source))
 			{
@@ -197,6 +281,7 @@ namespace TestConsoleApp
 		private static void FormatDataCells(X.Range range)
 		{
 			range.Cells.NumberFormat = "@";
+			range.Cells.VerticalAlignment = X.XlVAlign.xlVAlignTop;
 		}
 
 	}
