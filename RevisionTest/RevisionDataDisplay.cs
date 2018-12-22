@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 
-using static TestConsoleApp.RevisionMetaData;
+using static RevisionTest.RevisionMetaData;
 
-namespace TestConsoleApp
+namespace RevisionTest
 {
 	public class RevisionDataDisplay : ICloneable<RevisionDataDisplay>
 	{
@@ -83,11 +83,11 @@ namespace TestConsoleApp
 
 		// data justification in the column
 		// left, right, or center
-		public Justification JustifyColumn { get; set; }
+		public RevisionMetaData.Justification JustifyColumn { get; set; }
 			
 		// data justification when a key member
 		// left, right, or center
-		public Justification JustifyKey { get; set; }
+		public RevisionMetaData.Justification JustifyKey { get; set; }
 			
 		// the font in which to format the data (not used)
 		public Font Font { get; set; }            
@@ -103,8 +103,8 @@ namespace TestConsoleApp
 		public RevisionDataDisplay(int keyWidth,
 			Font                       font,
 			string                     formatString,
-			Justification              justifyColumn,
-			Justification              justifyKey)
+			RevisionMetaData.Justification              justifyColumn,
+			RevisionMetaData.Justification              justifyKey)
 		{
 			ColWidth      = keyWidth;
 			KeyWidth      = keyWidth;

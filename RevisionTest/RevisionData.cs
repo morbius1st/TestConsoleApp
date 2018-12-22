@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 
 
-namespace TestConsoleApp 
+namespace RevisionTest 
 {
 	public class RevisionData : IEnumerable<RevisionDataFields>, 
 		ICloneable<RevisionData>

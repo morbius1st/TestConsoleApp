@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using static TestConsoleApp.DataItems;
-using static TestConsoleApp.DataItems.EDataFields;
+using static RevisionTest.DataItems;
+using static RevisionTest.DataItems.EDataFields;
 
-using static TestConsoleApp.RevisionFilters;
-using static TestConsoleApp.RevisionFilters;
-using static TestConsoleApp.RevisionFilters.ECompareOps;
+using static RevisionTest.RevisionFilters;
+using static RevisionTest.RevisionFilters.ECompareOps;
 
 using static UtilityLibrary.CsUtilities;
 
@@ -20,7 +19,7 @@ using static UtilityLibrary.CsUtilities;
 // created:  7/8/2018 5:47:48 AM
 
 
-namespace TestConsoleApp
+namespace RevisionTest
 {
 	public class Settings
 	{
@@ -140,9 +139,9 @@ namespace TestConsoleApp
 			oneClickFilter.Add(ReadOneClickCriteria());
 		}
 
-		private Criteria  ReadOneClickCriteria()
+		private RevisionFilters.Criteria  ReadOneClickCriteria()
 		{
-			Criteria c = null;
+			RevisionFilters.Criteria c = null;
 			
 			if (c == null)
 			{
@@ -285,9 +284,9 @@ namespace TestConsoleApp
 			return so;
 		}
 
-		private Criteria DefaultOneClickCriteria()
+		private RevisionFilters.Criteria DefaultOneClickCriteria()
 		{
-			return new Criteria(REV_SORT_ORDER_CODE , EQUAL, 
+			return new RevisionFilters.Criteria(REV_SORT_ORDER_CODE , EQUAL, 
 				RevitRevisions.MaxRevision.ToString(), REV_SUB_ALTID);
 		}
 

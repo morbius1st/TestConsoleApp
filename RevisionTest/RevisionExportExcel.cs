@@ -8,11 +8,11 @@ using System.Reflection;
 using X = Microsoft.Office.Interop.Excel;
 using static Microsoft.Office.Interop.Excel.XlHAlign;
 
-using static TestConsoleApp.DataItems;
-using static TestConsoleApp.RevisionTest;
-using static TestConsoleApp.Settings;
+using static RevisionTest.DataItems;
+using static RevisionTest.RevisionTest;
+using static RevisionTest.Settings;
 
-using static TestConsoleApp.DataItems.EDataFields;
+using static RevisionTest.DataItems.EDataFields;
 
 #endregion
 
@@ -23,7 +23,7 @@ using static TestConsoleApp.DataItems.EDataFields;
 // created:  6/30/2018 1:43:01 PM
 
 
-namespace TestConsoleApp
+namespace RevisionTest
 {
 	public static class RevisionExportExcel
 	{
@@ -80,7 +80,7 @@ namespace TestConsoleApp
 		}
 
 		private static List<List<string>> AggregateData(RevisionData selected,
-			RevOrderMgr om, DataEnum field)
+			RevOrderMgr om, DataItems.DataEnum field)
 		{
 			// rows x columns
 			List<List<string>> rawTableData = FormatTableData(selected, om);
@@ -96,7 +96,7 @@ namespace TestConsoleApp
 			{
 				bool result = true;
 
-				foreach (DataEnum item in om.SortOrder.Columns)
+				foreach (DataItems.DataEnum item in om.SortOrder.Columns)
 				{
 					if (item.Equals(field)) continue;
 
@@ -156,7 +156,7 @@ namespace TestConsoleApp
 			{
 				List<string> rowData = new List<string>(new string[selected.Count]);
 
-				foreach (DataEnum d in om.ColumnOrder.itemize())
+				foreach (DataItems.DataEnum d in om.ColumnOrder.itemize())
 				{
 					rowData[d.DataIdx] = (string.Format(d.Display.FormatString,
 						rdf[d.DataIdx]?? ""));
@@ -171,7 +171,7 @@ namespace TestConsoleApp
 		{
 			int col = 1;
 
-			foreach (DataEnum item in om.ColumnOrder.Iterate())
+			foreach (DataItems.DataEnum item in om.ColumnOrder.Iterate())
 			{
 				ExportARowTitle(item, row, col++, ws);
 			}
@@ -184,7 +184,7 @@ namespace TestConsoleApp
 			range.Cells.WrapText = true;
 		}
 
-		private static void ExportARowTitle(DataEnum item, int row, int col, 
+		private static void ExportARowTitle(DataItems.DataEnum item, int row, int col, 
 			X.Worksheet ws)
 		{
 			string title = item.FullTitle;
@@ -200,7 +200,7 @@ namespace TestConsoleApp
 			foreach (RevisionDataFields rdf in selected.GetEnumerable())
 			{
 				int col = 1;
-				foreach (DataEnum d in om.ColumnOrder.Iterate())
+				foreach (DataItems.DataEnum d in om.ColumnOrder.Iterate())
 				{
 					ExportAnItem(rdf[d.DataIdx], d, row, col++, ws);
 				}
@@ -216,7 +216,7 @@ namespace TestConsoleApp
 			foreach (List<string> field in data)
 			{
 				int col = 1;
-				foreach (DataEnum d in om.ColumnOrder.Iterate())
+				foreach (DataItems.DataEnum d in om.ColumnOrder.Iterate())
 				{
 					ws.Cells[row, col++] = field[d.DataIdx];
 				}
@@ -224,7 +224,7 @@ namespace TestConsoleApp
 			}
 		}
 
-		private static void ExportAnItem(dynamic data, DescEnum descEnum, 
+		private static void ExportAnItem(dynamic data, DataItems.DescEnum descEnum, 
 			int row, int col, X.Worksheet ws)
 		{
 			string formatted = string.Format(descEnum.Display.FormatString,

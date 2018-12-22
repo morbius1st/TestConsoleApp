@@ -3,9 +3,9 @@ using System.Reflection;
 using System.Collections.Generic;
 //using static TestConsoleApp.DataItems.ColumnHelpers;
 
-using static TestConsoleApp.DataItems.EDataFields;
+using static RevisionTest.DataItems.EDataFields;
 
-namespace TestConsoleApp
+namespace RevisionTest
 {
 	public enum EDataType
 	{

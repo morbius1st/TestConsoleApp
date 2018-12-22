@@ -2,10 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using static TestConsoleApp.DataItems;
-using static TestConsoleApp.RevColumnOrder;
+using static RevisionTest.DataItems;
+using static RevisionTest.RevColumnOrder;
 
-namespace TestConsoleApp
+namespace RevisionTest
 {
 	public static class RevisionDataMgr
 	{
@@ -133,9 +133,9 @@ namespace TestConsoleApp
 
 			int i = 0;
 			
-			foreach (ISortable so in om.SortOrder.Iterate())
+			foreach (DataItems.ISortable so in om.SortOrder.Iterate())
 			{
-				DataEnum d = ((DataEnum) so);
+				DataItems.DataEnum d = ((DataItems.DataEnum) so);
 
 				key += RevisionFormat.FormatForKey(items[d.DataIdx], d.Display);
 

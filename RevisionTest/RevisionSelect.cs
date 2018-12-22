@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using static TestConsoleApp.RevisionTest;
-using static TestConsoleApp.RevisionFilters;
-using static TestConsoleApp.RevisionFilters.ECompareOps;
+using static RevisionTest.RevisionTest;
+using static RevisionTest.RevisionFilters;
+using static RevisionTest.RevisionFilters.ECompareOps;
 
 
 
 
-namespace TestConsoleApp
+namespace RevisionTest
 {
 
 	public static class RevisionSelect
 	{
 		#region + Comparisons
 
-		public static bool Verify(RevOrderCode a, Criteria c)
+		public static bool Verify(RevOrderCode a, RevisionFilters.Criteria c)
 		{
 			string ax;
 
@@ -29,10 +29,10 @@ namespace TestConsoleApp
 			return Verify(ax, c);
 		}
 
-		public static bool Verify(bool a, Criteria c)
+		public static bool Verify(bool a, RevisionFilters.Criteria c)
 		{
 			bool result = false;
-			ICompRoot opr = c.CompareOpr;
+			RevisionFilters.ICompRoot opr = c.CompareOpr;
 
 			if (c.CompareOpr == ANY)
 			{
@@ -47,10 +47,10 @@ namespace TestConsoleApp
 			return result;
 		}
 
-		public static bool Verify(RevisionVisibility a, Criteria c)
+		public static bool Verify(RevisionVisibility a, RevisionFilters.Criteria c)
 		{
 			bool result = false;
-			ICompRoot opr = c.CompareOpr;
+			RevisionFilters.ICompRoot opr = c.CompareOpr;
 
 			if (c.CompareOpr == ANY)
 			{
@@ -65,10 +65,10 @@ namespace TestConsoleApp
 			return result;
 		}
 
-		public static bool Verify(ElementId a, Criteria c)
+		public static bool Verify(ElementId a, RevisionFilters.Criteria c)
 		{
 			bool result = false;
-			ICompRoot opr = c.CompareOpr;
+			RevisionFilters.ICompRoot opr = c.CompareOpr;
 
 			ElementId b = c.TestValue?.AsElementId;
 
@@ -88,34 +88,34 @@ namespace TestConsoleApp
 			return result;
 		}
 
-		public static bool Verify(int a, Criteria c)
+		public static bool Verify(int a, RevisionFilters.Criteria c)
 		{
 			bool result = false;
-			ICompRoot opr = c.CompareOpr;
+			RevisionFilters.ICompRoot opr = c.CompareOpr;
 			int b = c.TestValue?.AsInt ?? 0;
 
 			switch (c.CompareOpr.Type)
 			{
-			case CompareType.ANY:
+			case RevisionFilters.CompareType.ANY:
 				{
 					result = true;
 					break;
 				}
-			case CompareType.EQUAL:
-			case CompareType.NOT_EQUAL:
+			case RevisionFilters.CompareType.EQUAL:
+			case RevisionFilters.CompareType.NOT_EQUAL:
 				{
 					result = (a == b) == (opr == EQUAL);
 					break;
 				}
-			case CompareType.LESS_THEN:
-			case CompareType.LESS_THEN_OR_EQUAL:
+			case RevisionFilters.CompareType.LESS_THEN:
+			case RevisionFilters.CompareType.LESS_THEN_OR_EQUAL:
 				{
 					result = a < b ||
 						((a == b) && (opr == LESS_THEN_OR_EQUAL));
 					break;
 				}
-			case CompareType.GREATER_THEN:
-			case CompareType.GREATER_THEN_OR_EQUAL:
+			case RevisionFilters.CompareType.GREATER_THEN:
+			case RevisionFilters.CompareType.GREATER_THEN_OR_EQUAL:
 				{
 					result = a > b ||
 						((a == b) && (opr == GREATER_THEN_OR_EQUAL));
@@ -126,10 +126,10 @@ namespace TestConsoleApp
 			return result;
 		}
 
-		public static bool Verify(string a, Criteria c)
+		public static bool Verify(string a, RevisionFilters.Criteria c)
 		{
 			bool result = false;
-			ICompRoot opr = c.CompareOpr;
+			RevisionFilters.ICompRoot opr = c.CompareOpr;
 			StringComparison ignorecase = StringComparison.OrdinalIgnoreCase;
 
 			if (!c.IgnoreCase)
@@ -139,7 +139,7 @@ namespace TestConsoleApp
 
 			string b = c.TestValue?.AsString;
 
-			if (c.CompareOpr.Type == CompareType.ANY)
+			if (c.CompareOpr.Type == RevisionFilters.CompareType.ANY)
 			{
 				result = true;
 			}
@@ -161,37 +161,37 @@ namespace TestConsoleApp
 			{
 				switch (c.CompareOpr.Type)
 				{
-				case CompareType.EQUAL:
-				case CompareType.NOT_EQUAL:
+				case RevisionFilters.CompareType.EQUAL:
+				case RevisionFilters.CompareType.NOT_EQUAL:
 					{
 						result = a.Equals(b) == (opr == EQUAL);
 						break;
 					}
-				case CompareType.LESS_THEN:
-				case CompareType.LESS_THEN_OR_EQUAL:
+				case RevisionFilters.CompareType.LESS_THEN:
+				case RevisionFilters.CompareType.LESS_THEN_OR_EQUAL:
 					{
 						int ans = String.Compare(a, b, ignorecase);
 						result = ans < 0 ||
 							((a.Equals(b)) && (opr == LESS_THEN_OR_EQUAL));
 						break;
 					}
-				case CompareType.GREATER_THEN:
-				case CompareType.GREATER_THEN_OR_EQUAL:
+				case RevisionFilters.CompareType.GREATER_THEN:
+				case RevisionFilters.CompareType.GREATER_THEN_OR_EQUAL:
 					{
 						int ans = String.Compare(a, b, ignorecase);
 						result = ans > 0 ||
 							((a.Equals(b)) && (opr == GREATER_THEN_OR_EQUAL));
 						break;
 					}
-				case CompareType.STARTS_WITH:
-				case CompareType.DOES_NOT_START_WITH:
+				case RevisionFilters.CompareType.STARTS_WITH:
+				case RevisionFilters.CompareType.DOES_NOT_START_WITH:
 					{
 						bool ans = a.StartsWith(b, ignorecase);
 						result = (opr == STARTS_WITH) == ans;
 						break;
 					}
-				case CompareType.CONTAINS:
-				case CompareType.DOES_NOT_CONTAIN:
+				case RevisionFilters.CompareType.CONTAINS:
+				case RevisionFilters.CompareType.DOES_NOT_CONTAIN:
 					{
 						bool ans = a.IndexOf(b, ignorecase) > 0;
 						result = (opr == CONTAINS) == ans;
@@ -229,11 +229,11 @@ namespace TestConsoleApp
 			// the outer loop is the opposite
 			// it is an 'and' loop - a single false and the data row fails
 
-			foreach (KeyValuePair<DataItems.FilterEnum, Filters> kvpOuter in filters)
+			foreach (KeyValuePair<DataItems.FilterEnum, RevisionFilters.Filters> kvpOuter in filters)
 			{
-				foreach (KeyValuePair<int, Criteria> kvpInner in kvpOuter.Value)
+				foreach (KeyValuePair<int, RevisionFilters.Criteria> kvpInner in kvpOuter.Value)
 				{
-					if (kvpInner.Value.CompareOpr == ECompareOps.ANY)
+					if (kvpInner.Value.CompareOpr == RevisionFilters.ECompareOps.ANY)
 					{
 						result = true;
 					}

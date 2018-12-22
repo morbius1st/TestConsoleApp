@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
-using static TestConsoleApp.DataItems;
-using static TestConsoleApp.RevisionFilters;
+using static RevisionTest.DataItems;
+using static RevisionTest.RevisionFilters;
 
 
-namespace TestConsoleApp
+namespace RevisionTest
 {
 	// this class holds the list of filters
-	public class RevisionFilters : IEnumerable<KeyValuePair<FilterEnum, Filters>>
+	public class RevisionFilters : IEnumerable<KeyValuePair<DataItems.FilterEnum, RevisionFilters.Filters>>
 	{
 		#region + Compare Ops
 
@@ -104,7 +104,7 @@ namespace TestConsoleApp
 
 		#region + Helper Classes & Structs
 
-		public IEnumerator<KeyValuePair<FilterEnum, Filters>> GetEnumerator()
+		public IEnumerator<KeyValuePair<DataItems.FilterEnum, Filters>> GetEnumerator()
 		{
 			return _filterLists.GetEnumerator();
 		}
@@ -118,14 +118,14 @@ namespace TestConsoleApp
 
 		public class Criteria
 		{
-			public FilterEnum FilterEnum { get;  }
+			public DataItems.FilterEnum FilterEnum { get;  }
 			public CompareOpRoot CompareOpr { get;  }
 			public ItemValue TestValue { get;  } = null;
 			public bool IgnoreCase { get;  } = true;
-			public SubDataEnum SubDataEnum { get; } = null;
+			public DataItems.SubDataEnum SubDataEnum { get; } = null;
 
 			// Any
-			public Criteria(FilterEnum filterEnum,
+			public Criteria(DataItems.FilterEnum filterEnum,
 				ICompAny compareOprAny)
 			{
 				FilterEnum = filterEnum;
@@ -135,7 +135,7 @@ namespace TestConsoleApp
 			}
 
 			// basic / RevitVisibility
-			public Criteria(CompareVisEnum filterEnum,
+			public Criteria(DataItems.CompareVisEnum filterEnum,
 				ICompBasic compareOpr, RevisionVisibility testValue)
 			{
 				FilterEnum = filterEnum;
@@ -145,7 +145,7 @@ namespace TestConsoleApp
 			}
 
 			// basic / ElementId
-			public Criteria(CompareEIdEnum filterEnum,
+			public Criteria(DataItems.CompareEIdEnum filterEnum,
 				ICompBasic compareOpr, ElementId testValue)
 			{
 				FilterEnum = filterEnum;
@@ -155,7 +155,7 @@ namespace TestConsoleApp
 			}
 
 			// bool
-			public Criteria(CompareBoolEnum filterEnum,
+			public Criteria(DataItems.CompareBoolEnum filterEnum,
 				CompareOpBool compareOpr)
 			{
 				FilterEnum = filterEnum;
@@ -165,7 +165,7 @@ namespace TestConsoleApp
 			}
 
 			// extended
-			public Criteria(CompareIntEnum filterEnum,
+			public Criteria(DataItems.CompareIntEnum filterEnum,
 				ICompExtended compareOpr, int testValue)
 			{
 				FilterEnum = filterEnum;
@@ -175,7 +175,7 @@ namespace TestConsoleApp
 			}
 
 			// strings
-			public Criteria(CompareStrSortable filterEnum,
+			public Criteria(DataItems.CompareStrSortable filterEnum,
 				ICompStringUnary compareOpr)
 			{
 				FilterEnum = filterEnum;
@@ -184,7 +184,7 @@ namespace TestConsoleApp
 //				IgnoreCase = true;
 			}
 
-			public Criteria(CompareStrSortable filterEnum,
+			public Criteria(DataItems.CompareStrSortable filterEnum,
 				ICompStringBinary compareOpr,
 				string testValue, bool ignoreCase = true)
 			{
@@ -195,7 +195,7 @@ namespace TestConsoleApp
 			}
 
 			// strings
-			public Criteria(CompareStrEnum filterEnum,
+			public Criteria(DataItems.CompareStrEnum filterEnum,
 				ICompStringUnary compareOpr)
 			{
 				FilterEnum = filterEnum;
@@ -204,7 +204,7 @@ namespace TestConsoleApp
 //				IgnoreCase = true;
 			}
 
-			public Criteria(CompareStrEnum filterEnum,
+			public Criteria(DataItems.CompareStrEnum filterEnum,
 				ICompStringBinary compareOpr,
 				string testValue, bool ignoreCase = true)
 			{
@@ -216,37 +216,37 @@ namespace TestConsoleApp
 
 			// RevOrderCode
 			// unary
-			public Criteria(CompareOrderEnum filterEnum,
+			public Criteria(DataItems.CompareOrderEnum filterEnum,
 				ICompStringUnary compareOpr)
 			{
 				FilterEnum = filterEnum;
 				CompareOpr = (CompareOpRoot) compareOpr;
 			}
 
-			public Criteria(CompareOrderEnum filterEnum,
+			public Criteria(DataItems.CompareOrderEnum filterEnum,
 				ICompStringUnary compareOpr, 
-				ISubRevOrderCode subDataEnum = null)
+				DataItems.ISubRevOrderCode subDataEnum = null)
 			{
 				FilterEnum = filterEnum;
 				CompareOpr = (CompareOpRoot) compareOpr;
-				SubDataEnum = subDataEnum as SubDataEnum;
+				SubDataEnum = subDataEnum as DataItems.SubDataEnum;
 			}
 
 			// binary
-			public Criteria(CompareOrderEnum filterEnum,
+			public Criteria(DataItems.CompareOrderEnum filterEnum,
 				ICompStringBinary compareOpr,
 				string testValue,
-				ISubRevOrderCode subDataEnum = null, 
+				DataItems.ISubRevOrderCode subDataEnum = null, 
 				bool ignoreCase = true)
 			{
 				FilterEnum = filterEnum;
 				CompareOpr = (CompareOpRoot) compareOpr;
-				SubDataEnum = subDataEnum as SubDataEnum;
+				SubDataEnum = subDataEnum as DataItems.SubDataEnum;
 				TestValue = new ItemValue(testValue);
 				IgnoreCase = ignoreCase;
 			}
 
-			public Criteria(CompareOrderEnum filterEnum,
+			public Criteria(DataItems.CompareOrderEnum filterEnum,
 				ICompStringBinary compareOpr,
 				string testValue, bool ignoreCase)
 			{
@@ -300,12 +300,12 @@ namespace TestConsoleApp
 		// a lists of criteria lists.  each list is 
 		// associated with a specific FilterEnum
 		public class FilterLists :
-			IEnumerable<KeyValuePair<FilterEnum, Filters>>
+			IEnumerable<KeyValuePair<DataItems.FilterEnum, Filters>>
 		{
-			private SortedList<FilterEnum, Filters> _filterList =
-				new SortedList<FilterEnum, Filters>(new FilterCompare());
+			private SortedList<DataItems.FilterEnum, Filters> _filterList =
+				new SortedList<DataItems.FilterEnum, Filters>(new FilterCompare());
 
-			public void Add(FilterEnum filterEnum, Criteria criteria)
+			public void Add(DataItems.FilterEnum filterEnum, Criteria criteria)
 			{
 				if (ContainsKey(filterEnum))
 				{
@@ -324,19 +324,19 @@ namespace TestConsoleApp
 				return _filterList.Count;
 			}
 
-			public int Count(FilterEnum filterEnum)
+			public int Count(DataItems.FilterEnum filterEnum)
 			{
 				if (!ContainsKey(filterEnum)) return -1;
 
 				return _filterList[filterEnum].Count;
 			}
 
-			public bool ContainsKey(FilterEnum filterEnum)
+			public bool ContainsKey(DataItems.FilterEnum filterEnum)
 			{
 				return _filterList.ContainsKey(filterEnum);
 			}
 
-			public IEnumerator<KeyValuePair<FilterEnum, Filters>> GetEnumerator()
+			public IEnumerator<KeyValuePair<DataItems.FilterEnum, Filters>> GetEnumerator()
 			{
 				return _filterList.GetEnumerator();
 			}
@@ -348,9 +348,9 @@ namespace TestConsoleApp
 		}
 
 		// this is a comparer that allows sorting via filterenum
-		public class FilterCompare : IComparer<FilterEnum>
+		public class FilterCompare : IComparer<DataItems.FilterEnum>
 		{
-			public int Compare(FilterEnum x, FilterEnum y)
+			public int Compare(DataItems.FilterEnum x, DataItems.FilterEnum y)
 			{
 				return x.FilterIdx.CompareTo(y.FilterIdx);
 			}

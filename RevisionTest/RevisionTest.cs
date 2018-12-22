@@ -2,17 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using static TestConsoleApp.DataItems;
-using static TestConsoleApp.DataItems.EDataFields;
+using static RevisionTest.DataItems;
+using static RevisionTest.DataItems.EDataFields;
 
-using static TestConsoleApp.RevisionFilters.ECompareOps;
-using static TestConsoleApp.RevisionFilters;
-using static TestConsoleApp.RevisionSelect;
-using static TestConsoleApp.RevisionVisibility;
-using static TestConsoleApp.RevisionFormat;
-using static TestConsoleApp.RevisionMetaData;
+using static RevisionTest.RevisionFilters.ECompareOps;
+using static RevisionTest.RevisionFilters;
+using static RevisionTest.RevisionSelect;
+using static RevisionTest.RevisionVisibility;
+using static RevisionTest.RevisionFormat;
+using static RevisionTest.RevisionMetaData;
 
-namespace TestConsoleApp
+namespace RevisionTest
 {
 	public class RevisionTest
 	{
@@ -233,156 +233,156 @@ namespace TestConsoleApp
 
 			// ANY
 			Console.WriteLine("testing ALL");
-			Eval(true,          new Criteria(REV_SELECTED, ANY)                                   , true);
-			Eval(5,             new Criteria(REV_SEQ, ANY)                                        , true);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, ANY)                                 , true);
-			Eval(Hidden,        new Criteria(REV_ITEM_VISIBLE, ANY)                               , true);
-			Eval(               new ElementId(1), new Criteria(REV_TAG_ELEM_ID, ANY)              , true);
+			Eval(true,          new RevisionFilters.Criteria(REV_SELECTED, ANY)                                   , true);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, ANY)                                        , true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, ANY)                                 , true);
+			Eval(Hidden,        new RevisionFilters.Criteria(REV_ITEM_VISIBLE, ANY)                               , true);
+			Eval(               new ElementId(1), new RevisionFilters.Criteria(REV_TAG_ELEM_ID, ANY)              , true);
 			Console.Write(nl);
 
 			// test using bool
 			Console.WriteLine("testing bool");
-			Eval(true,          new Criteria(REV_SELECTED, TRUE)                                  , true);
-			Eval(true,          new Criteria(REV_SELECTED, FALSE)                                 , false);
-			Eval(false,         new Criteria(REV_SELECTED, TRUE)                                  , false);
-			Eval(false,         new Criteria(REV_SELECTED, FALSE)                                 , true);
+			Eval(true,          new RevisionFilters.Criteria(REV_SELECTED, TRUE)                                  , true);
+			Eval(true,          new RevisionFilters.Criteria(REV_SELECTED, FALSE)                                 , false);
+			Eval(false,         new RevisionFilters.Criteria(REV_SELECTED, TRUE)                                  , false);
+			Eval(false,         new RevisionFilters.Criteria(REV_SELECTED, FALSE)                                 , true);
 			Console.Write(nl);
 
 			// test using int
 			Console.WriteLine("testing int");
-			Eval(5,             new Criteria(REV_SEQ, EQUAL                         , 5)          , true);
-			Eval(5,             new Criteria(REV_SEQ, NOT_EQUAL                     , 5)          , false);
-			Eval(5,             new Criteria(REV_SEQ, EQUAL                         , 3)          , false);
-			Eval(5,             new Criteria(REV_SEQ, NOT_EQUAL                     , 3)          , true);
-			Eval(5,             new Criteria(REV_SEQ, GREATER_THEN                  , 3)          , true);
-			Eval(5,             new Criteria(REV_SEQ, GREATER_THEN                  , 5)          , false);
-			Eval(5,             new Criteria(REV_SEQ, GREATER_THEN                  , 7)          , false);
-			Eval(5,             new Criteria(REV_SEQ, GREATER_THEN_OR_EQUAL         , 3)          , true);
-			Eval(5,             new Criteria(REV_SEQ, GREATER_THEN_OR_EQUAL         , 5)          , true);
-			Eval(5,             new Criteria(REV_SEQ, GREATER_THEN_OR_EQUAL         , 7)          , false);
-			Eval(5,             new Criteria(REV_SEQ, LESS_THEN                     , 3)          , false);
-			Eval(5,             new Criteria(REV_SEQ, LESS_THEN                     , 5)          , false);
-			Eval(5,             new Criteria(REV_SEQ, LESS_THEN                     , 7)          , true);
-			Eval(5,             new Criteria(REV_SEQ, LESS_THEN_OR_EQUAL            , 3)          , false);
-			Eval(5,             new Criteria(REV_SEQ, LESS_THEN_OR_EQUAL            , 5)          , true);
-			Eval(5,             new Criteria(REV_SEQ, LESS_THEN_OR_EQUAL            , 7)          , true);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, EQUAL                         , 5)          , true);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, NOT_EQUAL                     , 5)          , false);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, EQUAL                         , 3)          , false);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, NOT_EQUAL                     , 3)          , true);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, GREATER_THEN                  , 3)          , true);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, GREATER_THEN                  , 5)          , false);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, GREATER_THEN                  , 7)          , false);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, GREATER_THEN_OR_EQUAL         , 3)          , true);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, GREATER_THEN_OR_EQUAL         , 5)          , true);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, GREATER_THEN_OR_EQUAL         , 7)          , false);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, LESS_THEN                     , 3)          , false);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, LESS_THEN                     , 5)          , false);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, LESS_THEN                     , 7)          , true);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, LESS_THEN_OR_EQUAL            , 3)          , false);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, LESS_THEN_OR_EQUAL            , 5)          , true);
+			Eval(5,             new RevisionFilters.Criteria(REV_SEQ, LESS_THEN_OR_EQUAL            , 7)          , true);
 			Console.Write(nl);
 
 			// test using string
 			Console.WriteLine("testing string");
 			// basic and extended
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, EQUAL                  , "BCDE")     , true);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, NOT_EQUAL              , "BCDE")     , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, EQUAL                  , "ACDE")     , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, NOT_EQUAL              , "ACDE")     , true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, EQUAL                  , "BCDE")     , true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, NOT_EQUAL              , "BCDE")     , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, EQUAL                  , "ACDE")     , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, NOT_EQUAL              , "ACDE")     , true);
 																			   
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, EQUAL                  , "ACDE")     , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, EQUAL                  , nullString) , false);
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, EQUAL                  , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, EQUAL                  , "ACDE")     , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, EQUAL                  , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, EQUAL                  , nullString) , false);
 																			   
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, NOT_EQUAL              , "ACDE")     , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, NOT_EQUAL              , nullString) , false);
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, NOT_EQUAL              , nullString) , false);
-																			   
-																		       
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, GREATER_THEN           , "ACDE")     , true);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, GREATER_THEN           , "BCDE")     , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, GREATER_THEN           , "CCDE")     , false);
-																		       
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, GREATER_THEN           , "ACDE")     , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, GREATER_THEN           , nullString) , false);
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, GREATER_THEN           , nullString) , false);
-																			   
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, NOT_EQUAL              , "ACDE")     , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, NOT_EQUAL              , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, NOT_EQUAL              , nullString) , false);
 																			   
 																		       
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, GREATER_THEN_OR_EQUAL  , "ACDE")     , true);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, GREATER_THEN_OR_EQUAL  , "BCDE")     , true);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, GREATER_THEN_OR_EQUAL  , "CCDE")     , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, GREATER_THEN           , "ACDE")     , true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, GREATER_THEN           , "BCDE")     , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, GREATER_THEN           , "CCDE")     , false);
+																		       
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, GREATER_THEN           , "ACDE")     , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, GREATER_THEN           , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, GREATER_THEN           , nullString) , false);
+																			   
+																			   
+																		       
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, GREATER_THEN_OR_EQUAL  , "ACDE")     , true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, GREATER_THEN_OR_EQUAL  , "BCDE")     , true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, GREATER_THEN_OR_EQUAL  , "CCDE")     , false);
 																    
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, GREATER_THEN_OR_EQUAL  , "ACDE")     , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, GREATER_THEN_OR_EQUAL  , nullString) , false);
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, GREATER_THEN_OR_EQUAL  , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, GREATER_THEN_OR_EQUAL  , "ACDE")     , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, GREATER_THEN_OR_EQUAL  , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, GREATER_THEN_OR_EQUAL  , nullString) , false);
 
 																		    
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, LESS_THEN              , "ACDE")     , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, LESS_THEN              , "BCDE")     , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, LESS_THEN              , "CCDE")     , true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, LESS_THEN              , "ACDE")     , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, LESS_THEN              , "BCDE")     , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, LESS_THEN              , "CCDE")     , true);
 																		       
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, LESS_THEN              , "ACDE")     , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, LESS_THEN              , nullString) , false);
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, LESS_THEN              , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, LESS_THEN              , "ACDE")     , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, LESS_THEN              , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, LESS_THEN              , nullString) , false);
 																		       
 																		       
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, LESS_THEN_OR_EQUAL     , "ACDE")     , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, LESS_THEN_OR_EQUAL     , "BCDE")     , true);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, LESS_THEN_OR_EQUAL     , "CCDE")     , true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, LESS_THEN_OR_EQUAL     , "ACDE")     , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, LESS_THEN_OR_EQUAL     , "BCDE")     , true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, LESS_THEN_OR_EQUAL     , "CCDE")     , true);
 																		       
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, LESS_THEN_OR_EQUAL     , "CCDE")     , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, LESS_THEN_OR_EQUAL     , nullString) , false);
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, LESS_THEN_OR_EQUAL     , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, LESS_THEN_OR_EQUAL     , "CCDE")     , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, LESS_THEN_OR_EQUAL     , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, LESS_THEN_OR_EQUAL     , nullString) , false);
 
 
 			// string unary
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, IS_EMPTY)                            , false);
-			Eval("",            new Criteria(REV_SORT_ITEM_REVID, IS_EMPTY)                            , true);
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, IS_EMPTY)                            , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, IS_EMPTY)                            , false);
+			Eval("",            new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, IS_EMPTY)                            , true);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, IS_EMPTY)                            , false);
 
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, IS_NOT_EMPTY)                        , true);
-			Eval("",            new Criteria(REV_SORT_ITEM_REVID, IS_NOT_EMPTY)                        , false);
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, IS_NOT_EMPTY)                        , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, IS_NOT_EMPTY)                        , true);
+			Eval("",            new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, IS_NOT_EMPTY)                        , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, IS_NOT_EMPTY)                        , false);
 
 			// string binary
 			// starts with
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , "BC")       , true);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , "AA")       , false);
-			Eval("",            new Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , "AA")       , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , "BC")       , true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , "AA")       , false);
+			Eval("",            new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , "AA")       , false);
 
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , "b"         , false), false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , "b")        , true);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , "b"         , true), true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , "b"         , false), false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , "b")        , true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , "b"         , true), true);
 																		       
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , "AA")       , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , nullString) , false);
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , "AA")       , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, STARTS_WITH            , nullString) , false);
 			
 			// does not start with
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , "BC")       , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , "AA")       , true);
-			Eval("",            new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , "AA")       , true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , "BC")       , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , "AA")       , true);
+			Eval("",            new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , "AA")       , true);
 
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , "b"         , false), true);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , "b")        , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , "b"         , true), false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , "b"         , false), true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , "b")        , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , "b"         , true), false);
 
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , "AA")       , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , nullString) , false);
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , "AA")       , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_START_WITH    , nullString) , false);
 
 			// contains
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, CONTAINS               , "CD")       , true);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, CONTAINS               , "AA")       , false);
-			Eval("",            new Criteria(REV_SORT_ITEM_REVID, CONTAINS               , "AA")       , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, CONTAINS               , "CD")       , true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, CONTAINS               , "AA")       , false);
+			Eval("",            new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, CONTAINS               , "AA")       , false);
 
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, CONTAINS               , "cd"        , false), false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, CONTAINS               , "cd")       , true);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, CONTAINS               , "cd"        , true), true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, CONTAINS               , "cd"        , false), false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, CONTAINS               , "cd")       , true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, CONTAINS               , "cd"        , true), true);
 																		       
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, CONTAINS               , "AA")       , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, CONTAINS               , nullString) , false);
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, CONTAINS               , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, CONTAINS               , "AA")       , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, CONTAINS               , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, CONTAINS               , nullString) , false);
 																		       
 			// does not contain													
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , "CD")       , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , "AA")       , true);
-			Eval("",            new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , "AA")       , true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , "CD")       , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , "AA")       , true);
+			Eval("",            new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , "AA")       , true);
 
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , "cd"        , false), true);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , "cd")       , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , "cd"        , true), false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , "cd"        , false), true);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , "cd")       , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , "cd"        , true), false);
 																		       
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , "AA")       , false);
-			Eval("BCDE",        new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , nullString) , false);
-			Eval(nullString,    new Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , "AA")       , false);
+			Eval("BCDE",        new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , nullString) , false);
+			Eval(nullString,    new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, DOES_NOT_CONTAIN       , nullString) , false);
 
 
 			Console.Write(nl);
@@ -390,29 +390,29 @@ namespace TestConsoleApp
 			// test using visibility
 			Console.WriteLine("testing visibility");
 			// basic
-			Eval(Hidden,        new Criteria(REV_ITEM_VISIBLE, EQUAL                , Hidden)     , true);
-			Eval(Hidden,        new Criteria(REV_ITEM_VISIBLE, EQUAL                , Hidden)     , true);
-			Eval(Hidden,        new Criteria(REV_ITEM_VISIBLE, NOT_EQUAL            , Hidden)     , false);
-			Eval(Hidden,        new Criteria(REV_ITEM_VISIBLE, EQUAL                , TagVisible) , false);
-			Eval(Hidden,        new Criteria(REV_ITEM_VISIBLE, NOT_EQUAL            , TagVisible) , true);
+			Eval(Hidden,        new RevisionFilters.Criteria(REV_ITEM_VISIBLE, EQUAL                , Hidden)     , true);
+			Eval(Hidden,        new RevisionFilters.Criteria(REV_ITEM_VISIBLE, EQUAL                , Hidden)     , true);
+			Eval(Hidden,        new RevisionFilters.Criteria(REV_ITEM_VISIBLE, NOT_EQUAL            , Hidden)     , false);
+			Eval(Hidden,        new RevisionFilters.Criteria(REV_ITEM_VISIBLE, EQUAL                , TagVisible) , false);
+			Eval(Hidden,        new RevisionFilters.Criteria(REV_ITEM_VISIBLE, NOT_EQUAL            , TagVisible) , true);
 			Console.Write(nl);											       
 																		       
 			// test using string										       
 			Console.WriteLine("testing element id");					       
 			// basic													       
-			Eval(new ElementId(1), new Criteria(REV_TAG_ELEM_ID, EQUAL              , new ElementId(1))  , true);
-			Eval(new ElementId(1), new Criteria(REV_TAG_ELEM_ID, EQUAL              , new ElementId(2))  , false);
+			Eval(new ElementId(1), new RevisionFilters.Criteria(REV_TAG_ELEM_ID, EQUAL              , new ElementId(1))  , true);
+			Eval(new ElementId(1), new RevisionFilters.Criteria(REV_TAG_ELEM_ID, EQUAL              , new ElementId(2))  , false);
 																			        
-			Eval(nullElementId   , new Criteria(REV_TAG_ELEM_ID, EQUAL              , new ElementId(1))  , false);
-			Eval(new ElementId(1), new Criteria(REV_TAG_ELEM_ID, EQUAL              , nullElementId)     , false);
-			Eval(nullElementId   , new Criteria(REV_TAG_ELEM_ID, EQUAL              , nullElementId)     , false);
+			Eval(nullElementId   , new RevisionFilters.Criteria(REV_TAG_ELEM_ID, EQUAL              , new ElementId(1))  , false);
+			Eval(new ElementId(1), new RevisionFilters.Criteria(REV_TAG_ELEM_ID, EQUAL              , nullElementId)     , false);
+			Eval(nullElementId   , new RevisionFilters.Criteria(REV_TAG_ELEM_ID, EQUAL              , nullElementId)     , false);
 																			        
-			Eval(new ElementId(1), new Criteria(REV_TAG_ELEM_ID, NOT_EQUAL          , new ElementId(1))  , false);
-			Eval(new ElementId(1), new Criteria(REV_TAG_ELEM_ID, NOT_EQUAL          , new ElementId(2))  , true);
+			Eval(new ElementId(1), new RevisionFilters.Criteria(REV_TAG_ELEM_ID, NOT_EQUAL          , new ElementId(1))  , false);
+			Eval(new ElementId(1), new RevisionFilters.Criteria(REV_TAG_ELEM_ID, NOT_EQUAL          , new ElementId(2))  , true);
 																			        
-			Eval(nullElementId   , new Criteria(REV_TAG_ELEM_ID, NOT_EQUAL          , new ElementId(1))  , false);
-			Eval(new ElementId(1), new Criteria(REV_TAG_ELEM_ID, NOT_EQUAL          , nullElementId)     , false);
-			Eval(nullElementId   , new Criteria(REV_TAG_ELEM_ID, NOT_EQUAL          , nullElementId)     , false);
+			Eval(nullElementId   , new RevisionFilters.Criteria(REV_TAG_ELEM_ID, NOT_EQUAL          , new ElementId(1))  , false);
+			Eval(new ElementId(1), new RevisionFilters.Criteria(REV_TAG_ELEM_ID, NOT_EQUAL          , nullElementId)     , false);
+			Eval(nullElementId   , new RevisionFilters.Criteria(REV_TAG_ELEM_ID, NOT_EQUAL          , nullElementId)     , false);
 			Console.Write(nl);	
 
 			// test using string										       
@@ -423,43 +423,43 @@ namespace TestConsoleApp
 			RevOrderCode rcNull = null;
 			RevOrderCode rcEmpty = new RevOrderCode();
 
-			Eval(rc              , new Criteria(REV_SORT_ORDER_CODE, EQUAL           , "1.00.00")        , true);
-			Eval(rc              , new Criteria(REV_SORT_ORDER_CODE, EQUAL           , "2.00.00")        , false);
+			Eval(rc              , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, EQUAL           , "1.00.00")        , true);
+			Eval(rc              , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, EQUAL           , "2.00.00")        , false);
 
-			Eval(rc              , new Criteria(REV_SORT_ORDER_CODE, NOT_EQUAL       , "1.00.00")        , false);
-			Eval(rc              , new Criteria(REV_SORT_ORDER_CODE, NOT_EQUAL       , "2.00.00")        , true);
-			Eval(rcEmpty         , new Criteria(REV_SORT_ORDER_CODE, NOT_EQUAL       , "2.00.00")        , true);
-			Eval(rcNull          , new Criteria(REV_SORT_ORDER_CODE, NOT_EQUAL       , "2.00.00")        , true);
+			Eval(rc              , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, NOT_EQUAL       , "1.00.00")        , false);
+			Eval(rc              , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, NOT_EQUAL       , "2.00.00")        , true);
+			Eval(rcEmpty         , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, NOT_EQUAL       , "2.00.00")        , true);
+			Eval(rcNull          , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, NOT_EQUAL       , "2.00.00")        , true);
 
 						// string unary
-			Eval(rc              , new Criteria(REV_SORT_ORDER_CODE, IS_EMPTY)                           , false);
-			Eval(rcEmpty         , new Criteria(REV_SORT_ORDER_CODE, IS_EMPTY)                           , true);
-			Eval(rcNull          , new Criteria(REV_SORT_ORDER_CODE, IS_EMPTY)                           , true);
+			Eval(rc              , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, IS_EMPTY)                           , false);
+			Eval(rcEmpty         , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, IS_EMPTY)                           , true);
+			Eval(rcNull          , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, IS_EMPTY)                           , true);
 
-			Eval(rc              , new Criteria(REV_SORT_ORDER_CODE, IS_NOT_EMPTY)                       , true);
-			Eval(rcEmpty         , new Criteria(REV_SORT_ORDER_CODE, IS_NOT_EMPTY)                       , false);
-			Eval(rcNull          , new Criteria(REV_SORT_ORDER_CODE, IS_NOT_EMPTY)                       , false);
+			Eval(rc              , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, IS_NOT_EMPTY)                       , true);
+			Eval(rcEmpty         , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, IS_NOT_EMPTY)                       , false);
+			Eval(rcNull          , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, IS_NOT_EMPTY)                       , false);
 							
 			// string binary
 			// starts with	
-			Eval(rc              , new Criteria(REV_SORT_ORDER_CODE, STARTS_WITH      , "1.")            , true);
-			Eval(rc              , new Criteria(REV_SORT_ORDER_CODE, STARTS_WITH      , "2.")            , false);
+			Eval(rc              , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, STARTS_WITH      , "1.")            , true);
+			Eval(rc              , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, STARTS_WITH      , "2.")            , false);
 																								        
-			Eval(rc              , new Criteria(REV_SORT_ORDER_CODE, STARTS_WITH      , nullString)      , false);
+			Eval(rc              , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, STARTS_WITH      , nullString)      , false);
 																								        
-			Eval(rcEmpty         , new Criteria(REV_SORT_ORDER_CODE, STARTS_WITH      , "AA")            , false);
-			Eval(rcEmpty         , new Criteria(REV_SORT_ORDER_CODE, STARTS_WITH      , nullString)      , false);
+			Eval(rcEmpty         , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, STARTS_WITH      , "AA")            , false);
+			Eval(rcEmpty         , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, STARTS_WITH      , nullString)      , false);
 																								        
-			Eval(rcNull          , new Criteria(REV_SORT_ORDER_CODE, STARTS_WITH      , "AA")            , false);
-			Eval(rcNull          , new Criteria(REV_SORT_ORDER_CODE, STARTS_WITH      , nullString)      , false);
+			Eval(rcNull          , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, STARTS_WITH      , "AA")            , false);
+			Eval(rcNull          , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, STARTS_WITH      , nullString)      , false);
 
 			// using subdataenum
-			Eval(rc              , new Criteria(REV_SORT_ORDER_CODE, EQUAL           , "1", REV_SUB_ALTID)        , true);
-			Eval(rc              , new Criteria(REV_SORT_ORDER_CODE, EQUAL           , "2", REV_SUB_ALTID)        , false);
+			Eval(rc              , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, EQUAL           , "1", REV_SUB_ALTID)        , true);
+			Eval(rc              , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, EQUAL           , "2", REV_SUB_ALTID)        , false);
 
-			Eval(rc              , new Criteria(REV_SORT_ORDER_CODE, IS_EMPTY, REV_SUB_ALTID)            , false);
-			Eval(rcEmpty         , new Criteria(REV_SORT_ORDER_CODE, IS_EMPTY, REV_SUB_ALTID)            , true);
-			Eval(rcNull          , new Criteria(REV_SORT_ORDER_CODE, IS_EMPTY, REV_SUB_ALTID)            , true);
+			Eval(rc              , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, IS_EMPTY, REV_SUB_ALTID)            , false);
+			Eval(rcEmpty         , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, IS_EMPTY, REV_SUB_ALTID)            , true);
+			Eval(rcNull          , new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, IS_EMPTY, REV_SUB_ALTID)            , true);
 
 			Console.Write(nl);
 		}
@@ -708,7 +708,7 @@ namespace TestConsoleApp
 			}
 		}
 		
-		private static void Eval(RevOrderCode a, Criteria c, bool expected)
+		private static void Eval(RevOrderCode a, RevisionFilters.Criteria c, bool expected)
 		{
 			bool result = Verify(a, c);
 			string ax = a?.ToString() ?? "null";
@@ -716,7 +716,7 @@ namespace TestConsoleApp
 			ListResult(ax, c.TestValue?.AsOrderCode, c, result, expected);
 		}
 		
-		private static void Eval(ElementId a, Criteria c, bool expected)
+		private static void Eval(ElementId a, RevisionFilters.Criteria c, bool expected)
 		{
 			bool result = Verify(a, c);
 
@@ -726,25 +726,25 @@ namespace TestConsoleApp
 			ListResult(ax, cx, c, result, expected);
 		}
 		
-		private static void Eval(RevisionVisibility a, Criteria c, bool expected)
+		private static void Eval(RevisionVisibility a, RevisionFilters.Criteria c, bool expected)
 		{
 			bool result = Verify(a, c);
 			ListResult(a, c.TestValue?.AsVisibility, c, result, expected);
 		}
 
-		private static void Eval(int a, Criteria c, bool expected)
+		private static void Eval(int a, RevisionFilters.Criteria c, bool expected)
 		{
 			bool result = Verify(a, c);
 			ListResult(a, c.TestValue?.AsInt, c, result, expected);
 		}
 
-		private static void Eval(bool a, Criteria c, bool expected)
+		private static void Eval(bool a, RevisionFilters.Criteria c, bool expected)
 		{
 			bool result = Verify(a, c);
 			ListResult(a, c.CompareOpr == TRUE, c, result, expected);
 		}
 
-		private static void Eval(string a, Criteria c, bool expected)
+		private static void Eval(string a, RevisionFilters.Criteria c, bool expected)
 		{
 			bool result = Verify(a, c);
 
@@ -757,7 +757,7 @@ namespace TestConsoleApp
 			ListResult(a, b, c, result, expected);
 		}
 
-		private static void ListResult<T>(T a, T b, Criteria c, bool result, bool expected)
+		private static void ListResult<T>(T a, T b, RevisionFilters.Criteria c, bool result, bool expected)
 		{
 			string msg1 = "testing " + a + " " + c.CompareOpr.Type.ToString()
 			+ " " + b + " is| ";
@@ -782,42 +782,42 @@ namespace TestConsoleApp
 		{
 			RevisionFilters f = new RevisionFilters();
 
-			Criteria c;
+			RevisionFilters.Criteria c;
 
 			// any - string
-			c = new Criteria(REV_SORT_ITEM_BASIS, ANY);
+			c = new RevisionFilters.Criteria(REV_SORT_ITEM_BASIS, ANY);
 			f.Add(c);
 
 			// bool - bool
-			c = new Criteria(REV_SELECTED, TRUE);
+			c = new RevisionFilters.Criteria(REV_SELECTED, TRUE);
 			f.Add(c);
 
 			// basic - elementid
-			c = new Criteria(REV_TAG_ELEM_ID, EQUAL, new ElementId(10101));
+			c = new RevisionFilters.Criteria(REV_TAG_ELEM_ID, EQUAL, new ElementId(10101));
 			f.Add(c);
 
 			// basic - visibility
-			c = new Criteria(REV_ITEM_VISIBLE, EQUAL, Hidden);
+			c = new RevisionFilters.Criteria(REV_ITEM_VISIBLE, EQUAL, Hidden);
 			f.Add(c);
 			
 			// extended - int
-			c = new Criteria(REV_SEQ, LESS_THEN, 1);
+			c = new RevisionFilters.Criteria(REV_SEQ, LESS_THEN, 1);
 			f.Add(c);
 			
 			// string unary
-			c = new Criteria(REV_SORT_ITEM_REVID, IS_EMPTY);
+			c = new RevisionFilters.Criteria(REV_SORT_ITEM_REVID, IS_EMPTY);
 			f.Add(c);
 			
 			// string binary
-			c = new Criteria(REV_SORT_SHEETNUM, STARTS_WITH, "c", true);
+			c = new RevisionFilters.Criteria(REV_SORT_SHEETNUM, STARTS_WITH, "c", true);
 			f.Add(c);
 			
 			// string unary - RevOrderCode
-			c = new Criteria(REV_SORT_ORDER_CODE, IS_EMPTY);
+			c = new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, IS_EMPTY);
 			f.Add(c);
 
 			// string binary - RevOrderCode
-			c = new Criteria(REV_SORT_ORDER_CODE, STARTS_WITH, "a", true);
+			c = new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, STARTS_WITH, "a", true);
 			f.Add(c);
 
 			return f;
@@ -829,12 +829,12 @@ namespace TestConsoleApp
 		{
 			RevisionFilters f = new RevisionFilters();
 
-			Criteria c;
+			RevisionFilters.Criteria c;
 
 			// basis
-			c = new Criteria(REV_SORT_ITEM_BASIS, EQUAL, "pcc");
+			c = new RevisionFilters.Criteria(REV_SORT_ITEM_BASIS, EQUAL, "pcc");
 			f.Add(c);
-			c = new Criteria(REV_SORT_ITEM_BASIS, EQUAL, "rfi");
+			c = new RevisionFilters.Criteria(REV_SORT_ITEM_BASIS, EQUAL, "rfi");
 			f.Add(c);
 
 			// bool - bool
@@ -842,7 +842,7 @@ namespace TestConsoleApp
 //			f.Add(c);
 
 			// basic - visibility
-			c = new Criteria(REV_ITEM_VISIBLE, EQUAL, TagVisible);
+			c = new RevisionFilters.Criteria(REV_ITEM_VISIBLE, EQUAL, TagVisible);
 			f.Add(c);
 			
 //			// string unary
@@ -850,9 +850,9 @@ namespace TestConsoleApp
 //			f.Add(c);
 			
 			// string binary
-			c = new Criteria(REV_SORT_SHEETNUM, STARTS_WITH, "c");
+			c = new RevisionFilters.Criteria(REV_SORT_SHEETNUM, STARTS_WITH, "c");
 			f.Add(c);
-			c = new Criteria(REV_SORT_SHEETNUM, STARTS_WITH, "a");
+			c = new RevisionFilters.Criteria(REV_SORT_SHEETNUM, STARTS_WITH, "a");
 			f.Add(c);
 
 			
@@ -861,7 +861,7 @@ namespace TestConsoleApp
 //			f.Add(c);
 
 			// string binary - RevOrderCode
-			c = new Criteria(REV_SORT_ORDER_CODE, STARTS_WITH, "1", true);
+			c = new RevisionFilters.Criteria(REV_SORT_ORDER_CODE, STARTS_WITH, "1", true);
 			f.Add(c);
 
 			return f;
@@ -873,18 +873,18 @@ namespace TestConsoleApp
 		{
 			RevisionFilters f = new RevisionFilters();
 
-			Criteria c;
+			RevisionFilters.Criteria c;
 
 			// basis
-			c = new Criteria(REV_SORT_ITEM_BASIS, EQUAL, "pcc");
+			c = new RevisionFilters.Criteria(REV_SORT_ITEM_BASIS, EQUAL, "pcc");
 			f.Add(c);
-			c = new Criteria(REV_SORT_ITEM_BASIS, EQUAL, "rfi");
+			c = new RevisionFilters.Criteria(REV_SORT_ITEM_BASIS, EQUAL, "rfi");
 			f.Add(c);
 
 			// string binary
-			c = new Criteria(REV_SORT_SHEETNUM, STARTS_WITH, "c");
+			c = new RevisionFilters.Criteria(REV_SORT_SHEETNUM, STARTS_WITH, "c");
 			f.Add(c);
-			c = new Criteria(REV_SORT_SHEETNUM, STARTS_WITH, "a");
+			c = new RevisionFilters.Criteria(REV_SORT_SHEETNUM, STARTS_WITH, "a");
 			f.Add(c);
 
 			return f;
@@ -896,8 +896,8 @@ namespace TestConsoleApp
 		{
 			RevisionFilters f = new RevisionFilters();
 
-			f.Add(new Criteria(REV_SORT_DELTA_TITLE, CONTAINS, "007"));
-			f.Add(new Criteria(REV_SORT_DELTA_TITLE, CONTAINS, "013"));
+			f.Add(new RevisionFilters.Criteria(REV_SORT_DELTA_TITLE, CONTAINS, "007"));
+			f.Add(new RevisionFilters.Criteria(REV_SORT_DELTA_TITLE, CONTAINS, "013"));
 
 			return f;
 		}
@@ -908,7 +908,7 @@ namespace TestConsoleApp
 		{
 			RevisionFilters f = new RevisionFilters();
 
-			f.Add(new Criteria(REV_SORT_ITEM_BASIS, EQUAL, "pcc"));
+			f.Add(new RevisionFilters.Criteria(REV_SORT_ITEM_BASIS, EQUAL, "pcc"));
 
 			return f;
 		}
@@ -970,12 +970,12 @@ namespace TestConsoleApp
 		
 		private static void ListFilters(RevisionFilters f)
 		{
-			foreach (KeyValuePair<FilterEnum, Filters> kvpOutter in f)
+			foreach (KeyValuePair<DataItems.FilterEnum, RevisionFilters.Filters> kvpOutter in f)
 			{
 				
 				Console.WriteLine("      op name| " + kvpOutter.Key.Name + " (" + kvpOutter.Key.FilterIdx + ")");
 
-				foreach (KeyValuePair<int, Criteria> kvpInner in kvpOutter.Value)
+				foreach (KeyValuePair<int, RevisionFilters.Criteria> kvpInner in kvpOutter.Value)
 				{
 					ListCriteria(kvpInner.Value);
 
@@ -1048,7 +1048,7 @@ namespace TestConsoleApp
 				Console.Write("| -#- |");
 			}
 
-			foreach (DataEnum item in om.ColumnOrder.Iterate())
+			foreach (DataItems.DataEnum item in om.ColumnOrder.Iterate())
 			{
 				ListARowTitle(item, row, subData);
 			}
@@ -1056,7 +1056,7 @@ namespace TestConsoleApp
 			Console.Write(nl);
 		}
 
-		private static void ListARowTitle(SubDataEnum item, int row, bool subData)
+		private static void ListARowTitle(DataItems.SubDataEnum item, int row, bool subData)
 		{
 			string title;
 			RevisionDataDisplay dd = item.Display;
@@ -1064,7 +1064,7 @@ namespace TestConsoleApp
 			char spacer = item.Title[row].Equals("") ? ' ' : '-';
 
 			title = FormatForColumn(item.Title[row], dd, 
-				spacer, spacer, Justification.CENTER);
+				spacer, spacer, RevisionMetaData.Justification.CENTER);
 
 			Console.Write(title);
 
@@ -1074,7 +1074,7 @@ namespace TestConsoleApp
 			{
 				if (item.SubDataList != null)
 				{
-					foreach (SubDataEnum subDataEnum in item.SubDataList)
+					foreach (DataItems.SubDataEnum subDataEnum in item.SubDataList)
 					{
 						ListARowTitle(subDataEnum, row, false);
 					}
@@ -1114,7 +1114,7 @@ namespace TestConsoleApp
 			StringBuilder col = new StringBuilder("col| ");
 			StringBuilder key = new StringBuilder("key| ");
 
-			foreach (DataEnum d in om.ColumnOrder.Iterate())
+			foreach (DataItems.DataEnum d in om.ColumnOrder.Iterate())
 			{
 				ListAnItem(items[d.DataIdx], d, subData);
 
@@ -1134,7 +1134,7 @@ namespace TestConsoleApp
 
 		}
 
-		public static void ListAnItem(dynamic data, DescEnum dataEnum, 
+		public static void ListAnItem(dynamic data, DataItems.DescEnum dataEnum, 
 			bool subData)
 		{
 			RevisionDataDisplay dd = dataEnum.Display;
@@ -1234,11 +1234,11 @@ namespace TestConsoleApp
 
 			Console.Write(nl);
 
-			foreach (RootEnum rx in RootList)
+			foreach (DataItems.RootEnum rx in RootList)
 			{
-				if (rx is DataEnum)
+				if (rx is DataItems.DataEnum)
 				{
-					DataEnum ix = (DataEnum) rx;
+					DataItems.DataEnum ix = (DataItems.DataEnum) rx;
 					Console.WriteLine(fmtData, i, ix.Name, ix.Type.ToString(), 
 						ix.FullTitle, ix.Source.ToString());
 
@@ -1272,9 +1272,9 @@ namespace TestConsoleApp
 					}
 					
 				}
-				else if (rx is DescEnum)
+				else if (rx is DataItems.DescEnum)
 				{
-					DescEnum ix = (DescEnum) rx;
+					DataItems.DescEnum ix = (DataItems.DescEnum) rx;
 					Console.WriteLine(fmtDesc, i, ix.Name, ix.Type.ToString(), 
 						ix.FullTitle, ix.Display.FormatString);
 
@@ -1316,7 +1316,7 @@ namespace TestConsoleApp
 
 			Console.WriteLine("root List");
 
-			foreach (RootEnum rx in RootList)
+			foreach (DataItems.RootEnum rx in RootList)
 			{
 				Console.WriteLine(fmt2, i++, rx.Name, -1, -1, 0);
 			}
@@ -1324,7 +1324,7 @@ namespace TestConsoleApp
 			i = 0;
 
 			Console.WriteLine(nl + "desc list");
-			foreach (DescEnum dx in DescList)
+			foreach (DataItems.DescEnum dx in DescList)
 			{
 				Console.WriteLine(fmt2, i++, dx.Name, dx.DescItemIdx, -1, -1);
 			}
@@ -1332,7 +1332,7 @@ namespace TestConsoleApp
 			i = 0;
 
 			Console.WriteLine(nl + "data list");
-			foreach (DataEnum dx in DataList)
+			foreach (DataItems.DataEnum dx in DataList)
 			{
 				Console.Write(fmt2, i++, dx.Name, dx.DescItemIdx, dx.DataIdx, -1);
 
@@ -1340,7 +1340,7 @@ namespace TestConsoleApp
 				{
 					int j = 0;
 
-					foreach (SubDataEnum sub in dx.SubDataList)
+					foreach (DataItems.SubDataEnum sub in dx.SubDataList)
 					{
 						Console.Write("| " + j++ + "| (" + sub.Name + ")");
 					}
@@ -1352,7 +1352,7 @@ namespace TestConsoleApp
 			i = 0;
 
 			Console.WriteLine(nl + "filter list");
-			foreach (FilterEnum fx in FilterList)
+			foreach (DataItems.FilterEnum fx in FilterList)
 			{
 				Console.WriteLine(fmt2, i++, fx.Name, fx.DescItemIdx, fx.DataIdx, fx.FilterIdx);
 			}
@@ -1362,7 +1362,7 @@ namespace TestConsoleApp
 			RevColumnOrder co = new RevColumnOrder();
 
 			Console.WriteLine(nl + "column list");
-			foreach (DataEnum dx in co.Iterate()) 
+			foreach (DataItems.DataEnum dx in co.Iterate()) 
 			{
 				Console.WriteLine(fmt2, i++, dx.Name, dx.DescItemIdx, dx.DataIdx, -1);
 			}
@@ -1475,13 +1475,13 @@ namespace TestConsoleApp
 				return;
 			}
 
-			foreach (DataEnum column in revOrder.itemize())
+			foreach (DataItems.DataEnum column in revOrder.itemize())
 			{
 				Console.WriteLine("      column | " + column.FullTitle);
 			}
 		}
 
-		private static void ListCriteria(Criteria c)
+		private static void ListCriteria(RevisionFilters.Criteria c)
 		{
 			const string isNull = "** is null **"; 
 

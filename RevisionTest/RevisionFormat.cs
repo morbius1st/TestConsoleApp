@@ -1,7 +1,7 @@
 ﻿#region + Using Directives
 
 
-using static TestConsoleApp.RevisionMetaData;
+using static RevisionTest.RevisionMetaData;
 
 
 #endregion
@@ -16,7 +16,7 @@ using static TestConsoleApp.RevisionMetaData;
 
 // take the raw data and format depending on the usage
 
-namespace TestConsoleApp
+namespace RevisionTest
 {
 	public static class RevisionFormat
 	{
@@ -40,7 +40,7 @@ namespace TestConsoleApp
 		public static string FormatForColumn(string value, 
 			RevisionDataDisplay dd, 
 			char left = ' ', char right = ' ', 
-			Justification justification = Justification.UNDEFINED)
+			RevisionMetaData.Justification justification = RevisionMetaData.Justification.UNDEFINED)
 		{
 			if (string.IsNullOrWhiteSpace(value)) value = "";
 
@@ -48,7 +48,7 @@ namespace TestConsoleApp
 
 			formatted = Abbreviate(value, dd.ColWidth, '…');
 
-			if (justification == Justification.UNDEFINED)
+			if (justification == RevisionMetaData.Justification.UNDEFINED)
 			{
 				formatted = Justify(formatted, dd.JustifyColumn, dd.ColWidth, left, right);
 			}
@@ -100,23 +100,23 @@ namespace TestConsoleApp
 		}
 
 		public static string Justify(string formatted, 
-			Justification justifyColumn, int width, char left = ' ', char right = ' ')
+			RevisionMetaData.Justification justifyColumn, int width, char left = ' ', char right = ' ')
 		{
 			string result = formatted;
 
 			switch (justifyColumn)
 			{
-			case Justification.LEFT:
+			case RevisionMetaData.Justification.LEFT:
 				{
 					result = formatted.PadRight(width, left);
 					break;
 				}
-			case Justification.CENTER:
+			case RevisionMetaData.Justification.CENTER:
 				{
 					result = formatted.PadCenter(width, left, right);
 					break;
 				}
-			case Justification.RIGHT:
+			case RevisionMetaData.Justification.RIGHT:
 				{
 					result = formatted.PadLeft(width, right);
 					break;

@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Resources;
 using System.Xml;
 
-using static TestConsoleApp.DataItems;
-using static TestConsoleApp.RevisionUtil;
+using static RevisionTest.DataItems;
+using static RevisionTest.RevisionUtil;
 
 
 #endregion
@@ -22,14 +22,14 @@ using static TestConsoleApp.RevisionUtil;
 // which columns on which to sort the data
 // 
 
-namespace TestConsoleApp
+namespace RevisionTest
 {
 	public class RevOrderMgr
 	{
-		public RevColumns<DataEnum, RevColumnOrder> 
+		public RevColumns<DataItems.DataEnum, RevColumnOrder> 
 			DefaultColumnOrder => RevColumnOrder.Default;
 
-		public RevColumns<ISortable, RevSortOrder> 
+		public RevColumns<DataItems.ISortable, RevSortOrder> 
 			DefaultSortOrder => RevSortOrder.Default;
 
 		public RevColumnOrder ColumnOrder { get; set; } 
@@ -110,11 +110,11 @@ namespace TestConsoleApp
 	} 
 
 	public class RevColumnOrder : 
-		RevColumns<DataEnum, RevColumnOrder>
+		RevColumns<DataItems.DataEnum, RevColumnOrder>
 	{
 		public RevColumnOrder()
 		{
-			Columns = new List<DataEnum>(DataList.Count);
+			Columns = new List<DataItems.DataEnum>(DataList.Count);
 		}
 
 		public new static RevColumnOrder Default {
@@ -131,11 +131,11 @@ namespace TestConsoleApp
 			Columns = Default.Columns.Clone();
 		}
 
-		public override IEnumerable<DataEnum> Iterate()
+		public override IEnumerable<DataItems.DataEnum> Iterate()
 		{
 			if (Columns == null || Columns.Count == 0) SetToDefault();
 
-			foreach (DataEnum de in Columns)
+			foreach (DataItems.DataEnum de in Columns)
 			{
 				yield return de;
 			}
@@ -143,11 +143,11 @@ namespace TestConsoleApp
 	}
 
 	public class RevSortOrder : 
-		RevColumns<ISortable, RevSortOrder>
+		RevColumns<DataItems.ISortable, RevSortOrder>
 	{
 		public RevSortOrder()
 		{
-			Columns = new List<ISortable>(DataList.Count);
+			Columns = new List<DataItems.ISortable>(DataList.Count);
 		}
 
 		public new static RevSortOrder Default {
@@ -164,11 +164,11 @@ namespace TestConsoleApp
 			Columns = Default.Columns.Clone();
 		}
 
-		public override IEnumerable<ISortable> Iterate()
+		public override IEnumerable<DataItems.ISortable> Iterate()
 		{
 			if (Columns == null || Columns.Count == 0) SetToDefault();
 
-			foreach (ISortable so in Columns)
+			foreach (DataItems.ISortable so in Columns)
 			{
 				yield return so;
 			}

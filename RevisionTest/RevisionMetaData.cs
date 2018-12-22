@@ -1,11 +1,11 @@
-﻿using static TestConsoleApp.DataItems;
-using static TestConsoleApp.DataItems.EDataFields;
+﻿using static RevisionTest.DataItems;
+using static RevisionTest.DataItems.EDataFields;
 
-using static TestConsoleApp.EDataType;
-using static TestConsoleApp.EFieldSource;
-using static TestConsoleApp.RevisionMetaData.Justification;
+using static RevisionTest.EDataType;
+using static RevisionTest.EFieldSource;
+using static RevisionTest.RevisionMetaData.Justification;
 
-namespace TestConsoleApp
+namespace RevisionTest
 {
 	public class RevisionMetaData
 	{
@@ -61,40 +61,40 @@ namespace TestConsoleApp
 			ConfigItem(REV_SUB_DISCIPLINE_CODE, "Disc", "Code" , 
 				new RevisionDataDisplay(  6, null, fmt_str, LEFT, RIGHT));	   
 
-			foreach (DescEnum de in DescList)
+			foreach (DataItems.DescEnum de in DescList)
 			{
 				de.Display.SetWidthByTitle(de);
 			}
 		}
 
-		private static void ConfigItem(RootEnum r,
+		private static void ConfigItem(DataItems.RootEnum r,
 			string title1, string title2)
 		{
 			r.Title[0] = title1;
 			r.Title[1] = title2;
 		}
 
-		private static void ConfigItem(MgmtEnum m,
+		private static void ConfigItem(DataItems.MgmtEnum m,
 			string title1, string title2)
 		{
-			ConfigItem((RootEnum) m, title1, title2);
+			ConfigItem((DataItems.RootEnum) m, title1, title2);
 		}
 
-		private static void ConfigItem(DescEnum d,
+		private static void ConfigItem(DataItems.DescEnum d,
 			string title1, string title2,
 			RevisionDataDisplay display)
 		{
 			d.Display = display;
-			ConfigItem((RootEnum) d, title1, title2);
+			ConfigItem((DataItems.RootEnum) d, title1, title2);
 		}
 
-		private static void ConfigItem(DataEnum i,
+		private static void ConfigItem(DataItems.DataEnum i,
 			string title1, string title2,
 			EFieldSource source, RevisionDataDisplay display)
 		{
 			i.Source = source;
 			i.Display = display;
-			ConfigItem((RootEnum) i, title1, title2);
+			ConfigItem((DataItems.RootEnum) i, title1, title2);
 		}
 
 		public enum Justification

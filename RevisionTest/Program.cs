@@ -47,7 +47,7 @@
 
 !// Todo: Complete. next step is integrate info revit.
 
-namespace TestConsoleApp
+namespace RevisionTest
 {
 	class Program
 	{

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using static TestConsoleApp.DataItems.EDataFields;
+using static RevisionTest.DataItems.EDataFields;
 
-using static TestConsoleApp.RevisionTest;
-using static TestConsoleApp.DataItems;
+using static RevisionTest.RevisionTest;
+using static RevisionTest.DataItems;
 
-namespace TestConsoleApp
+namespace RevisionTest
 {
 	class RevitRevisions
 	{
@@ -41,7 +41,7 @@ namespace TestConsoleApp
 
 			for (int i = 0; i < items.Length; i++)
 			{
-				DataEnum d = xlate[i];
+				DataItems.DataEnum d = xlate[i];
 				int j = d.DataIdx;
 
 				switch (i)
@@ -160,7 +160,7 @@ namespace TestConsoleApp
 			return max;
 		}
 
-		private static DataEnum[] xlate =
+		private static DataItems.DataEnum[] xlate =
 		{
 			//  0
 			REV_SELECTED,

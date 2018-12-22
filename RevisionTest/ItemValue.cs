@@ -1,4 +1,4 @@
-﻿namespace TestConsoleApp
+﻿namespace RevisionTest
 {
 	public class ItemValue
 	{

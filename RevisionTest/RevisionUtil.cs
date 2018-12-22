@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-using static TestConsoleApp.DataItems.EDataFields;
-using static TestConsoleApp.RevisionFilters;
-using static TestConsoleApp.RevisionFilters.ECompareOps;
+using static RevisionTest.DataItems.EDataFields;
+using static RevisionTest.RevisionFilters;
+using static RevisionTest.RevisionFilters.ECompareOps;
 
 #endregion
 
@@ -16,7 +16,7 @@ using static TestConsoleApp.RevisionFilters.ECompareOps;
 // created:  6/18/2018 10:29:54 PM
 
 
-namespace TestConsoleApp
+namespace RevisionTest
 {
 	public interface ICloneable<U> : ICloneable where U : ICloneable<U>
 	{

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using static TestConsoleApp.DataItems;
-using static TestConsoleApp.DataItems.EDataFields;
+using static RevisionTest.DataItems;
+using static RevisionTest.DataItems.EDataFields;
 
 
-namespace TestConsoleApp
+namespace RevisionTest
 {
 	public interface SubData
 	{
@@ -119,12 +119,12 @@ namespace TestConsoleApp
 			set => _revDataFields[idx] = value;
 		}
 
-		public dynamic this[DataEnum item]
+		public dynamic this[DataItems.DataEnum item]
 		{
 			get => _revDataFields[item.DataIdx];
 			set => _revDataFields[item.DataIdx] = value;
 		}
-		public dynamic this[FilterEnum filter]
+		public dynamic this[DataItems.FilterEnum filter]
 		{
 			get => _revDataFields[filter.DataIdx];
 			set => _revDataFields[filter.DataIdx] = value;
